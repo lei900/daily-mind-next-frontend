@@ -24,7 +24,7 @@ const UserMenu = ({ currentUser, onLogout }: Props) => {
               as="button"
               color="secondary"
               size="md"
-              src={currentUser.photoURL}
+              src={currentUser.photoURL!}
             />
           </Dropdown.Trigger>
         </Navbar.Item>
