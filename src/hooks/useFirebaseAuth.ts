@@ -5,6 +5,7 @@ import {
   signOut,
   signInWithPopup,
   GoogleAuthProvider,
+  TwitterAuthProvider,
 } from "firebase/auth";
 import { useRouter } from "next/router";
 
@@ -21,6 +22,20 @@ export default function useFirebaseAuth() {
 
     if (result) {
       // The signed-in user info.
+      const user = result.user;
+      // This gives you a Google Access Token.You can use it to access the Google API.
+      // const credential = GoogleAuthProvider.credentialFromResult(result);
+      // const token = credential?.accessToken;
+      router.push("/");
+      return user;
+    }
+  };
+
+  const loginWithTwitter = async () => {
+    const provider = new TwitterAuthProvider();
+    const result = await signInWithPopup(auth, provider);
+
+    if (result) {
       const user = result.user;
       router.push("/");
       return user;
@@ -56,6 +71,7 @@ export default function useFirebaseAuth() {
     currentUser,
     loading,
     loginWithGoogle,
+    loginWithTwitter,
     logout,
   };
 }

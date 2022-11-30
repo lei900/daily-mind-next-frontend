@@ -6,6 +6,7 @@ interface AuthContext {
   currentUser: User | null;
   loading: boolean;
   loginWithGoogle: () => Promise<User | undefined>;
+  loginWithTwitter: () => Promise<User | undefined>;
   logout: () => Promise<void>;
 }
 
@@ -16,12 +17,14 @@ type AuthProviderProps = {
 const AuthCtx = createContext({} as AuthContext);
 
 export function AuthContextProvider({ children }: AuthProviderProps) {
-  const { currentUser, loading, loginWithGoogle, logout } = useFirebaseAuth();
+  const { currentUser, loading, loginWithGoogle, loginWithTwitter, logout } =
+    useFirebaseAuth();
 
   const AuthContext: AuthContext = {
     currentUser: currentUser,
     loading: true,
     loginWithGoogle: loginWithGoogle,
+    loginWithTwitter: loginWithTwitter,
     logout: logout,
   };
 
