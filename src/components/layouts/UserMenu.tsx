@@ -3,7 +3,7 @@ import Link from "next/link";
 import { User } from "firebase/auth";
 
 type Props = {
-  currentUser: User | null;
+  currentUser: User;
   onLogout: () => {};
 };
 
@@ -24,7 +24,7 @@ const UserMenu = ({ currentUser, onLogout }: Props) => {
               as="button"
               color="secondary"
               size="md"
-              src={currentUser?.photoURL}
+              src={currentUser.photoURL}
             />
           </Dropdown.Trigger>
         </Navbar.Item>
