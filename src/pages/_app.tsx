@@ -1,6 +1,21 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import type { AppProps } from "next/app";
+import { NextUIProvider } from "@nextui-org/react";
+import axios from "axios";
+
+import "../styles/globals.css";
+import { Layout } from "components/layouts/Layout";
+import { AuthContextProvider } from "context/AuthContext";
+
+axios.defaults.baseURL = "http://127.0.0.1:3001/api/v1";
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <NextUIProvider>
+      <AuthContextProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </AuthContextProvider>
+    </NextUIProvider>
+  );
 }
