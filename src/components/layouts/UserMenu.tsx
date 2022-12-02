@@ -8,6 +8,9 @@ type Props = {
 };
 
 const UserMenu = ({ currentUser, onLogout }: Props) => {
+  const userPhotoUrl = currentUser.photoURL;
+  const userName = currentUser.displayName;
+
   return (
     <Navbar.Content
       css={{
@@ -24,7 +27,7 @@ const UserMenu = ({ currentUser, onLogout }: Props) => {
               as="button"
               color="secondary"
               size="md"
-              src={currentUser.photoURL!}
+              src={userPhotoUrl!}
             />
           </Dropdown.Trigger>
         </Navbar.Item>
@@ -38,7 +41,7 @@ const UserMenu = ({ currentUser, onLogout }: Props) => {
               Welcome
             </Text>
             <Text b color="inherit" css={{ d: "flex" }}>
-              {currentUser?.displayName}
+              {userName!}
             </Text>
           </Dropdown.Item>
           <Dropdown.Item key="settings" withDivider>
