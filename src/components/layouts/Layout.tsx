@@ -13,7 +13,7 @@ export const Layout = ({ children }: any) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main>{children}</main>
+      {children}
     </>
   );
 };
