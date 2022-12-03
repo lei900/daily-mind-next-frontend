@@ -13,7 +13,7 @@ export const HeroSection = () => {
             <br className="hidden md:inline-block" />
             心のセルフケア
           </h1>
-          <p className="text-xl leading-relaxed mb-12">
+          <p className="sm:text-xl text-lg leading-relaxed mb-12">
             ストレスがたまって苦しい、人間関係で疲弊している、先行きが不安で眠れない......。
             <br className="hidden md:inline-block" />
             その辛さの正体を知り、自分と向き合いながら、気分を改善する。
@@ -23,7 +23,7 @@ export const HeroSection = () => {
           <div className="flex justify-center">
             <Link
               href="/guide"
-              className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded-lg text-lg"
+              className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded-lg sm:text-lg text-base"
             >
               認知療法を知る
             </Link>
