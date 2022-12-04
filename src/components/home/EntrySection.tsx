@@ -38,7 +38,7 @@ export const EntrySection = () => {
         }}
       >
         {entryKinds.map((item, index) => (
-          <Grid sm={3} xs={6}>
+          <Grid sm={3} xs={6} key={index}>
             <Card
               isPressable
               isHoverable
