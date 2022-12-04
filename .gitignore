@@ -35,3 +35,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 src/components/logo
+src/components/images
+src/components/distortions
+src/pages/template.tsx

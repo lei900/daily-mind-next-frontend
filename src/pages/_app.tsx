@@ -6,7 +6,8 @@ import "../styles/globals.css";
 import { Layout } from "components/layouts/Layout";
 import { AuthContextProvider } from "context/AuthContext";
 
-axios.defaults.baseURL = "http://127.0.0.1:3001/api/v1";
+axios.defaults.baseURL =
+  "http://127.0.0.1:3001/api/v1" || process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
