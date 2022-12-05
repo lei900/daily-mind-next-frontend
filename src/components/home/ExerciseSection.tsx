@@ -2,14 +2,14 @@ import { Grid, Card, Row, Col, Spacer } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
 
-import exercisePic_1 from "./images/exercisePic_1.png";
-import exercisePic_2 from "./images/exercisePic_2.png";
-import exercisePic_3 from "./images/exercisePic_3.png";
+import exercisePic_1 from "../exercises/images/exercisePic_1.png";
+import exercisePic_2 from "../exercises/images/exercisePic_2.png";
+import exercisePic_3 from "../exercises/images/exercisePic_3.png";
 
 export const ExerciseSection = () => {
   const communityList = [
     {
-      href: "#",
+      href: "/exercise/separate-thoughts-from-feelings",
       title: "認知と感情を分ける",
       description: "考え方を変えると、気分は変わる",
       src: exercisePic_1,
