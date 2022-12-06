@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import exercisePic from "components/exercises/images/exercisePic_1.png";
 
-export default function exerciseIntroPage() {
+export default function ExerciseIntroPage() {
   return (
     <Container md css={{ px: "$18", mt: "$12", "@mdMax": { px: "$10" } }}>
       <Card css={{ p: "$sm", mw: "900px", margin: "auto" }}>
@@ -27,18 +27,28 @@ export default function exerciseIntroPage() {
           </Grid.Container>
         </Card.Header>
         <Card.Divider />
-        <Card.Body css={{ py: "$12", mw: "450px", margin: "auto" }}>
+        <Card.Body
+          css={{
+            py: "$12",
+            px: "$lg",
+            "@mdMin": { px: "$4xl" },
+            margin: "auto",
+          }}
+        >
           <div className="exercise-intro">
             <p className="sm:text-lg text-base">
               私たちの気持ちはすべて、考え方に影響されます。
             </p>
             <br />
-            <p className="sm:text-lg text-base">私たちの感情を決めるのは、</p>
             <p className="sm:text-lg text-base">
-              現実ではなく、その現実の受け取り方。
+              私たちの感情を決めるのは、現実ではなく、その現実の受け取り方。
             </p>
             <p className="sm:text-lg text-base">
-              つまり、物事に対しての認知です。
+              つまり、物事に対しての
+              <strong className="sm:text-xl text-lg border-b-4 border-purple-700 border-opacity-50">
+                認知
+              </strong>
+              です。
             </p>
             <br />
             <p className="sm:text-lg text-base">
@@ -55,10 +65,18 @@ export default function exerciseIntroPage() {
               認知行動療法では、その解釈に注目します。
             </p>
             <p className="sm:text-lg text-base">
-              特に、頭の中に瞬間に浮かんでくる考えやイメージ。
+              特に、頭の中に
+              <strong className="sm:text-xl text-lg border-b-4 border-purple-700 border-opacity-50">
+                瞬間に浮かんでくる考えやイメージ
+              </strong>
+              。
             </p>
             <p className="sm:text-lg text-base">
-              それを「自動思考」と呼びます。
+              それを
+              <strong className="sm:text-xl text-lg border-b-4 border-purple-700 border-opacity-50">
+                「自動思考」
+              </strong>
+              と呼びます。
             </p>
             <br />
             <p className="sm:text-lg text-base">

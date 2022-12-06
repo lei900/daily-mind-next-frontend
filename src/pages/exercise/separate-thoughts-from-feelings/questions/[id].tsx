@@ -63,8 +63,39 @@ export default function QuestionDetailPage({ question }: Props) {
     const nextQuestionUrl = `/exercise/separate-thoughts-from-feelings/questions/${(
       questionId + 1
     ).toString()}`;
-    const nextUrl = isLastQuestion ? "/" : nextQuestionUrl;
+    const finalUrl = "/exercise/separate-thoughts-from-feelings/final";
+    const nextUrl = isLastQuestion ? finalUrl : nextQuestionUrl;
     router.push(nextUrl);
+  };
+
+  const ModalBodyContent = () => {
+    if (isCorrect === true) {
+      return (
+        <div className="modal-body-content mx-auto py-4">
+          <p className="text-base sm:text-lg">そうですね！</p>
+          <br />
+          <p className="text-base sm:text-lg">
+            <strong className="text-purple-700">
+              「{correctChoice?.content}」
+            </strong>
+            を感じるでしょう。
+          </p>
+        </div>
+      );
+    } else {
+      return (
+        <div className="modal-body-content mx-auto py-4 sm:px-6">
+          <p className="text-base sm:text-lg">
+            人によっては考え方が違うかもしれませんね。
+          </p>
+          <br />
+          <p className="text-base sm:text-lg">参考解答：</p>
+          <strong className="text-indigo-700 text-base sm:text-lg">
+            {correctChoice?.content}
+          </strong>
+        </div>
+      );
+    }
   };
 
   return (
@@ -118,29 +149,17 @@ export default function QuestionDetailPage({ question }: Props) {
         onClose={closeHandler}
       >
         <Modal.Body>
-          {isCorrect ? (
-            <>
-              <p>そうですね！</p>
-              <p>確かに「{correctChoice?.content}」を感じるでしょう。</p>
-            </>
-          ) : (
-            <>
-              <p>人によっては考え方が違うかもしれませんね。</p>
-              <br />
-              <p>参考解答：</p>
-              <p>{correctChoice?.content}</p>
-            </>
-          )}
+          <ModalBodyContent />
         </Modal.Body>
         <Modal.Footer>
-          <button
-            onClick={turnNextPage}
-            className="block rounded-lg bg-indigo-500 px-4 py-2 text-white  transition hover:bg-indigo-700 focus:outline-none focus:ring"
-          >
-            <span className="text-base font-semibold">
-              {isLastQuestion ? "戻る" : "次へ"}
-            </span>
-          </button>
+          <Row justify="center">
+            <button
+              onClick={turnNextPage}
+              className="block rounded-lg bg-indigo-500 px-8 py-2 text-white  transition hover:bg-indigo-700 focus:outline-none focus:ring"
+            >
+              <span className="text-base font-semibold">次へ</span>
+            </button>
+          </Row>
         </Modal.Footer>
       </Modal>
     </Container>
