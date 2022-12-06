@@ -1,7 +1,8 @@
 import axios from "axios";
 import { GetStaticPropsContext } from "next";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ParsedUrlQuery } from "querystring";
+
 import {
   Container,
   Spacer,
@@ -11,7 +12,6 @@ import {
   Col,
   Modal,
 } from "@nextui-org/react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { QuestionData, Choice } from "types/types";
@@ -22,14 +22,9 @@ export type Props = {
 };
 
 export default function QuestionDetailPage({ question }: Props) {
-  // const [questionData, setQuestionData] = useState<QuestionData | null>(null);
-  const [selectedChoice, setSelectedChoice] = useState<Choice | null>(null);
-  // const [correctChoice, setCorrectChoice] = useState<Choice | null>(null);
-  const [isCorrect, setIsCorrect] = useState(true);
+  const [isCorrect, setIsCorrect] = useState(false);
   const [visible, setVisible] = useState(false);
-  // const [isLastQuestion, setIsLastQuestion] = useState(false);
   const router = useRouter();
-  const { id } = router.query;
 
   const questionId = Number(question.id);
   const questionBody = question.attributes.body.split("。");
@@ -46,33 +41,12 @@ export default function QuestionDetailPage({ question }: Props) {
   // !Caution: the number of questions is hard-coded
   const isLastQuestion = questionId === 4 ? true : false;
 
-  console.log(isCorrect);
-
-  // useEffect(() => {
-  //   // !Caution: the number of questions is hard-coded
-  //   if (questionId === 4) {
-  //     setIsLastQuestion(true);
-  //   }
-
-  //   console.log(isLastQuestion);
-  // }, [questionId]);
-
-  const closeHandler = () => {
-    setVisible(false);
-  };
-
-  const nextQuestionUrl = `/exercise/separate-thoughts-from-feelings/questions/${(
-    questionId + 1
-  ).toString()}`;
-
   const checkAnswer = (choice: Choice) => {
-    setSelectedChoice(choice);
-    if (selectedChoice?.isCorrectChoice === true) {
+    if (choice.isCorrectChoice === true) {
       setIsCorrect(true);
     } else {
       setIsCorrect(false);
     }
-    console.log(isCorrect);
     openModal();
   };
 
@@ -80,8 +54,15 @@ export default function QuestionDetailPage({ question }: Props) {
     setVisible(true);
   };
 
-  const turnNextPage = () => {
+  const closeHandler = () => {
     setVisible(false);
+  };
+
+  const turnNextPage = () => {
+    closeHandler();
+    const nextQuestionUrl = `/exercise/separate-thoughts-from-feelings/questions/${(
+      questionId + 1
+    ).toString()}`;
     const nextUrl = isLastQuestion ? "/" : nextQuestionUrl;
     router.push(nextUrl);
   };
@@ -144,8 +125,7 @@ export default function QuestionDetailPage({ question }: Props) {
             </>
           ) : (
             <>
-              <p>なるほどです。</p>
-              <p>確かに人によって考え方が違いますね。</p>
+              <p>人によっては考え方が違うかもしれませんね。</p>
               <br />
               <p>参考解答：</p>
               <p>{correctChoice?.content}</p>
