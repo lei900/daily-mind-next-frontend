@@ -30,7 +30,7 @@ export const HeroSection = () => {
           </div>
         </div>
         <div className="max-w-sm md:max-w-md">
-          <Image alt="hero" src={heroPic} />
+          <Image alt="hero" src={heroPic} priority={true} />
         </div>
       </div>
     </section>
