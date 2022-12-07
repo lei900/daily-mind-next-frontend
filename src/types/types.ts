@@ -1,6 +1,6 @@
 export interface QuestionData {
-  id: string;
   attributes: {
+    qid: number;
     body: string;
     resultInterpretation: string;
     choices: ChoiceData[];
@@ -8,20 +8,18 @@ export interface QuestionData {
 }
 
 export interface ChoiceData {
-  id: number;
   content: string;
   is_correct_choice: boolean;
 }
 
 export interface Question {
-  id: number;
+  qid: number;
   body: string;
   resultInterpretation: string;
   choices: Choice[];
 }
 
 export interface Choice {
-  id: number;
   content: string;
   isCorrectChoice: boolean;
 }
