@@ -61,7 +61,6 @@ export default function QuestionDetailPage({ question }: Props) {
     const nextQuestionUrl = `/exercise/separate-thoughts-from-facts/questions/${(
       questionId + 1
     ).toString()}`;
-    console.log(nextQuestionUrl);
     const finalUrl = "/exercise/separate-thoughts-from-facts/final";
     const nextUrl = isLastQuestion ? finalUrl : nextQuestionUrl;
     router.push(nextUrl);
@@ -149,7 +148,7 @@ export default function QuestionDetailPage({ question }: Props) {
             {choices.map((choice, index) => (
               <button
                 onClick={() => checkAnswer(choice)}
-                className="block rounded-lg bg-indigo-500 sm:px-14 px-8 py-3 my-2 text-white text-center transition hover:bg-indigo-700 focus:outline-none focus:ring mx-auto"
+                className="block rounded-lg bg-indigo-500 sm:px-14 px-8 py-3 my-2 text-white text-center transition hover:bg-indigo-700 mx-auto"
                 key={index}
               >
                 <span className="text-base sm:text-lg font-semibold">

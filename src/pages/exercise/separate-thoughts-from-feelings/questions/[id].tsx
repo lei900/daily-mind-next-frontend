@@ -126,11 +126,11 @@ export default function QuestionDetailPage({ question }: Props) {
         </Card.Body>
         <Card.Footer>
           <Row justify="center">
-            <Col span={4}>
+            <div className="grid-cols-1">
               {choices.map((choice, index) => (
                 <button
                   onClick={() => checkAnswer(choice)}
-                  className="rounded-lg bg-indigo-500 px-4 py-3 my-2 text-white text-left min-w-full transition hover:bg-indigo-700 focus:outline-none focus:ring"
+                  className="block rounded-lg bg-indigo-500 sm:px-14 px-8 py-3 my-2 text-white text-left transition hover:bg-indigo-700 min-w-full"
                   key={index}
                 >
                   <span className="sm:text-lg text-base font-semibold">
@@ -138,7 +138,7 @@ export default function QuestionDetailPage({ question }: Props) {
                   </span>
                 </button>
               ))}
-            </Col>
+            </div>
           </Row>
         </Card.Footer>
       </Card>
