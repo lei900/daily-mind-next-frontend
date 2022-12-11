@@ -16,7 +16,7 @@ import { useRouter } from "next/router";
 
 import { QuestionData, Choice } from "types/types";
 
-export type Props = {
+type Props = {
   question: QuestionData;
 };
 
