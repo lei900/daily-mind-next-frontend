@@ -2,9 +2,9 @@ import { Container, Spacer, Card, Grid, Row, Col } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
 
-import exercisePic from "components/exercises/images/exercisePic_1.png";
+import exercisePic from "components/exercises/images/exercisePic_3.png";
 
-export default function Exercise1IntroPage() {
+export default function Exercise3FinalPage() {
   return (
     <Container md css={{ px: "$18", mt: "$12", "@mdMax": { px: "$10" } }}>
       <Card css={{ p: "$sm", mw: "900px", margin: "auto" }}>
@@ -16,10 +16,10 @@ export default function Exercise1IntroPage() {
                 <Spacer x={0.5} />
                 <Col>
                   <h2 className="text-2xl font-semibold sm:text-3xl text-gray-700">
-                    認知と感情を分ける
+                    認知のゆがみに気づく
                   </h2>
                   <p className="text-gray-600 sm:text-base text-sm">
-                    考え方を変えると、気分は変わる
+                    「考え方のクセ」に気づくことが、変化の第一歩
                   </p>
                 </Col>
               </Row>
@@ -31,71 +31,54 @@ export default function Exercise1IntroPage() {
           css={{
             py: "$12",
             px: "$lg",
-            "@mdMin": { px: "$4xl" },
+            "@mdMin": { px: "$3xl" },
             margin: "auto",
           }}
         >
           <div className="exercise-intro">
+            <p className="sm:text-lg text-base">練習お疲れさまでした！</p>
+            <br />
             <p className="sm:text-lg text-base">
-              私たちの気持ちはすべて、考え方に影響されます。
+              この練習では、認知の歪みという概念をどれだけ正確に把握できることよりも、
+            </p>
+            <p className="sm:text-lg text-base">
+              「私の思考にはクセがあるかもしれない」という意識を持つことが大切です。
             </p>
             <br />
             <p className="sm:text-lg text-base">
-              私たちの感情を決めるのは、現実ではなく、その現実の受け取り方。
-            </p>
-            <p className="sm:text-lg text-base">
-              つまり、物事に対しての
+              歪みの存在に気づいたら、新しい視点でより
               <strong className="sm:text-xl text-lg border-b-4 border-purple-700 border-opacity-50">
-                認知
+                合理的な考え方に見直す
               </strong>
-              です。
+              ことが可能になります。
             </p>
             <br />
             <p className="sm:text-lg text-base">
-              良いこと、悪いこと、意味のないこと。
-            </p>
-            <p className="sm:text-lg text-base">
-              私たちは自分なりに、周りのことを解釈しています。
-            </p>
-            <p className="sm:text-lg text-base">
-              その解釈によって、気持ちが違ってきます。
+              時には、ネガティブな感情に囚われ、自分ではなかなか気づけないこともよくあります。
             </p>
             <br />
             <p className="sm:text-lg text-base">
-              認知行動療法では、その解釈に注目します。
-            </p>
-            <p className="sm:text-lg text-base">
-              特に、頭の中に
+              そんなときは、
               <strong className="sm:text-xl text-lg border-b-4 border-purple-700 border-opacity-50">
-                瞬間に浮かんでくる考えやイメージ
+                「今の自分の考え方にゆがみはないか」
               </strong>
-              。
-            </p>
-            <p className="sm:text-lg text-base">
-              それを
-              <strong className="sm:text-xl text-lg border-b-4 border-purple-700 border-opacity-50">
-                「自動思考」
-              </strong>
-              と呼びます。
+              と自分に問いかけたり、第三者に意見を求めたりしましょう。
             </p>
             <br />
             <p className="sm:text-lg text-base">
-              その自動思考はどのように気持ちを影響するのか。
-            </p>
-            <p className="sm:text-lg text-base">
-              この練習で体験してみましょう。
+              認知の歪みの定義リストを参照するのも良いでしょう。
             </p>
           </div>
         </Card.Body>
         <Card.Footer>
           <Row justify="center">
             <Link
-              href="/exercise/separate-thoughts-from-feelings/questions/1"
-              className="block rounded-lg bg-indigo-500 px-16 py-3 text-white  transition hover:bg-indigo-700 focus:outline-none focus:ring text-center"
+              href="/"
+              className="block rounded-lg bg-indigo-500 px-4 py-3 text-white  transition hover:bg-indigo-700 focus:outline-none focus:ring text-center"
               type="button"
             >
               <span className="sm:text-lg text-base font-semibold">
-                スタート
+                ホームへ戻る
               </span>
             </Link>
           </Row>

@@ -16,9 +16,9 @@ export const ExerciseSection = () => {
       numberOfParticipants: "15",
     },
     {
-      href: "#",
-      title: "認知と状況を分ける",
-      description: "あの考えは事実ではないかも?!",
+      href: "/exercise/separate-thoughts-from-facts",
+      title: "認知と事実を分ける",
+      description: "あの考えは本当に事実なのか?!",
       src: exercisePic_2,
       numberOfParticipants: "21",
     },

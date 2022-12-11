@@ -10,17 +10,15 @@ export default function QuestionBody({ questionBody }: Props) {
   const normalSentences = questionBody.slice(0, -1);
 
   return (
-    <Row className="question-body" justify="center">
-      <Col span={10}>
-        {normalSentences.map((sentence, index) => (
-          <Fragment key={index}>
-            <p className="sm:text-lg text-base">{sentence + "。"}</p>
-            <br />
-          </Fragment>
-        ))}
-        <br />
-        <p className="sm:text-lg font-semibold text-base">{lastSentence}</p>
-      </Col>
-    </Row>
+    <div className="mx-auto px-2 sm:px-14">
+      {normalSentences.map((sentence, index) => (
+        <Fragment key={index}>
+          <p className="sm:text-lg text-base">{sentence + "。"}</p>
+          <br />
+        </Fragment>
+      ))}
+      <br />
+      <p className="sm:text-xl font-semibold text-lg">{lastSentence}</p>
+    </div>
   );
 }
