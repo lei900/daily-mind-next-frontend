@@ -115,9 +115,10 @@ export default function QuestionDetailPage({ question, choices }: Props) {
           <p className="text-xl sm:text-2xl font-semibold text-gray-800">
             参考解答：
           </p>
-          {correctChoices.map((choice: any) => (
+          {correctChoices.map((choice: any, index: any) => (
             <p className=" text-lg sm:text-xl text-gray-800">
               {choice.content}
+              key={index}
             </p>
           ))}
         </div>
