@@ -23,3 +23,10 @@ export interface Choice {
   content: string;
   isCorrectChoice: boolean;
 }
+
+export interface DistortionDetail {
+  name: string;
+  formalName: string;
+  definition: string;
+  description: string[];
+}
