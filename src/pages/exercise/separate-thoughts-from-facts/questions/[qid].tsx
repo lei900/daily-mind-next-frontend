@@ -188,21 +188,21 @@ export async function getStaticPaths() {
   const questions: QuestionData[] = response.data.data;
 
   const paths = questions.map((question) => ({
-    params: { id: question.attributes.qid.toString() },
+    params: { qid: question.attributes.qid.toString() },
   }));
 
   return { paths, fallback: false };
 }
 
 interface Params extends ParsedUrlQuery {
-  id: string;
+  qid: string;
 }
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
-  const { id } = context.params as Params;
+  const { qid } = context.params as Params;
 
   try {
-    const response = await axios.get(`/exercises/2/questions/${id}`);
+    const response = await axios.get(`/exercises/2/questions/${qid}`);
     const question: QuestionData = response.data.data[0];
     return {
       props: {

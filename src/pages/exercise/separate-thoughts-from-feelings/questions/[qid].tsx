@@ -3,15 +3,7 @@ import { GetStaticPropsContext } from "next";
 import { useState } from "react";
 import { ParsedUrlQuery } from "querystring";
 
-import {
-  Container,
-  Spacer,
-  Card,
-  Grid,
-  Row,
-  Col,
-  Modal,
-} from "@nextui-org/react";
+import { Container, Spacer, Card, Grid, Row, Modal } from "@nextui-org/react";
 import { useRouter } from "next/router";
 
 import { QuestionData, Choice } from "types/types";
@@ -170,21 +162,21 @@ export async function getStaticPaths() {
   const questions: QuestionData[] = response.data.data;
 
   const paths = questions.map((question) => ({
-    params: { id: question.attributes.qid.toString() },
+    params: { qid: question.attributes.qid.toString() },
   }));
 
   return { paths, fallback: false };
 }
 
 interface Params extends ParsedUrlQuery {
-  id: string;
+  qid: string;
 }
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
-  const { id } = context.params as Params;
+  const { qid } = context.params as Params;
 
   try {
-    const response = await axios.get(`/exercises/1/questions/${id}`);
+    const response = await axios.get(`/exercises/1/questions/${qid}`);
     const question: QuestionData = response.data.data[0];
     return {
       props: {
