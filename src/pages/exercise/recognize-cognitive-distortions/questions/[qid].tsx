@@ -99,16 +99,14 @@ export default function QuestionDetailPage({
           <p className="text-lg sm:text-xl font-semibold">
             「{selectedChoice.distortion.name}」とは：
           </p>
-          <ReactMarkdown
-            className="prose prose-neutral prose-p:sm:text-xl prose-p:text-lg prose-p:text-gray-800"
-            children={selectedChoice.distortion.definition}
-          />
+          <ReactMarkdown className="prose prose-neutral prose-p:sm:text-xl prose-p:text-lg prose-p:text-gray-800">
+            {selectedChoice.distortion.definition}
+          </ReactMarkdown>
           <br />
           <p className="text-lg sm:text-xl font-semibold">具体例：</p>
-          <ReactMarkdown
-            className="prose prose-neutral prose-p:sm:text-xl prose-p:text-lg prose-p:text-gray-800"
-            children={selectedChoice.distortion.description}
-          />
+          <ReactMarkdown className="prose prose-neutral prose-p:sm:text-xl prose-p:text-lg prose-p:text-gray-800">
+            {selectedChoice.distortion.description}
+          </ReactMarkdown>
         </>
       );
     };
@@ -161,10 +159,9 @@ export default function QuestionDetailPage({
             </p>
           ))}
         </div>
-        <ReactMarkdown
-          className="prose prose-neutral prose-p:sm:text-xl prose-p:text-lg prose-p:text-gray-800"
-          children={resultInterpretation}
-        />
+        <ReactMarkdown className="prose prose-neutral prose-p:sm:text-xl prose-p:text-lg prose-p:text-gray-800">
+          {resultInterpretation}
+        </ReactMarkdown>
         <p className="text-base sm:text-lg mt-6 text-gray-700">
           ※上記はあくまで参考解答で、絶対的な正解ではありません。
         </p>
@@ -206,10 +203,9 @@ export default function QuestionDetailPage({
             </p>
             <br />
             <div className="my-6">
-              <ReactMarkdown
-                className="prose prose-neutral prose-p:sm:text-xl prose-p:text-lg prose-p:text-gray-800"
-                children={questionBody}
-              />
+              <ReactMarkdown className="prose prose-neutral prose-p:sm:text-xl prose-p:text-lg prose-p:text-gray-800">
+                {questionBody}
+              </ReactMarkdown>
             </div>
           </div>
         </Card.Body>
