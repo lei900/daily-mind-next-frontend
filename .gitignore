@@ -36,6 +36,6 @@ yarn-error.log*
 next-env.d.ts
 src/components/logo
 src/components/images
-src/components/distortions/images
+src/components/distortions
 src/components/diaries/EmotionIcons.tsx
 src/pages/template.tsx

@@ -16,10 +16,25 @@ export interface Question {
   qid: number;
   body: string;
   resultInterpretation: string;
-  choices: Choice[];
+  choices?: Choice[];
 }
 
 export interface Choice {
   content: string;
   isCorrectChoice: boolean;
+  distortion?: Distortion;
+}
+
+export interface ChoiceWithDistortionData {
+  attributes: {
+    content: string;
+    isCorrectChoice: boolean;
+    distortion: Distortion;
+  };
+}
+
+export interface Distortion {
+  name: string;
+  definition: string;
+  description: string;
 }

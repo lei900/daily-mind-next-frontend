@@ -15,7 +15,6 @@ import {
 import { useRouter } from "next/router";
 
 import { QuestionData, Choice } from "types/types";
-import QuestionBody from "components/exercises/questions/QuestionBody";
 
 type Props = {
   question: QuestionData;
@@ -27,7 +26,7 @@ export default function QuestionDetailPage({ question }: Props) {
   const router = useRouter();
 
   const questionId = question.attributes.qid;
-  const questionBody = question.attributes.body.split("。");
+  const questionBody = question.attributes.body;
   const choices = question.attributes.choices.map((choice) => {
     const content = choice.content;
     const isCorrectChoice = choice.is_correct_choice;
@@ -38,7 +37,7 @@ export default function QuestionDetailPage({ question }: Props) {
   );
 
   // !Caution: the number of questions is hard-coded
-  const isLastQuestion = questionId === 4 ? true : false;
+  const isLastQuestion = questionId === 22 ? true : false;
 
   const checkAnswer = (choice: Choice) => {
     if (choice.isCorrectChoice === true) {
@@ -59,10 +58,10 @@ export default function QuestionDetailPage({ question }: Props) {
 
   const turnNextPage = () => {
     closeHandler();
-    const nextQuestionUrl = `/exercise/separate-thoughts-from-feelings/questions/${(
+    const nextQuestionUrl = `/exercise/separate-thoughts-from-facts/questions/${(
       questionId + 1
     ).toString()}`;
-    const finalUrl = "/exercise/separate-thoughts-from-feelings/final";
+    const finalUrl = "/exercise/separate-thoughts-from-facts/final";
     const nextUrl = isLastQuestion ? finalUrl : nextQuestionUrl;
     router.push(nextUrl);
   };
@@ -74,10 +73,11 @@ export default function QuestionDetailPage({ question }: Props) {
           <p className="text-lg sm:text-xl">そうですね！</p>
           <br />
           <p className="text-lg sm:text-xl">
+            これは
             <strong className="text-purple-700">
               「{correctChoice?.content}」
             </strong>
-            を感じるでしょう。
+            になりますね。
           </p>
         </div>
       );
@@ -85,13 +85,22 @@ export default function QuestionDetailPage({ question }: Props) {
       return (
         <div className="modal-body-content mx-auto py-4 sm:px-6">
           <p className="text-lg sm:text-xl">
-            人によっては考え方が違うかもしれませんね。
+            これは
+            <strong className="text-indigo-700 text-lg sm:text-xl">
+              {correctChoice?.content}
+            </strong>
+            と捉えたほうが良いでしょう。
           </p>
           <br />
-          <p className="text-lg sm:text-xl">参考解答：</p>
-          <strong className="text-indigo-700 text-lg sm:text-xl">
-            {correctChoice?.content}
-          </strong>
+          <p className="text-sm sm:text-base font-semibold">事実とは：</p>
+          <p className="text-base sm:text-base">
+            証明も反証もできるものです。誰が何を言おうが、事実は変わりません。
+          </p>
+          <br />
+          <p className="text-sm sm:text-base font-semibold">認知とは：</p>
+          <p className="text-base sm:text-base">
+            主観的な思考や意見であり、それを「証明」したり「反証」したりする方法はなく、単に好みや視点を反映したものです。
+          </p>
         </div>
       );
     }
@@ -105,11 +114,11 @@ export default function QuestionDetailPage({ question }: Props) {
             <Grid xs={12} sm={6}>
               <Row justify="center">
                 <h2 className="text-xl text-center font-semibold sm:text-2xl text-gray-700">
-                  認知と感情を分ける
+                  認知と事実を分ける
                 </h2>
                 <Spacer x={0.5} />
                 <p className="text-center sm:text-lg text-base self-end">
-                  (Q {questionId} / 4)
+                  (Q {questionId} / 22)
                 </p>
               </Row>
             </Grid>
@@ -122,28 +131,37 @@ export default function QuestionDetailPage({ question }: Props) {
             margin: "auto",
           }}
         >
-          <QuestionBody questionBody={questionBody} />
+          <div className="mx-auto sm:px-14">
+            <p className="sm:text-xl text-lg">下記の言葉を読んでください。</p>
+            <p className="sm:text-xl text-lg">
+              これは客観的な「事実・状況」なのか、それとも主観的な「認知・思考」なのか。
+            </p>
+            <p className="sm:text-xl text-lg">判断してみましょう。</p>
+            <br />
+            <p className="sm:text-2xl font-semibold text-lg text-center">
+              「{questionBody}」
+            </p>
+          </div>
         </Card.Body>
         <Card.Footer>
-          <Row justify="center">
-            <Col span={4}>
-              {choices.map((choice, index) => (
-                <button
-                  onClick={() => checkAnswer(choice)}
-                  className="rounded-lg bg-indigo-500 px-4 py-3 my-2 text-white text-left min-w-full transition hover:bg-indigo-700 focus:outline-none focus:ring"
-                  key={index}
-                >
-                  <span className="sm:text-lg text-base font-semibold">
-                    {choice.content}
-                  </span>
-                </button>
-              ))}
-            </Col>
-          </Row>
+          <Col>
+            {choices.map((choice, index) => (
+              <button
+                onClick={() => checkAnswer(choice)}
+                className="block rounded-lg bg-indigo-500 sm:px-14 px-8 py-3 my-2 text-white text-center transition hover:bg-indigo-700 mx-auto"
+                key={index}
+              >
+                <span className="text-base sm:text-lg font-semibold">
+                  {choice.content}
+                </span>
+              </button>
+            ))}
+          </Col>
         </Card.Footer>
       </Card>
       <Modal
         aria-labelledby="modal-title"
+        width="50em"
         open={visible}
         onClose={closeHandler}
       >
@@ -166,25 +184,25 @@ export default function QuestionDetailPage({ question }: Props) {
 }
 
 export async function getStaticPaths() {
-  const response = await axios.get("/exercises/1/questions");
+  const response = await axios.get("/exercises/2/questions");
   const questions: QuestionData[] = response.data.data;
 
   const paths = questions.map((question) => ({
-    params: { id: question.attributes.qid.toString() },
+    params: { qid: question.attributes.qid.toString() },
   }));
 
   return { paths, fallback: false };
 }
 
 interface Params extends ParsedUrlQuery {
-  id: string;
+  qid: string;
 }
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
-  const { id } = context.params as Params;
+  const { qid } = context.params as Params;
 
   try {
-    const response = await axios.get(`/exercises/1/questions/${id}`);
+    const response = await axios.get(`/exercises/2/questions/${qid}`);
     const question: QuestionData = response.data.data[0];
     return {
       props: {
