@@ -18,3 +18,17 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/* https://fkhadra.github.io/react-toastify/how-to-style/ */
+.Toastify__toast--warning {
+  font-weight: 600;
+}
+.Toastify__toast--error {
+  font-weight: 600;
+}
+.Toastify__toast--success {
+  font-weight: 600;
+}
+.Toastify__toast--info {
+  font-weight: 600;
+}
