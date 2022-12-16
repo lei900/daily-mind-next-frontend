@@ -1,5 +1,4 @@
 import { Fragment } from "react";
-import { Container, Spacer, Card, Grid, Row, Col } from "@nextui-org/react";
 
 type Props = {
   questionBody: String[];

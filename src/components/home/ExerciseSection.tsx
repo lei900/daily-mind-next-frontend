@@ -25,7 +25,7 @@ export const ExerciseSection = () => {
     {
       href: "/exercise/recognize-cognitive-distortions",
       title: "認知のゆがみに気づく",
-      description: "「考え方のクセ」に気づくことが、変化の第一歩",
+      description: "「考え方のクセ」に気づくことが、変化への第一歩",
       src: exercisePic_3,
       numberOfParticipants: "30",
     },

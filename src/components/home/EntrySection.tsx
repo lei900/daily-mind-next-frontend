@@ -8,7 +8,7 @@ import analysisIcon from "./images/analysisIcon.png";
 export const EntrySection = () => {
   const entryKinds = [
     {
-      href: "#",
+      href: "/diaries/new",
       title: "今日の気持ち",
       src: diaryIcon,
     },
