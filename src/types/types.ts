@@ -1,3 +1,25 @@
+export interface Diary {
+  mood: string;
+  title: string;
+  body: string;
+}
+
+export interface Entry {
+  id: number;
+  entryableType: string;
+  status: string;
+  user: User;
+  diary: Diary;
+}
+
+export interface User {
+  uid: string;
+  nickname: string;
+  role: string;
+  avatar: string;
+  bio: string | null;
+}
+
 export interface QuestionData {
   attributes: {
     qid: number;

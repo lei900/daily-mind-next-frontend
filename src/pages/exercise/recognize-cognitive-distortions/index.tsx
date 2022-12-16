@@ -1,12 +1,4 @@
-import {
-  Container,
-  Spacer,
-  Card,
-  Grid,
-  Row,
-  Col,
-  Checkbox,
-} from "@nextui-org/react";
+import { Container, Spacer, Card, Grid, Row, Col } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -27,7 +19,7 @@ export default function Exercise3IntroPage() {
                     認知のゆがみに気づく
                   </h2>
                   <p className="text-gray-600 sm:text-base text-sm">
-                    「考え方のクセ」に気づくことが、変化の第一歩
+                    「考え方のクセ」に気づくことが、変化への第一歩
                   </p>
                 </Col>
               </Row>

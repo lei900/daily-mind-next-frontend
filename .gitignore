@@ -34,8 +34,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# for personal use
 src/components/logo
 src/components/images
 src/components/distortions
-src/components/diaries/EmotionIcons.tsx
 src/pages/template.tsx
