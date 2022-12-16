@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { Header } from "./Header";
-import { ToastContainer } from "react-toastify";
 
 export const Layout = ({ children }: any) => {
   return (
@@ -15,18 +14,6 @@ export const Layout = ({ children }: any) => {
       </Head>
       <Header />
       {children}
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
     </>
   );
 };

@@ -1,6 +1,7 @@
 import type { AppProps } from "next/app";
 import { NextUIProvider } from "@nextui-org/react";
 import axios from "axios";
+import { ToastContainer } from "react-toastify";
 
 import "../styles/globals.css";
 import { Layout } from "components/layouts/Layout";
@@ -16,6 +17,18 @@ export default function App({ Component, pageProps }: AppProps) {
         <Layout>
           <Component {...pageProps} />
         </Layout>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable={false}
+          pauseOnHover={false}
+          theme="colored"
+        />
       </AuthContextProvider>
     </NextUIProvider>
   );
