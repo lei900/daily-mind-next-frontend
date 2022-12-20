@@ -1,10 +1,17 @@
 import { Container, Spacer, Card, Grid, Row, Col } from "@nextui-org/react";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/router";
+import axios from "axios";
 
 import exercisePic from "components/exercises/images/exercisePic_3.png";
 
 export default function Exercise3IntroPage() {
+  const router = useRouter();
+  const handleStart = async () => {
+    router.push("/exercise/recognize-cognitive-distortions/questions/1");
+    axios.patch("/exercises/3/participations");
+  };
+
   return (
     <Container md css={{ px: "$18", mt: "$12", "@mdMax": { px: "$10" } }}>
       <Card css={{ p: "$sm", mw: "900px", margin: "auto" }}>
@@ -80,15 +87,15 @@ export default function Exercise3IntroPage() {
         </Card.Body>
         <Card.Footer>
           <Row justify="center">
-            <Link
-              href="/exercise/recognize-cognitive-distortions/questions/1"
+            <button
+              onClick={handleStart}
               className="block rounded-lg bg-indigo-500 px-16 py-3 text-white  transition hover:bg-indigo-700 focus:outline-none focus:ring  text-center"
               type="button"
             >
               <span className="sm:text-lg text-base font-semibold">
                 スタート
               </span>
-            </Link>
+            </button>
           </Row>
         </Card.Footer>
       </Card>
