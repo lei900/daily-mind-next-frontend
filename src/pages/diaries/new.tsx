@@ -1,13 +1,16 @@
-import { useState, Fragment, useMemo, useEffect } from "react";
+import { useState, Fragment, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import axios from "axios";
-import { Input, Textarea, Checkbox } from "@nextui-org/react";
-import { Dropdown } from "@nextui-org/react";
+import { Input, Textarea } from "@nextui-org/react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Listbox, Transition } from "@headlessui/react";
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import {
+  CheckIcon,
+  ChevronUpDownIcon,
+  ChevronDownIcon,
+} from "@heroicons/react/20/solid";
 import Image from "next/image";
 
 import {
@@ -54,6 +57,12 @@ const communities = [
   },
 ];
 
+const statuses = [
+  { id: 1, displayName: "公開", name: "published" },
+  { id: 2, displayName: "非公開", name: "private" },
+  { id: 3, displayName: "下書き", name: "draft" },
+];
+
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
@@ -68,14 +77,8 @@ export default function NewDiaryPage() {
   const [selectedCommunity, setSelectedCommunity] = useState<Community | null>(
     null
   );
-  const [status, setStatus] = useState("published");
-
-  // const [selected, setSelected] = useState(new Set([""]));
-
-  // const selectedValue = useMemo(
-  //   () => Array.from(selected).join(", ").replaceAll("_", " "),
-  //   [selected]
-  // );
+  const [selectedStatus, setSelectedStatus] = useState(statuses[0]);
+  const bodyRef = useRef<HTMLTextAreaElement>(null);
 
   // Listen for changes on loading and currentUser, redirect if not logged in
   useEffect(() => {
@@ -108,7 +111,7 @@ export default function NewDiaryPage() {
           {
             entry: {
               entryable_type: "Diary",
-              status: status,
+              status: selectedStatus.name,
               community_id: selectedCommunity?.id,
               entryable_attributes: diaryData,
             },
@@ -142,14 +145,6 @@ export default function NewDiaryPage() {
       setShowMoodSelect(false);
     } else {
       toast.info("気分を選んでくださいね");
-    }
-  };
-
-  const handleStatus = (isSelected: boolean) => {
-    if (isSelected) {
-      setStatus("private");
-    } else {
-      setStatus("published");
     }
   };
 
@@ -308,13 +303,7 @@ export default function NewDiaryPage() {
               name="title"
               control={control}
               render={({ field }) => (
-                <Input
-                  {...field}
-                  placeholder="任意"
-                  size="xl"
-                  status="primary"
-                  fullWidth
-                />
+                <Input {...field} size="xl" status="primary" fullWidth />
               )}
             />
           </div>
@@ -332,6 +321,8 @@ export default function NewDiaryPage() {
               render={({ field }) => (
                 <Textarea
                   {...field}
+                  value={bodyRef.current?.value}
+                  ref={bodyRef}
                   fullWidth
                   rows={10}
                   size="xl"
@@ -348,7 +339,7 @@ export default function NewDiaryPage() {
           <Listbox value={selectedCommunity} onChange={setSelectedCommunity}>
             {({ open }) => (
               <>
-                <div className="relative mt-1 sm:w-2/5 w-1/2">
+                <div className="relative mt-1 w-56">
                   <Listbox.Button className="relative w-full cursor-default rounded-xl bg-blue-50 py-2 pl-3 pr-10 text-left shadow-sm text-sm focus:ring-1 focus:ring-indigo-500">
                     <span className="flex items-center">
                       {selectedCommunity && (
@@ -361,7 +352,9 @@ export default function NewDiaryPage() {
                         />
                       )}
                       <span className="ml-3 block truncate text-blue-600">
-                        {selectedCommunity?.name || "コミュニティーを選ぶ"}
+                        {selectedCommunity
+                          ? selectedCommunity.name
+                          : "コミュニティーを選ぶ"}
                       </span>
                     </span>
                     <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
@@ -391,7 +384,7 @@ export default function NewDiaryPage() {
                               "relative cursor-default py-2 pl-3 pr-9 select-none rounded-xl text-sm"
                             )
                           }
-                          value={community.id}
+                          value={community}
                         >
                           {({ selected, active }) => (
                             <>
@@ -431,34 +424,64 @@ export default function NewDiaryPage() {
               </>
             )}
           </Listbox>
-          {/* <Dropdown>
-            <Dropdown.Button flat className="bg-blue-100">
-              <span className="text-base">
-                {selectedValue || "コミュニティ選択"}
-              </span>
-            </Dropdown.Button>
-            <Dropdown.Menu
-              aria-label="コミュニティ選択"
-              color="primary"
-              selectionMode="single"
-              selectedKeys={selected}
-              onSelectionChange={setSelected}
-            >
-              <Dropdown.Item key="日常生活">日常生活</Dropdown.Item>
-              <Dropdown.Item key="職場キャリア">職場キャリア</Dropdown.Item>
-              <Dropdown.Item key="エンジニア部屋">エンジニア部屋</Dropdown.Item>
-              <Dropdown.Item key="その他">その他</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown> */}
-          <Checkbox
-            color="primary"
-            isRounded={true}
-            labelColor="primary"
-            size="sm"
-            onChange={(isSelected) => handleStatus(isSelected)}
-          >
-            <span className="text-sm">記録を非公開にする</span>
-          </Checkbox>
+          <Listbox value={selectedStatus} onChange={setSelectedStatus}>
+            {({ open }) => (
+              <>
+                <div className="relative mt-1 w-24">
+                  <Listbox.Button className="relative w-full cursor-default rounded-xl bg-blue-50 py-2 px-2  text-left shadow-sm text-sm focus:ring-1 focus:ring-indigo-500">
+                    <span className="flex items-center">
+                      <span className="ml-3 block truncate text-blue-600">
+                        {selectedStatus.displayName}
+                      </span>
+                    </span>
+                    <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+                      <ChevronDownIcon
+                        className="h-5 w-5 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </Listbox.Button>
+
+                  <Transition
+                    show={open}
+                    as={Fragment}
+                    leave="transition ease-in duration-100"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Listbox.Options className="absolute z-10 w-full overflow-auto rounded-xl bg-white text-sm shadow-lg  p-2">
+                      {statuses.map((status) => (
+                        <Listbox.Option
+                          key={status.id}
+                          className={({ active }) =>
+                            classNames(
+                              active
+                                ? "text-blue-600 bg-blue-50"
+                                : "text-gray-800",
+                              "relative cursor-default py-2 px-2 select-none rounded-xl text-sm"
+                            )
+                          }
+                          value={status}
+                        >
+                          {({ selected, active }) => (
+                            <>
+                              <div className="flex items-center">
+                                <span
+                                  className={classNames("ml-3 block truncate")}
+                                >
+                                  {status.displayName}
+                                </span>
+                              </div>
+                            </>
+                          )}
+                        </Listbox.Option>
+                      ))}
+                    </Listbox.Options>
+                  </Transition>
+                </div>
+              </>
+            )}
+          </Listbox>
         </div>
         <div className="p-2 w-full sm:mt-10 mt-6">
           <button
