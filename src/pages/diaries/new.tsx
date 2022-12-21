@@ -1,10 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, Fragment, useMemo, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import axios from "axios";
 import { Input, Textarea, Checkbox } from "@nextui-org/react";
+import { Dropdown } from "@nextui-org/react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Listbox, Transition } from "@headlessui/react";
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import Image from "next/image";
 
 import {
   Great,
@@ -15,11 +19,43 @@ import {
 } from "components/diaries/EmotionIcons";
 import { useAuthContext } from "context/AuthContext";
 import useWindowSize from "hooks/useWindowSize";
+import { Community } from "types/types";
+import engineerIcon from "components/communities/images/engineerIcon.png";
+import careerIcon from "components/communities/images/careerIcon.png";
+import lifeIcon from "components/communities/images/lifeIcon.png";
+import otherIcon from "components/communities/images/otherIcon.png";
 
 interface Inputs {
   mood: string;
   title: string;
   body: string;
+}
+
+const communities = [
+  {
+    id: 1,
+    name: "日常生活",
+    image: lifeIcon,
+  },
+  {
+    id: 2,
+    name: "職場キャリア",
+    image: careerIcon,
+  },
+  {
+    id: 3,
+    name: "エンジニア部屋",
+    image: engineerIcon,
+  },
+  {
+    id: 4,
+    name: "その他",
+    image: otherIcon,
+  },
+];
+
+function classNames(...classes: any) {
+  return classes.filter(Boolean).join(" ");
 }
 
 export default function NewDiaryPage() {
@@ -29,6 +65,17 @@ export default function NewDiaryPage() {
   const [hasSelectedMood, setHasSelectedMood] = useState(false);
   const [hasFilledBody, setHasFilledBody] = useState(false);
   const [showMoodSelect, setShowMoodSelect] = useState(true);
+  const [selectedCommunity, setSelectedCommunity] = useState<Community | null>(
+    null
+  );
+  const [status, setStatus] = useState("published");
+
+  // const [selected, setSelected] = useState(new Set([""]));
+
+  // const selectedValue = useMemo(
+  //   () => Array.from(selected).join(", ").replaceAll("_", " "),
+  //   [selected]
+  // );
 
   // Listen for changes on loading and currentUser, redirect if not logged in
   useEffect(() => {
@@ -61,7 +108,8 @@ export default function NewDiaryPage() {
           {
             entry: {
               entryable_type: "Diary",
-              status: "published",
+              status: status,
+              community_id: selectedCommunity?.id,
               entryable_attributes: diaryData,
             },
           },
@@ -94,6 +142,14 @@ export default function NewDiaryPage() {
       setShowMoodSelect(false);
     } else {
       toast.info("気分を選んでくださいね");
+    }
+  };
+
+  const handleStatus = (isSelected: boolean) => {
+    if (isSelected) {
+      setStatus("private");
+    } else {
+      setStatus("published");
     }
   };
 
@@ -243,9 +299,9 @@ export default function NewDiaryPage() {
             <div className="mb-2">
               <label
                 htmlFor="タイトル"
-                className="leading-7 text-xl text-gray-600"
+                className="leading-7 text-xl text-gray-700"
               >
-                タイトル
+                タイトル<span className="text-sm">(任意)</span>
               </label>
             </div>
             <Controller
@@ -266,7 +322,7 @@ export default function NewDiaryPage() {
         <div className="p-2 w-full">
           <div className="relative">
             <div className="mb-2">
-              <label htmlFor="body" className="leading-7 text-xl text-gray-600">
+              <label htmlFor="body" className="leading-7 text-xl text-gray-700">
                 詳細記録
               </label>
             </div>
@@ -288,31 +344,121 @@ export default function NewDiaryPage() {
             />
           </div>
         </div>
-        <div className="px-4 mt-2">
+        <div className="flex justify-between px-4 mt-2 w-full">
+          <Listbox value={selectedCommunity} onChange={setSelectedCommunity}>
+            {({ open }) => (
+              <>
+                <div className="relative mt-1 sm:w-2/5 w-1/2">
+                  <Listbox.Button className="relative w-full cursor-default rounded-xl bg-blue-50 py-2 pl-3 pr-10 text-left shadow-sm text-sm focus:ring-1 focus:ring-indigo-500">
+                    <span className="flex items-center">
+                      {selectedCommunity && (
+                        <Image
+                          src={selectedCommunity.image}
+                          alt="日常生活"
+                          width={30}
+                          height={30}
+                          className="h-6 w-6 flex-shrink-0 rounded-full"
+                        />
+                      )}
+                      <span className="ml-3 block truncate text-blue-600">
+                        {selectedCommunity?.name || "コミュニティーを選ぶ"}
+                      </span>
+                    </span>
+                    <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+                      <ChevronUpDownIcon
+                        className="h-5 w-5 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </Listbox.Button>
+
+                  <Transition
+                    show={open}
+                    as={Fragment}
+                    leave="transition ease-in duration-100"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Listbox.Options className="absolute z-10 w-full overflow-auto rounded-xl bg-white text-sm shadow-lg  p-2">
+                      {communities.map((community) => (
+                        <Listbox.Option
+                          key={community.id}
+                          className={({ active }) =>
+                            classNames(
+                              active
+                                ? "text-blue-600 bg-blue-50"
+                                : "text-gray-800",
+                              "relative cursor-default py-2 pl-3 pr-9 select-none rounded-xl text-sm"
+                            )
+                          }
+                          value={community.id}
+                        >
+                          {({ selected, active }) => (
+                            <>
+                              <div className="flex items-center">
+                                <Image
+                                  src={community.image}
+                                  alt={community.name}
+                                  width={15}
+                                  height={15}
+                                  className="h-6 w-6 flex-shrink-0 rounded-full"
+                                />
+                                <span
+                                  className={classNames("ml-3 block truncate")}
+                                >
+                                  {community.name}
+                                </span>
+                              </div>
+
+                              {selected ? (
+                                <span
+                                  className="text-blue-600 
+                                    absolute inset-y-0 right-0 flex items-center pr-4"
+                                >
+                                  <CheckIcon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              ) : null}
+                            </>
+                          )}
+                        </Listbox.Option>
+                      ))}
+                    </Listbox.Options>
+                  </Transition>
+                </div>
+              </>
+            )}
+          </Listbox>
+          {/* <Dropdown>
+            <Dropdown.Button flat className="bg-blue-100">
+              <span className="text-base">
+                {selectedValue || "コミュニティ選択"}
+              </span>
+            </Dropdown.Button>
+            <Dropdown.Menu
+              aria-label="コミュニティ選択"
+              color="primary"
+              selectionMode="single"
+              selectedKeys={selected}
+              onSelectionChange={setSelected}
+            >
+              <Dropdown.Item key="日常生活">日常生活</Dropdown.Item>
+              <Dropdown.Item key="職場キャリア">職場キャリア</Dropdown.Item>
+              <Dropdown.Item key="エンジニア部屋">エンジニア部屋</Dropdown.Item>
+              <Dropdown.Item key="その他">その他</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown> */}
           <Checkbox
             color="primary"
             isRounded={true}
             labelColor="primary"
             size="sm"
+            onChange={(isSelected) => handleStatus(isSelected)}
           >
-            非公開にする
+            <span className="text-sm">記録を非公開にする</span>
           </Checkbox>
-          <label
-            htmlFor="countries"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Select an option
-          </label>
-          <select
-            id="countries"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            <option selected>Choose a country</option>
-            <option value="US">United States</option>
-            <option value="CA">Canada</option>
-            <option value="FR">France</option>
-            <option value="DE">Germany</option>
-          </select>
         </div>
         <div className="p-2 w-full sm:mt-10 mt-6">
           <button

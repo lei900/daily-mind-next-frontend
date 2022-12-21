@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export interface Diary {
   mood: string;
   title: string;
@@ -8,6 +10,7 @@ export interface Entry {
   id: number;
   entryableType: string;
   status: string;
+  community: CommunityData | null;
   user: User;
   diary: Diary;
 }
@@ -59,4 +62,16 @@ export interface Distortion {
   name: string;
   definition: string;
   description: string;
+}
+
+export interface Community {
+  id: number;
+  name: string;
+  image: StaticImageData;
+}
+
+export interface CommunityData {
+  id: number;
+  name: string;
+  image: string;
 }
