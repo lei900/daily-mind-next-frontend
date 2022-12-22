@@ -13,6 +13,9 @@ type Props = {
   choicesData: ChoiceWithDistortionData[];
 };
 
+// !Caution: the number of questions is hard-coded
+const QUESTION_NUMBER = 10;
+
 export default function QuestionDetailPage({
   questionData,
   choicesData,
@@ -46,8 +49,7 @@ export default function QuestionDetailPage({
     (choice: Choice) => choice.isCorrectChoice === true
   );
 
-  // !Caution: the number of questions is hard-coded
-  const isLastQuestion = questionId === 6 ? true : false;
+  const isLastQuestion = questionId === QUESTION_NUMBER ? true : false;
 
   const handleChoiceClick = (choice: Choice) => {
     setSelectedChoice({
