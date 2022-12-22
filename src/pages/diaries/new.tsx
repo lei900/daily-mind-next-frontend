@@ -19,7 +19,7 @@ import {
   Neutral,
   Bad,
   Terrible,
-} from "components/diaries/EmotionIcons";
+} from "components/entries/diaries/EmotionIcons";
 import { useAuthContext } from "context/AuthContext";
 import useWindowSize from "hooks/useWindowSize";
 import { Community } from "types/types";
@@ -87,12 +87,7 @@ export default function NewDiaryPage() {
     }
   }, [loading, currentUser]);
 
-  const {
-    control,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>();
+  const { control, register, handleSubmit } = useForm<Inputs>();
 
   const sendDiary: SubmitHandler<Inputs> = async (diaryData) => {
     if (!showMoodSelect && hasFilledBody === false) {
