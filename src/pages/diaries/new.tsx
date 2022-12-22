@@ -6,11 +6,6 @@ import { Input, Textarea } from "@nextui-org/react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Listbox, Transition } from "@headlessui/react";
-import {
-  CheckIcon,
-  ChevronUpDownIcon,
-  ChevronDownIcon,
-} from "@heroicons/react/20/solid";
 import Image from "next/image";
 
 import {
@@ -20,6 +15,11 @@ import {
   Bad,
   Terrible,
 } from "components/entries/diaries/EmotionIcons";
+import {
+  CheckIcon,
+  ChevronUpDownIcon,
+  ChevronDownIcon,
+} from "components/Icons";
 import { useAuthContext } from "context/AuthContext";
 import useWindowSize from "hooks/useWindowSize";
 import { Community } from "types/types";
@@ -94,7 +94,6 @@ export default function NewDiaryPage() {
       toast.info("詳細記録を書いてくださいね");
     } else {
       const token = await currentUser?.getIdToken();
-      console.log("Calling API with user token:", token);
 
       const config = {
         headers: { authorization: `Bearer ${token}` },
@@ -145,11 +144,11 @@ export default function NewDiaryPage() {
 
   const MoodComponent = () => {
     return (
-      <div className="p-2 w-full">
+      <section className="p-2 w-full">
         <div className="relative mx-auto">
-          <h4 className="sm:text-2xl text-xl text-center font-semibold text-gray-700 sm:mb-14 mb-6">
+          <h1 className="sm:text-2xl text-xl text-center font-semibold text-gray-700 sm:mb-14 mb-6">
             今の気分はどうですか？
-          </h4>
+          </h1>
           <ul className="flex justify-center">
             <li className="relative">
               <input
@@ -277,7 +276,7 @@ export default function NewDiaryPage() {
             </button>
           </div>
         </div>
-      </div>
+      </section>
     );
   };
 
@@ -353,10 +352,7 @@ export default function NewDiaryPage() {
                       </span>
                     </span>
                     <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                      <ChevronUpDownIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
+                      <ChevronUpDownIcon className="h-5 w-5 text-gray-400" />
                     </span>
                   </Listbox.Button>
 
@@ -403,10 +399,7 @@ export default function NewDiaryPage() {
                                   className="text-blue-600 
                                     absolute inset-y-0 right-0 flex items-center pr-4"
                                 >
-                                  <CheckIcon
-                                    className="h-5 w-5"
-                                    aria-hidden="true"
-                                  />
+                                  <CheckIcon className="h-5 w-5" />
                                 </span>
                               ) : null}
                             </>
@@ -430,10 +423,7 @@ export default function NewDiaryPage() {
                       </span>
                     </span>
                     <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                      <ChevronDownIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
+                      <ChevronDownIcon className="h-5 w-5 text-gray-400" />
                     </span>
                   </Listbox.Button>
 
@@ -491,18 +481,16 @@ export default function NewDiaryPage() {
   };
 
   return (
-    <>
-      <div className="container px-5 py-24 mx-auto">
-        <div className="lg:w-1/2 md:w-2/3 mx-auto">
-          <form
-            onSubmit={handleSubmit(sendDiary)}
-            className="flex flex-wrap -m-2"
-          >
-            {showMoodSelect && <MoodComponent />}
-            {!showMoodSelect && <DiaryInputComponent />}
-          </form>
-        </div>
+    <div className="container px-5 py-24 mx-auto">
+      <div className="lg:w-1/2 md:w-2/3 mx-auto">
+        <form
+          onSubmit={handleSubmit(sendDiary)}
+          className="flex flex-wrap -m-2"
+        >
+          {showMoodSelect && <MoodComponent />}
+          {!showMoodSelect && <DiaryInputComponent />}
+        </form>
       </div>
-    </>
+    </div>
   );
 }
