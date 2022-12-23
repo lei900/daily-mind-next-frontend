@@ -75,3 +75,12 @@ export interface CommunityData {
   name: string;
   image: string;
 }
+
+export interface DistortionInfo {
+  id: number;
+  name: string;
+  definition: string;
+  description: string[];
+  brief: string;
+  icon: ({ className }: { className?: string }) => JSX.Element;
+}

@@ -13,8 +13,8 @@ export const EntrySection = () => {
       src: diaryIcon,
     },
     {
-      href: "#",
-      title: "認知のゆがみ分析",
+      href: "/thought-analyses/new",
+      title: "ゆがみ分析",
       src: analysisIcon,
     },
   ];

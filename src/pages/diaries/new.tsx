@@ -6,11 +6,6 @@ import { Input, Textarea } from "@nextui-org/react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Listbox, Transition } from "@headlessui/react";
-import {
-  CheckIcon,
-  ChevronUpDownIcon,
-  ChevronDownIcon,
-} from "@heroicons/react/20/solid";
 import Image from "next/image";
 
 import {
@@ -19,7 +14,12 @@ import {
   Neutral,
   Bad,
   Terrible,
-} from "components/diaries/EmotionIcons";
+} from "components/entries/diaries/EmotionIcons";
+import {
+  CheckIcon,
+  ChevronUpDownIcon,
+  ChevronDownIcon,
+} from "components/Icons";
 import { useAuthContext } from "context/AuthContext";
 import useWindowSize from "hooks/useWindowSize";
 import { Community } from "types/types";
@@ -72,7 +72,6 @@ export default function NewDiaryPage() {
   const router = useRouter();
   const size = useWindowSize();
   const [hasSelectedMood, setHasSelectedMood] = useState(false);
-  const [hasFilledBody, setHasFilledBody] = useState(false);
   const [showMoodSelect, setShowMoodSelect] = useState(true);
   const [selectedCommunity, setSelectedCommunity] = useState<Community | null>(
     null
@@ -87,19 +86,13 @@ export default function NewDiaryPage() {
     }
   }, [loading, currentUser]);
 
-  const {
-    control,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>();
+  const { control, register, handleSubmit } = useForm<Inputs>();
 
   const sendDiary: SubmitHandler<Inputs> = async (diaryData) => {
-    if (!showMoodSelect && hasFilledBody === false) {
-      toast.info("詳細記録を書いてくださいね");
+    if (!showMoodSelect && !bodyRef.current?.value) {
+      toast.info("詳細記録は記入必須です。");
     } else {
       const token = await currentUser?.getIdToken();
-      console.log("Calling API with user token:", token);
 
       const config = {
         headers: { authorization: `Bearer ${token}` },
@@ -118,13 +111,13 @@ export default function NewDiaryPage() {
           },
           config
         );
-        console.log(response.data);
         if (response.status === 200) {
           toast.success("気持ち記録が作成できました！");
           router.push("/");
+        } else {
+          toast.error("気持ち記録が作成できませんでした");
         }
       } catch (err) {
-        toast.error("気持ち記録が作成できませんでした");
         let message;
         if (axios.isAxiosError(err) && err.response) {
           console.error(err.response.data.message);
@@ -150,11 +143,11 @@ export default function NewDiaryPage() {
 
   const MoodComponent = () => {
     return (
-      <div className="p-2 w-full">
+      <section className="p-2 w-full">
         <div className="relative mx-auto">
-          <h4 className="sm:text-2xl text-xl text-center font-semibold text-gray-700 sm:mb-14 mb-6">
+          <h1 className="sm:text-2xl text-xl text-center font-semibold text-gray-700 sm:mb-14 mb-6">
             今の気分はどうですか？
-          </h4>
+          </h1>
           <ul className="flex justify-center">
             <li className="relative">
               <input
@@ -278,11 +271,11 @@ export default function NewDiaryPage() {
               onClick={handleClickNext}
               className="block mx-auto sm:w-1/3 w-full text-white font-semibold bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded text-lg"
             >
-              次へ
+              続ける
             </button>
           </div>
         </div>
-      </div>
+      </section>
     );
   };
 
@@ -326,10 +319,8 @@ export default function NewDiaryPage() {
                   fullWidth
                   rows={10}
                   size="xl"
-                  required
                   placeholder="今日は何かありましたか？"
                   status="primary"
-                  onChange={() => setHasFilledBody(true)}
                 />
               )}
             />
@@ -358,10 +349,7 @@ export default function NewDiaryPage() {
                       </span>
                     </span>
                     <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                      <ChevronUpDownIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
+                      <ChevronUpDownIcon className="h-5 w-5 text-gray-400" />
                     </span>
                   </Listbox.Button>
 
@@ -408,10 +396,7 @@ export default function NewDiaryPage() {
                                   className="text-blue-600 
                                     absolute inset-y-0 right-0 flex items-center pr-4"
                                 >
-                                  <CheckIcon
-                                    className="h-5 w-5"
-                                    aria-hidden="true"
-                                  />
+                                  <CheckIcon className="h-5 w-5" />
                                 </span>
                               ) : null}
                             </>
@@ -435,10 +420,7 @@ export default function NewDiaryPage() {
                       </span>
                     </span>
                     <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                      <ChevronDownIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
+                      <ChevronDownIcon className="h-5 w-5 text-gray-400" />
                     </span>
                   </Listbox.Button>
 
@@ -496,18 +478,16 @@ export default function NewDiaryPage() {
   };
 
   return (
-    <>
-      <div className="container px-5 py-24 mx-auto">
-        <div className="lg:w-1/2 md:w-2/3 mx-auto">
-          <form
-            onSubmit={handleSubmit(sendDiary)}
-            className="flex flex-wrap -m-2"
-          >
-            {showMoodSelect && <MoodComponent />}
-            {!showMoodSelect && <DiaryInputComponent />}
-          </form>
-        </div>
+    <div className="container px-5 py-24 mx-auto">
+      <div className="lg:w-1/2 md:w-2/3 mx-auto">
+        <form
+          onSubmit={handleSubmit(sendDiary)}
+          className="flex flex-wrap -m-2"
+        >
+          {showMoodSelect && <MoodComponent />}
+          {!showMoodSelect && <DiaryInputComponent />}
+        </form>
       </div>
-    </>
+    </div>
   );
 }

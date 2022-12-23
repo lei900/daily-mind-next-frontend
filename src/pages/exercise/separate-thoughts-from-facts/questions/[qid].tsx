@@ -20,6 +20,9 @@ type Props = {
   question: QuestionData;
 };
 
+// !Caution: the number of questions is hard-coded
+const QUESTION_NUMBER = 22;
+
 export default function QuestionDetailPage({ question }: Props) {
   const [isCorrect, setIsCorrect] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -37,7 +40,7 @@ export default function QuestionDetailPage({ question }: Props) {
   );
 
   // !Caution: the number of questions is hard-coded
-  const isLastQuestion = questionId === 22 ? true : false;
+  const isLastQuestion = questionId === QUESTION_NUMBER ? true : false;
 
   const checkAnswer = (choice: Choice) => {
     if (choice.isCorrectChoice === true) {
