@@ -72,7 +72,6 @@ export default function NewDiaryPage() {
   const router = useRouter();
   const size = useWindowSize();
   const [hasSelectedMood, setHasSelectedMood] = useState(false);
-  const [hasFilledBody, setHasFilledBody] = useState(false);
   const [showMoodSelect, setShowMoodSelect] = useState(true);
   const [selectedCommunity, setSelectedCommunity] = useState<Community | null>(
     null
@@ -90,8 +89,8 @@ export default function NewDiaryPage() {
   const { control, register, handleSubmit } = useForm<Inputs>();
 
   const sendDiary: SubmitHandler<Inputs> = async (diaryData) => {
-    if (!showMoodSelect && hasFilledBody === false) {
-      toast.info("詳細記録を書いてくださいね");
+    if (!showMoodSelect && !bodyRef.current?.value) {
+      toast.info("詳細記録は記入必須です。");
     } else {
       const token = await currentUser?.getIdToken();
 
@@ -112,13 +111,13 @@ export default function NewDiaryPage() {
           },
           config
         );
-        console.log(response.data);
         if (response.status === 200) {
           toast.success("気持ち記録が作成できました！");
           router.push("/");
+        } else {
+          toast.error("気持ち記録が作成できませんでした");
         }
       } catch (err) {
-        toast.error("気持ち記録が作成できませんでした");
         let message;
         if (axios.isAxiosError(err) && err.response) {
           console.error(err.response.data.message);
@@ -272,7 +271,7 @@ export default function NewDiaryPage() {
               onClick={handleClickNext}
               className="block mx-auto sm:w-1/3 w-full text-white font-semibold bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded text-lg"
             >
-              次へ
+              続ける
             </button>
           </div>
         </div>
@@ -320,10 +319,8 @@ export default function NewDiaryPage() {
                   fullWidth
                   rows={10}
                   size="xl"
-                  required
                   placeholder="今日は何かありましたか？"
                   status="primary"
-                  onChange={() => setHasFilledBody(true)}
                 />
               )}
             />

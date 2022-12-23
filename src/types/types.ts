@@ -82,11 +82,5 @@ export interface DistortionInfo {
   definition: string;
   description: string[];
   brief: string;
-  icon: ({
-    width,
-    height,
-  }: {
-    width?: string | undefined;
-    height?: string | undefined;
-  }) => JSX.Element;
+  icon: ({ className }: { className?: string }) => JSX.Element;
 }

@@ -1,5 +1,13 @@
-import { Fragment, useEffect, useRef, useState } from "react";
-import { Card, Col, Row, Grid, Spacer, Modal } from "@nextui-org/react";
+import { Fragment, useEffect, useState } from "react";
+import {
+  Card,
+  Textarea,
+  Row,
+  Grid,
+  Spacer,
+  Modal,
+  FormElement,
+} from "@nextui-org/react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -21,6 +29,8 @@ import {
   EmotionalReasoning,
 } from "components/entries/thought-analyses/distortionIcon";
 import {
+  FightIcon,
+  IdeaIcon,
   CheckIcon,
   ChevronUpDownIcon,
   ChevronDownIcon,
@@ -206,6 +216,12 @@ const distortionArray = [
   },
 ];
 
+interface thoughtInputs {
+  negatetiveThought: string;
+  distortions: DistortionInfo[] | [];
+  newThought: string;
+}
+
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
@@ -213,21 +229,21 @@ function classNames(...classes: any) {
 export default function NewAnalysisPage() {
   const { currentUser, loading } = useAuthContext();
   const router = useRouter();
-  const [distortionModalVisible, setDistortionModalVisible] = useState(false);
-  const [distortionToModal, setDistortionToModal] = useState<DistortionInfo>();
-  const [selectedDistortions, setSeletecdDistortions] = useState<
-    DistortionInfo[]
-  >([]);
+  const [showNegaThoughtSection, setShowNegaThoughtSection] = useState(true);
+  const [showNegaThoughtInfo, setShowNegaThoughtInfo] = useState(true);
   const [showDistortionSection, setShowDistortionSection] = useState(false);
-  const [showNewThoughtSection, setShowNewThoughtSection] = useState(false);
-  const [selectedCommunity, setSelectedCommunity] = useState<Community | null>(
-    null
-  );
-  const [selectedStatus, setSelectedStatus] = useState(statuses[0]);
-  const [visible, setVisible] = useState(false);
-  const [showAutothoughInfo, setShowAutothoughtInfo] = useState(false);
   const [showDistortionInfo, setShowDistortionInfo] = useState(false);
-  const [showNewthoughInfo, setShowNewthoughtInfo] = useState(false);
+  const [showNewThoughtSection, setShowNewThoughtSection] = useState(false);
+  const [showNewThoughInfo, setShowNewThoughtInfo] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [distortionToModal, setDistortionToModal] = useState<DistortionInfo>();
+  const [thoughtInputs, setThoughtInputs] = useState<thoughtInputs>({
+    negatetiveThought: "",
+    distortions: [],
+    newThought: "",
+  });
+  const [selectedCommunity, setSelectedCommunity] = useState<Community>();
+  const [selectedStatus, setSelectedStatus] = useState(statuses[0]);
 
   useEffect(() => {
     if (!loading && !currentUser) {
@@ -235,29 +251,49 @@ export default function NewAnalysisPage() {
     }
   }, [loading, currentUser]);
 
-  const handleConfirm = (distortion: DistortionInfo) => {
+  const handleNegaInputChange = (e: React.ChangeEvent<FormElement>) => {
+    setThoughtInputs({
+      ...thoughtInputs,
+      negatetiveThought: e.target.value,
+    });
+  };
+
+  const handleDistortionConfirm = (distortion: DistortionInfo) => {
     if (isSelected(distortion)) {
-      setSeletecdDistortions(
-        selectedDistortions.filter((d) => d.id !== distortion.id)
-      );
+      setThoughtInputs({
+        ...thoughtInputs,
+        distortions: thoughtInputs.distortions.filter(
+          (d) => d.id !== distortion.id
+        ),
+      });
     } else {
-      setSeletecdDistortions([
-        ...selectedDistortions,
-        {
-          id: distortion.id,
-          name: distortion.name,
-          definition: distortion.definition,
-          description: distortion.description,
-          brief: distortion.brief,
-          icon: distortion.icon,
-        },
-      ]);
+      setThoughtInputs({
+        ...thoughtInputs,
+        distortions: [
+          ...thoughtInputs.distortions,
+          {
+            id: distortion.id,
+            name: distortion.name,
+            definition: distortion.definition,
+            description: distortion.description,
+            brief: distortion.brief,
+            icon: distortion.icon,
+          },
+        ],
+      });
     }
     closeHandler();
   };
 
+  const handleNewInputChange = (e: React.ChangeEvent<FormElement>) => {
+    setThoughtInputs({
+      ...thoughtInputs,
+      newThought: e.target.value,
+    });
+  };
+
   const isSelected = (distortion: DistortionInfo) => {
-    return selectedDistortions.some((d) => d.id === distortion.id);
+    return thoughtInputs.distortions.some((d) => d.id === distortion.id);
   };
 
   const handleOpenDistortionModal = (distortion: DistortionInfo) => {
@@ -269,8 +305,41 @@ export default function NewAnalysisPage() {
     setVisible(false);
   };
 
-  const sendEntry = async () => {
-    const distortion_ids = selectedDistortions.map((d) => d.id);
+  const handleGoDistortionSection = () => {
+    if (thoughtInputs.negatetiveThought) {
+      setShowNegaThoughtSection(false);
+      setShowNegaThoughtInfo(false);
+      setShowDistortionSection(true);
+      setShowDistortionInfo(true);
+    } else {
+      toast.info("ネガティブ思考を記入してください。");
+    }
+  };
+
+  const handleBackToNegaSection = () => {
+    setShowDistortionSection(false);
+    setShowDistortionInfo(false);
+    setShowNegaThoughtSection(true);
+    setShowNegaThoughtInfo(true);
+  };
+
+  const handleGoNewThoughtSection = () => {
+    setShowDistortionSection(false);
+    setShowDistortionInfo(false);
+    setShowNewThoughtSection(true);
+    setShowNewThoughtInfo(true);
+  };
+
+  const handleBackToDistortionSection = () => {
+    setShowNewThoughtSection(false);
+    setShowNewThoughtInfo(false);
+    setShowDistortionSection(true);
+    setShowDistortionInfo(true);
+  };
+
+  const sendEntry = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    const distortion_ids = thoughtInputs.distortions.map((d) => d.id);
     const token = await currentUser?.getIdToken();
     const config = {
       headers: { authorization: `Bearer ${token}` },
@@ -283,23 +352,23 @@ export default function NewAnalysisPage() {
           entry: {
             entryable_type: "ThoughtAnalysis",
             status: selectedStatus.name,
-            community_id: selectedCommunity?.id,
+            community_id: selectedCommunity?.id || null,
             distortion_ids: distortion_ids,
             entryable_attributes: {
-              // negative_thought: negativeThought,
-              // new_thought: newThought,
+              negative_thought: thoughtInputs.negatetiveThought,
+              new_thought: thoughtInputs.newThought,
             },
           },
         },
         config
       );
-      console.log(response.data);
       if (response.status === 200) {
-        toast.success("思考分析記録が作成できました！");
+        toast.success("ゆがみ分析記録が作成できました！");
         router.push("/");
+      } else {
+        toast.error("ゆがみ分析記録が作成できませんでした");
       }
     } catch (err) {
-      toast.error("思考分析記録が作成できませんでした");
       let message;
       if (axios.isAxiosError(err) && err.response) {
         console.error(err.response.data.message);
@@ -319,7 +388,6 @@ export default function NewAnalysisPage() {
         onClose={closeHandler}
         className="sm:w-4/5 mx-auto"
       >
-        {showAutothoughInfo && <div>自動思考とは</div>}
         {showDistortionInfo && (
           <Modal.Header className="py-6">
             {distortionToModal && <distortionToModal.icon />}
@@ -334,6 +402,44 @@ export default function NewAnalysisPage() {
         )}
 
         <Modal.Body>
+          {showNegaThoughtInfo && (
+            <div className="sm:p-4 mx-auto">
+              <Row justify="center" align="center">
+                <IdeaIcon />
+                <h2 className="sm:text-2xl text-lg font-semibold text-gray-700">
+                  自動思考とは
+                </h2>
+              </Row>
+              <Spacer y={1.5} />
+              <p className="sm:text-lg text-base text-left text-gray-700">
+                自動的に根拠なく思い浮かぶ考えは「自動思考」と言います。
+              </p>
+              <p className="sm:text-lg text-base text-left text-gray-700">
+                自分で考えているつもりはないのに、
+                <strong className="sm:text-lg text-base border-b-2 border-purple-700 text-gray-700 border-opacity-50">
+                  瞬間的に頭に浮かんでくる
+                </strong>
+                考えやイメージです。
+              </p>
+              <Spacer y={1} />
+              <h3 className="sm:text-lg text-base text-left">例：</h3>
+              <p className="sm:text-lg text-base text-left text-gray-700">
+                「どうぜまた嫌われるんだろう」
+              </p>
+              <p className="sm:text-lg text-base text-left text-gray-700">
+                「なんなんだあの人、ひどい」
+              </p>
+              <p className="sm:text-lg text-base text-left text-gray-700">
+                「また怒られた! なんで毎回こうなんだ」
+              </p>
+              <p className="sm:text-lg text-base text-left text-gray-700">
+                「今度失敗したら、もう終わりだ」
+              </p>
+              <p className="sm:text-lg text-base text-left text-gray-700">
+                「やってしまった! 私は本当ダメ人間だ」
+              </p>
+            </div>
+          )}
           {showDistortionInfo && (
             <div className="mx-auto px-4">
               <p className="text-lg sm:text-xl font-semibold">定義：</p>
@@ -353,13 +459,65 @@ export default function NewAnalysisPage() {
               ))}
             </div>
           )}
+          {showNewThoughInfo && (
+            <div className="sm:p-8 p-2 mx-auto">
+              <Row justify="center" align="center">
+                <FightIcon />
+                <h2 className="sm:text-2xl text-lg font-semibold text-gray-700 pl-2">
+                  反論の出し方
+                </h2>
+              </Row>
+              <Spacer y={1} />
+              <p className="sm:text-lg text-base text-left text-gray-700">
+                自動思考と矛盾する事実や自分に対してのアドバイスを書き出してみましょう。
+              </p>
+              <Spacer y={1} />
+              <h3 className="sm:text-lg text-base text-left text-indigo-700 font-semibold">
+                ヒント：
+              </h3>
+              <ul className="list-disc px-6">
+                <li className="sm:text-lg text-base text-left text-gray-700">
+                  客観的な事実と自分の考えをちゃんと分けたでしょうか。
+                </li>
+                <li className="sm:text-lg text-base text-left text-gray-700">
+                  相手の心を読むような勝手な思い込みや自分の解釈ではないでしょうか。
+                </li>
+                <li className="sm:text-lg text-base text-left text-gray-700">
+                  その考えを裏づける根拠となる事実はあるでしょうか。
+                </li>
+                <li className="sm:text-lg text-base text-left text-gray-700">
+                  その証拠と矛盾する事実はないでしょうか。
+                </li>
+                <li className="sm:text-lg text-base text-left text-gray-700">
+                  見逃していることはないでしょうか。
+                </li>
+                <li className="sm:text-lg text-base text-left text-gray-700">
+                  自分の力だけではどうしようもない事柄について自分を責めてはないでしょうか。
+                </li>
+                <li className="sm:text-lg text-base text-left text-gray-700">
+                  親しい人が同じような考え方をしていたら、あなたはどのようにアドバイスしますか。
+                </li>
+                <li className="sm:text-lg text-base text-left text-gray-700">
+                  その考えが当たっているとして、その先、最悪のシナリオはどんなものでしょう。そして最良のシナリオと一番現実的なシナリオはどんなものでしょう。
+                </li>
+              </ul>
+              <Spacer y={2} />
+              <p className="sm:text-base text-sm text-left text-gray-500">
+                参照：
+              </p>
+              <p className="sm:text-base text-sm text-left text-gray-500">
+                大野裕『こころが晴れるノート
+                うつと不安の認知療法自習帳』（創元社、2003）
+              </p>
+            </div>
+          )}
         </Modal.Body>
         <Modal.Footer>
-          {showDistortionInfo && (
+          {showDistortionInfo ? (
             <Row justify="center">
               <button
                 type="button"
-                onClick={() => handleConfirm(distortionToModal!)}
+                onClick={() => handleDistortionConfirm(distortionToModal!)}
                 className="block rounded-lg bg-indigo-500 px-8 py-3 text-white  transition hover:bg-indigo-700 focus:outline-none focus:ring"
               >
                 <span className="text-base sm:text-lg font-semibold">
@@ -375,28 +533,64 @@ export default function NewAnalysisPage() {
                 <span className="text-base sm:text-lg font-semibold">戻る</span>
               </button>
             </Row>
+          ) : (
+            <button
+              type="button"
+              onClick={closeHandler}
+              className="block rounded-lg bg-indigo-500 px-8 py-3 text-white mx-auto transition hover:bg-indigo-700 focus:outline-none focus:ring"
+            >
+              <span className="text-base sm:text-lg font-semibold">閉じる</span>
+            </button>
           )}
         </Modal.Footer>
       </Modal>
     );
   };
 
-  const NegativeThoughtSection = () => {
+  const NegaThoughtSection = () => {
     return (
       <section className="p-2 w-full">
         <div className="relative mx-auto">
-          <div className="sm:w-3/4 w-5/6 mx-auto">
+          <div className="sm:mr-10">
             <h1 className="sm:text-2xl text-xl text-center font-semibold text-gray-700 ">
-              頭の中に浮かんだイヤな考えやイメージを整理しましょう
+              どのようなネガティブ思考が浮かんでいたか？
             </h1>
             <Spacer y={1} />
-            <Row className="sm:w-40 mx-auto p-2 rounded-lg justify-center items-center cursor-pointer hover:bg-gray-100">
+            <Row
+              className="sm:w-40 mx-auto p-2 rounded-lg justify-center items-center cursor-pointer hover:bg-gray-100"
+              onClick={() => setVisible(true)}
+            >
               <InformationCircleIcon className="w-6 h-6 inline-block" />
               <p className="sm:text-lg text-base text-center text-gray-700 ">
                 自動思考とは
               </p>
             </Row>
-            <ModalComponent />
+          </div>
+
+          <div className="p-2 w-full">
+            <div className="relative">
+              <div className="mb-2"></div>
+              <Textarea
+                value={thoughtInputs.negatetiveThought}
+                aria-label="Negative thought"
+                fullWidth
+                rows={10}
+                size="xl"
+                required
+                placeholder="頭の中に浮かんだイヤな考えやイメージを書き出しましょう"
+                status="primary"
+                onChange={handleNegaInputChange}
+              />
+            </div>
+          </div>
+          <div className="p-2 w-full sm:mt-10 mt-6">
+            <button
+              type="button"
+              className="block mx-auto sm:w-1/2 w-full text-white font-semibold bg-indigo-500 border-0 py-4 focus:outline-none hover:bg-indigo-600 rounded-xl sm:text-lg"
+              onClick={handleGoDistortionSection}
+            >
+              続ける
+            </button>
           </div>
         </div>
       </section>
@@ -444,7 +638,22 @@ export default function NewAnalysisPage() {
               </Card>
             ))}
           </div>
-          <ModalComponent />
+          <Row className="p-2 w-full sm:mt-10 mt-6">
+            <button
+              type="button"
+              className="block mx-auto text-white font-semibold bg-indigo-500 border-0 w-1/3 py-4 focus:outline-none hover:bg-indigo-600 rounded-xl sm:text-lg"
+              onClick={handleBackToNegaSection}
+            >
+              前へ
+            </button>
+            <button
+              type="button"
+              className="block mx-auto  text-white font-semibold bg-indigo-500 border-0 w-1/3 py-4 focus:outline-none hover:bg-indigo-600 rounded-xl sm:text-lg"
+              onClick={handleGoNewThoughtSection}
+            >
+              続ける
+            </button>
+          </Row>
         </div>
       </section>
     );
@@ -452,7 +661,52 @@ export default function NewAnalysisPage() {
 
   const NewThoughtSection = () => {
     return (
-      <>
+      <section className="p-2 w-full">
+        <div className="relative mx-auto">
+          <h1 className="sm:text-2xl text-xl text-center font-semibold text-gray-700 ">
+            その考えに反論するために、どうしたら良いですか？
+          </h1>
+          <Spacer y={0.5} />
+          <Row
+            className="sm:w-40 mx-auto p-2 rounded-lg justify-center items-center hover:cursor-pointer hover:bg-gray-100"
+            onClick={() => setVisible(true)}
+          >
+            <InformationCircleIcon className="w-6 h-6 inline-block" />
+            <p className="sm:text-lg text-base text-center text-gray-700 ml-2">
+              反論の出し方
+            </p>
+          </Row>
+          <Spacer y={1} />
+          <Row align="center" wrap="wrap" className="px-2">
+            {thoughtInputs.distortions.map((distortion) => (
+              <Row
+                gap={1}
+                align="center"
+                className="bg-blue-100 w-fit py-1 px-2 m-1 rounded-lg"
+                key={distortion.id}
+              >
+                <distortion.icon className="w-4 h-4" />
+                <p className="sm:text-sm text-xs pl-1">{distortion.name}</p>
+              </Row>
+            ))}
+          </Row>
+          <div className="p-2 w-full">
+            <div className="relative">
+              <div className="mb-2"></div>
+              <Textarea
+                value={thoughtInputs.newThought}
+                aria-label="Negative thought"
+                fullWidth
+                rows={10}
+                size="xl"
+                required
+                placeholder="ネガティブ思考に反論を書き出しましょう"
+                status="primary"
+                onChange={handleNewInputChange}
+              />
+            </div>
+          </div>
+        </div>
         <div className="flex justify-between px-4 mt-2 w-full">
           <Listbox value={selectedCommunity} onChange={setSelectedCommunity}>
             {({ open }) => (
@@ -598,25 +852,33 @@ export default function NewAnalysisPage() {
             )}
           </Listbox>
         </div>
-        <div className="p-2 w-full sm:mt-10 mt-6">
+        <Row className="p-2 w-full sm:mt-10 mt-6">
+          <button
+            type="button"
+            className="block mx-auto text-white font-semibold bg-indigo-500 border-0 w-1/3 py-4 focus:outline-none hover:bg-indigo-600 rounded-xl sm:text-lg"
+            onClick={handleBackToDistortionSection}
+          >
+            前へ
+          </button>
           <button
             type="submit"
             className="block mx-auto sm:w-1/2 w-full text-white font-semibold bg-indigo-500 border-0 py-4 focus:outline-none hover:bg-indigo-600 rounded-xl sm:text-lg"
           >
             思考分析記録を作成する
           </button>
-        </div>
-      </>
+        </Row>
+      </section>
     );
   };
 
   return (
     <div className="container sm:px-5 px-1 sm:mt-10 mt-6 mx-auto">
       <div className="lg:w-1/2 md:w-2/3 mx-auto">
-        <form className="flex flex-wrap ">
-          <NegativeThoughtSection />
+        <form className="flex flex-wrap" onSubmit={sendEntry}>
+          {showNegaThoughtSection && <NegaThoughtSection />}
           {showDistortionSection && <DistortionSection />}
           {showNewThoughtSection && <NewThoughtSection />}
+          <ModalComponent />
         </form>
       </div>
     </div>

@@ -14,7 +14,7 @@ export const EntrySection = () => {
     },
     {
       href: "/thought-analyses/new",
-      title: "認知のゆがみ分析",
+      title: "ゆがみ分析",
       src: analysisIcon,
     },
   ];

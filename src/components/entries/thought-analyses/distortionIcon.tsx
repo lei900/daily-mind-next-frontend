@@ -1,11 +1,10 @@
-export const BlackAndWhiteThinking = ({ width = "4em", height = "4em" }) => {
+export const BlackAndWhiteThinking = ({ className = "w-16 h-16" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      height={height || 24}
-      width={width || 24}
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 128 128"
+      className={className}
     >
       <circle
         cx="64"
@@ -37,14 +36,13 @@ export const BlackAndWhiteThinking = ({ width = "4em", height = "4em" }) => {
   );
 };
 
-export const Overgeneralization = ({ width = "4em", height = "4em" }) => {
+export const Overgeneralization = ({ className = "w-16 h-16" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      height={height || 24}
-      width={width || 24}
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 24 24"
+      className={className}
     >
       <path
         fill="currentColor"
@@ -54,14 +52,13 @@ export const Overgeneralization = ({ width = "4em", height = "4em" }) => {
   );
 };
 
-export const Personalization = ({ width = "4em", height = "4em" }) => {
+export const Personalization = ({ className = "w-16 h-16" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      height={height || 24}
-      width={width || 24}
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 48 48"
+      className={className}
     >
       <mask id="svgIDa">
         <g
@@ -84,14 +81,13 @@ export const Personalization = ({ width = "4em", height = "4em" }) => {
   );
 };
 
-export const ShouldStatements = ({ width = "4em", height = "4em" }) => {
+export const ShouldStatements = ({ className = "w-16 h-16" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      height={height || 24}
-      width={width || 24}
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 489 489"
+      className={className}
     >
       <g>
         <circle cx="266.275" cy="243.3" r="14.3" />
@@ -111,17 +107,13 @@ export const ShouldStatements = ({ width = "4em", height = "4em" }) => {
   );
 };
 
-export const MagnificationAndMinimization = ({
-  width = "4em",
-  height = "4em",
-}) => {
+export const MagnificationAndMinimization = ({ className = "w-16 h-16" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      height={height || 24}
-      width={width || 24}
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 32 32"
+      className={className}
     >
       <path fill="currentColor" d="M24 19h-3v-3h-2v3h-3v2h3v3h2v-3h3v-2z" />
       <path
@@ -133,14 +125,13 @@ export const MagnificationAndMinimization = ({
   );
 };
 
-export const MentalFilter = ({ width = "4em", height = "4em" }) => {
+export const MentalFilter = ({ className = "w-16 h-16" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      height={height || 24}
-      width={width || 24}
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 32 32"
+      className={className}
     >
       <path
         fill="currentColor"
@@ -154,15 +145,14 @@ export const MentalFilter = ({ width = "4em", height = "4em" }) => {
   );
 };
 
-export const DisqualifyPositive = ({ width = "4em", height = "4em" }) => {
+export const DisqualifyPositive = ({ className = "w-16 h-16" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      height={height || 24}
-      width={width || 24}
       fill="#000000      "
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 280 256"
+      className={className}
     >
       <path
         d="M133.781,2c20.372,0,36.888,16.515,36.888,36.888s-16.515,36.888-36.888,36.888S96.893,59.26,96.893,38.888
@@ -177,14 +167,13 @@ export const DisqualifyPositive = ({ width = "4em", height = "4em" }) => {
   );
 };
 
-export const MindReading = ({ width = "4em", height = "4em" }) => {
+export const MindReading = ({ className = "w-16 h-16" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      height={height || 24}
-      width={width || 24}
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 45 45"
+      className={className}
     >
       <g
         fill="none"
@@ -200,14 +189,13 @@ export const MindReading = ({ width = "4em", height = "4em" }) => {
   );
 };
 
-export const FortuneTeller = ({ width = "4em", height = "4em" }) => {
+export const FortuneTeller = ({ className = "w-16 h-16" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      height={height || 24}
-      width={width || 24}
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 460 460"
+      className={className}
     >
       <path
         fill="currentColor"
@@ -217,14 +205,13 @@ export const FortuneTeller = ({ width = "4em", height = "4em" }) => {
   );
 };
 
-export const Labeling = ({ width = "4em", height = "4em" }) => {
+export const Labeling = ({ className = "w-16 h-16" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      height={height || 24}
-      width={width || 24}
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 486 486"
+      className={className}
     >
       <g>
         <path
@@ -238,14 +225,13 @@ export const Labeling = ({ width = "4em", height = "4em" }) => {
   );
 };
 
-export const EmotionalReasoning = ({ width = "4em", height = "4em" }) => {
+export const EmotionalReasoning = ({ className = "w-16 h-16" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      height={height || 24}
-      width={width || 24}
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 227 260"
+      className={className}
     >
       <path
         d="M215.801,108.69l-11.22,4.83l-13.01-3.84l-6.97,2.81l-13.93-5.61h-1.729c-10.657-6.55-15.102-15.816-16.919-23.081
