@@ -84,3 +84,11 @@ export interface DistortionInfo {
   brief: string;
   icon: ({ className }: { className?: string }) => JSX.Element;
 }
+
+export interface entryCardInfo {
+  id: number;
+  kind: string;
+  url: string;
+  title: string;
+  src: StaticImageData;
+}
