@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Container,
   Spacer,
@@ -15,7 +15,6 @@ import { useAuthContext } from "context/AuthContext";
 import { CommunityList } from "components/communities/communityList";
 import { ExerciseSection } from "components/home/ExerciseSection";
 import { HeroSection } from "components/home/HeroSection";
-import { EntrySection } from "components/home/EntrySection";
 import engineerIcon from "components/communities/images/engineerIcon.png";
 import careerIcon from "components/communities/images/engineerIcon.png";
 import lifeIcon from "components/communities/images/engineerIcon.png";
@@ -46,6 +45,7 @@ import {
   ChatIcon,
   HeartIcon,
   MoreIcon,
+  ExclamationCircleIcon,
 } from "components/Icons";
 import { entryCardInfo } from "types/types";
 
@@ -272,54 +272,54 @@ export default function Home() {
     setVisible(false);
   };
 
-  // const EntrySection = () => {
-  //   return (
-  //     <section className="text-gray-800 mx-auto">
-  //       <header className="container mx-auto flex flex-row items-center">
-  //         <h1 className="title sm:text-3xl text-2xl mb-4 font-bold text-gray-700">
-  //           記録
-  //         </h1>
-  //         <Spacer x={0.5} />
-  //         <p className="text-gray-600 sm:text-base text-sm">
-  //           自分の気持ちや悩みを整理しましょう
-  //         </p>
-  //       </header>
-  //       <Grid.Container
-  //         gap={1}
-  //         justify="flex-start"
-  //         css={{
-  //           "@xsMax": { mw: "650px", margin: "auto" },
-  //         }}
-  //       >
-  //         {entryCardInfos.map((item) => (
-  //           <Grid sm={3} xs={6} key={item.id}>
-  //             <Card
-  //               isPressable
-  //               isHoverable
-  //               variant="bordered"
-  //               css={{ mw: "650px", margin: "auto" }}
-  //               onClick={() => handleClickEntry(item)}
-  //             >
-  //               <Card.Body>
-  //                 <Col>
-  //                   <Row justify="center">
-  //                     <Image alt={item.title} src={item.src} width={150} />
-  //                   </Row>
-  //                   <Spacer y={0.5} />
-  //                   <Row justify="center">
-  //                     <h2 className="title sm:text-2xl text-xl font-bold text-gray-700">
-  //                       {item.title}
-  //                     </h2>
-  //                   </Row>
-  //                 </Col>
-  //               </Card.Body>
-  //             </Card>
-  //           </Grid>
-  //         ))}
-  //       </Grid.Container>
-  //     </section>
-  //   );
-  // };
+  const EntrySection = () => {
+    return (
+      <section className="text-gray-800 mx-auto">
+        <header className="container mx-auto flex flex-row items-center">
+          <h1 className="title sm:text-3xl text-2xl mb-4 font-bold text-gray-700">
+            記録
+          </h1>
+          <Spacer x={0.5} />
+          <p className="text-gray-600 sm:text-base text-sm">
+            自分の気持ちや悩みを整理しましょう
+          </p>
+        </header>
+        <Grid.Container
+          gap={1}
+          justify="flex-start"
+          css={{
+            "@xsMax": { mw: "650px", margin: "auto" },
+          }}
+        >
+          {entryCardInfos.map((item) => (
+            <Grid sm={3} xs={6} key={item.id}>
+              <Card
+                isPressable
+                isHoverable
+                variant="bordered"
+                css={{ mw: "650px", margin: "auto" }}
+                onClick={() => handleClickEntry(item)}
+              >
+                <Card.Body>
+                  <Col>
+                    <Row justify="center">
+                      <Image alt={item.title} src={item.src} width={150} />
+                    </Row>
+                    <Spacer y={0.5} />
+                    <Row justify="center">
+                      <h2 className="title sm:text-2xl text-xl font-bold text-gray-700">
+                        {item.title}
+                      </h2>
+                    </Row>
+                  </Col>
+                </Card.Body>
+              </Card>
+            </Grid>
+          ))}
+        </Grid.Container>
+      </section>
+    );
+  };
 
   return (
     <Container lg className="sm:px-16 md:px-10 px-4 mt-8">
@@ -453,29 +453,36 @@ export default function Home() {
         width="45em"
         open={visible}
         onClose={closeHandler}
-        className="sm:w-4/5 mx-auto py-4"
+        className="sm:w-3/5 mx-auto py-4"
       >
-        <Modal.Header>
+        <Modal.Header className="flex-col">
+          <ExclamationCircleIcon className="sm:w-24 h-24 stroke-amber-500" />
           <h1
             id="modal-title"
-            className="sm:text-2xl text-xl font-semibold text-gray-700"
+            className="sm:text-2xl text-xl font-semibold text-gray-700 my-3"
           >
             ログインしてください
           </h1>
         </Modal.Header>
         <Modal.Body className="mx-auto">
-          <p className="sm:text-lg text-base text-gray-700">
+          <p className="sm:text-base text-base text-gray-700">
             記録作成にはログインが必要です。
           </p>
         </Modal.Body>
-        <Modal.Footer className="mx-auto">
+        <Modal.Footer className="mx-auto gap-5">
           <button
-            className="block rounded-lg bg-indigo-500 px-6 py-3 text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
+            className="block rounded-lg bg-gray-500 px-6 py-3 text-white transition hover:bg-gray-700 focus:outline-none focus:ring"
+            onClick={closeHandler}
+          >
+            <span className="text-base font-semibold">キャンセル</span>
+          </button>
+          <button
+            className="block rounded-lg bg-indigo-600 px-6 py-3 text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
             onClick={() => {
               router.push("/login");
             }}
           >
-            <span className="text-base font-semibold">ログイン</span>
+            <span className="text-base font-semibold">ログインへ</span>
           </button>
         </Modal.Footer>
       </Modal>
