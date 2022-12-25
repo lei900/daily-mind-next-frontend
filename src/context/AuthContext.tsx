@@ -22,7 +22,7 @@ export function AuthContextProvider({ children }: AuthProviderProps) {
 
   const AuthContext: AuthContext = {
     currentUser: currentUser,
-    loading: true,
+    loading: loading,
     loginWithGoogle: loginWithGoogle,
     loginWithTwitter: loginWithTwitter,
     logout: logout,

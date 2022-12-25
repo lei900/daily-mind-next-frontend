@@ -36,9 +36,8 @@ import {
   ChevronDownIcon,
   InformationCircleIcon,
 } from "components/Icons";
-import { DistortionInfo } from "types/types";
+import { DistortionInfo, Community } from "types/types";
 import { useAuthContext } from "context/AuthContext";
-import { Community } from "types/types";
 import engineerIcon from "components/communities/images/engineerIcon.png";
 import careerIcon from "components/communities/images/careerIcon.png";
 import lifeIcon from "components/communities/images/lifeIcon.png";
@@ -345,37 +344,41 @@ export default function NewAnalysisPage() {
       headers: { authorization: `Bearer ${token}` },
     };
 
-    try {
-      const response = await axios.post(
-        "/entries",
-        {
-          entry: {
-            entryable_type: "ThoughtAnalysis",
-            status: selectedStatus.name,
-            community_id: selectedCommunity?.id || null,
-            distortion_ids: distortion_ids,
-            entryable_attributes: {
-              negative_thought: thoughtInputs.negatetiveThought,
-              new_thought: thoughtInputs.newThought,
+    if (thoughtInputs.newThought) {
+      try {
+        const response = await axios.post(
+          "/entries",
+          {
+            entry: {
+              entryable_type: "ThoughtAnalysis",
+              status: selectedStatus.name,
+              community_id: selectedCommunity?.id || null,
+              distortion_ids: distortion_ids,
+              entryable_attributes: {
+                negative_thought: thoughtInputs.negatetiveThought,
+                new_thought: thoughtInputs.newThought,
+              },
             },
           },
-        },
-        config
-      );
-      if (response.status === 200) {
-        toast.success("ゆがみ分析記録が作成できました！");
-        router.push("/");
-      } else {
-        toast.error("ゆがみ分析記録が作成できませんでした");
+          config
+        );
+        if (response.status === 200) {
+          toast.success("ゆがみ分析記録が作成できました！");
+          router.push("/thought-analyses/new/feedback");
+        } else {
+          toast.error("ゆがみ分析記録が作成できませんでした");
+        }
+      } catch (err) {
+        let message;
+        if (axios.isAxiosError(err) && err.response) {
+          console.error(err.response.data.message);
+        } else {
+          message = String(err);
+          console.error(message);
+        }
       }
-    } catch (err) {
-      let message;
-      if (axios.isAxiosError(err) && err.response) {
-        console.error(err.response.data.message);
-      } else {
-        message = String(err);
-        console.error(message);
-      }
+    } else {
+      toast.info("反論を書き出てみしましょう。");
     }
   };
 
@@ -550,7 +553,7 @@ export default function NewAnalysisPage() {
   const NegaThoughtSection = () => {
     return (
       <section className="p-2 w-full">
-        <div className="relative mx-auto">
+        <div className="mx-auto">
           <div className="sm:mr-10">
             <h1 className="sm:text-2xl text-xl text-center font-semibold text-gray-700 ">
               どのようなネガティブ思考が浮かんでいたか？
@@ -668,7 +671,7 @@ export default function NewAnalysisPage() {
           </h1>
           <Spacer y={0.5} />
           <Row
-            className="sm:w-40 mx-auto p-2 rounded-lg justify-center items-center hover:cursor-pointer hover:bg-gray-100"
+            className="sm:w-40 mx-auto p-2 rounded-lg justify-center items-center cursor-pointer hover:bg-gray-100"
             onClick={() => setVisible(true)}
           >
             <InformationCircleIcon className="w-6 h-6 inline-block" />
@@ -699,7 +702,6 @@ export default function NewAnalysisPage() {
                 fullWidth
                 rows={10}
                 size="xl"
-                required
                 placeholder="ネガティブ思考に反論を書き出しましょう"
                 status="primary"
                 onChange={handleNewInputChange}
@@ -874,7 +876,7 @@ export default function NewAnalysisPage() {
   return (
     <div className="container sm:px-5 px-1 sm:mt-10 mt-6 mx-auto">
       <div className="lg:w-1/2 md:w-2/3 mx-auto">
-        <form className="flex flex-wrap" onSubmit={sendEntry}>
+        <form onSubmit={sendEntry}>
           {showNegaThoughtSection && <NegaThoughtSection />}
           {showDistortionSection && <DistortionSection />}
           {showNewThoughtSection && <NewThoughtSection />}

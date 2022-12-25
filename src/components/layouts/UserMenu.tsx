@@ -23,12 +23,7 @@ const UserMenu = ({ currentUser, onLogout }: Props) => {
       <Dropdown placement="bottom-right">
         <Navbar.Item>
           <Dropdown.Trigger>
-            <Avatar
-              as="button"
-              color="secondary"
-              size="md"
-              src={userPhotoUrl!}
-            />
+            <Avatar as="button" size="md" src={userPhotoUrl!} />
           </Dropdown.Trigger>
         </Navbar.Item>
         <Dropdown.Menu

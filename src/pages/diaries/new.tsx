@@ -9,19 +9,16 @@ import { Listbox, Transition } from "@headlessui/react";
 import Image from "next/image";
 
 import {
+  CheckIcon,
+  ChevronUpDownIcon,
+  ChevronDownIcon,
   Great,
   Good,
   Neutral,
   Bad,
   Terrible,
-} from "components/entries/diaries/EmotionIcons";
-import {
-  CheckIcon,
-  ChevronUpDownIcon,
-  ChevronDownIcon,
 } from "components/Icons";
 import { useAuthContext } from "context/AuthContext";
-import useWindowSize from "hooks/useWindowSize";
 import { Community } from "types/types";
 import engineerIcon from "components/communities/images/engineerIcon.png";
 import careerIcon from "components/communities/images/careerIcon.png";
@@ -70,7 +67,6 @@ function classNames(...classes: any) {
 export default function NewDiaryPage() {
   const { currentUser, loading } = useAuthContext();
   const router = useRouter();
-  const size = useWindowSize();
   const [hasSelectedMood, setHasSelectedMood] = useState(false);
   const [showMoodSelect, setShowMoodSelect] = useState(true);
   const [selectedCommunity, setSelectedCommunity] = useState<Community | null>(
@@ -144,7 +140,7 @@ export default function NewDiaryPage() {
   const MoodComponent = () => {
     return (
       <section className="p-2 w-full">
-        <div className="relative mx-auto">
+        <div className="mx-auto">
           <h1 className="sm:text-2xl text-xl text-center font-semibold text-gray-700 sm:mb-14 mb-6">
             今の気分はどうですか？
           </h1>
@@ -160,13 +156,9 @@ export default function NewDiaryPage() {
               />
               <label
                 htmlFor="terrible"
-                className="inline-block sm:mx-2 cursor-pointer hover:bg-gray-50 p-2 peer-checked/terrible:bg-gray-100"
+                className="inline-block sm:mx-2 cursor-pointer hover:bg-gray-50 hover:shadow-sm p-2 peer-checked/terrible:bg-gray-100"
               >
-                {size.width! < 650 ? (
-                  <Terrible width={50} height={50} />
-                ) : (
-                  <Terrible width={80} height={80} />
-                )}
+                <Terrible className="sm:w-20 sm:h-20 w-14 h-14" />
                 <p className="text-center mt-2 text-indigo-800 font-semibold">
                   最悪
                 </p>
@@ -183,13 +175,9 @@ export default function NewDiaryPage() {
               />
               <label
                 htmlFor="bad"
-                className="inline-block sm:mx-2 cursor-pointer hover:bg-gray-50 p-2 peer-checked/bad:bg-gray-100"
+                className="inline-block sm:mx-2 cursor-pointer hover:bg-gray-50 hover:shadow-sm p-2 peer-checked/bad:bg-gray-100"
               >
-                {size.width! < 650 ? (
-                  <Bad width={50} height={50} />
-                ) : (
-                  <Bad width={80} height={80} />
-                )}{" "}
+                <Bad className="sm:w-20 sm:h-20 w-14 h-14" />
                 <p className="text-center mt-2 text-sky-800 font-semibold">
                   悪い
                 </p>
@@ -206,13 +194,10 @@ export default function NewDiaryPage() {
               />
               <label
                 htmlFor="neutral"
-                className="inline-block sm:mx-2 cursor-pointer hover:bg-gray-50 p-2 peer-checked/neutral:bg-gray-100"
+                className="inline-block sm:mx-2 cursor-pointer hover:bg-gray-50 hover:shadow-sm p-2 peer-checked/neutral:bg-gray-100"
               >
-                {size.width! < 650 ? (
-                  <Neutral width={50} height={50} />
-                ) : (
-                  <Neutral width={80} height={80} />
-                )}
+                <Neutral className="sm:w-20 sm:h-20 w-14 h-14" />
+
                 <p className="text-center mt-2 text-teal-800 font-semibold">
                   普通
                 </p>
@@ -229,13 +214,10 @@ export default function NewDiaryPage() {
               />
               <label
                 htmlFor="good"
-                className="inline-block sm:mx-2 cursor-pointer hover:bg-gray-50 p-2 peer-checked/good:bg-gray-100"
+                className="inline-block sm:mx-2 cursor-pointer hover:bg-gray-50 hover:shadow-sm p-2 peer-checked/good:bg-gray-100"
               >
-                {size.width! < 650 ? (
-                  <Good width={50} height={50} />
-                ) : (
-                  <Good width={80} height={80} />
-                )}
+                <Good className="sm:w-20 sm:h-20 w-14 h-14" />
+
                 <p className="text-center mt-2 text-lime-800 font-semibold">
                   良い
                 </p>
@@ -252,13 +234,10 @@ export default function NewDiaryPage() {
               />
               <label
                 htmlFor="great"
-                className="inline-block sm:mx-2 cursor-pointer hover:bg-gray-50 p-2 peer-checked/great:bg-gray-100"
+                className="inline-block sm:mx-2 cursor-pointer hover:bg-gray-50 hover:shadow-sm p-2 peer-checked/great:bg-gray-100"
               >
-                {size.width! < 650 ? (
-                  <Great width={50} height={50} />
-                ) : (
-                  <Great width={80} height={80} />
-                )}
+                <Great className="sm:w-20 sm:h-20 w-14 h-14" />
+
                 <p className="text-center mt-2 text-green-800 font-semibold">
                   最高
                 </p>
@@ -269,7 +248,7 @@ export default function NewDiaryPage() {
             <button
               type="button"
               onClick={handleClickNext}
-              className="block mx-auto sm:w-1/3 w-full text-white font-semibold bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded text-lg"
+              className="block mx-auto sm:w-1/3 w-full text-white font-semibold bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded-lg text-lg"
             >
               続ける
             </button>
@@ -480,10 +459,7 @@ export default function NewDiaryPage() {
   return (
     <div className="container px-5 py-24 mx-auto">
       <div className="lg:w-1/2 md:w-2/3 mx-auto">
-        <form
-          onSubmit={handleSubmit(sendDiary)}
-          className="flex flex-wrap -m-2"
-        >
+        <form onSubmit={handleSubmit(sendDiary)}>
           {showMoodSelect && <MoodComponent />}
           {!showMoodSelect && <DiaryInputComponent />}
         </form>
