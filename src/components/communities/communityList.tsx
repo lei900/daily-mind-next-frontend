@@ -28,27 +28,18 @@ export const CommunityList = () => {
   ];
 
   return (
-    <Grid.Container
-      gap={1}
-      justify="flex-start"
-      css={{
-        "@xsMax": { mw: "650px", margin: "auto" },
-      }}
-    >
+    <Grid.Container gap={1} justify="flex-start" className="mx-auto">
       {communityList.map((item, index) => (
         <Grid key={index} justify="flex-start">
           <Card
-            isPressable
-            isHoverable
             variant="flat"
-            css={{ mw: "350px", margin: "auto" }}
+            className="mx-auto bg-blue-50 border-0 hover:bg-blue-100 hover:shadow-sm"
           >
             <Link href="#">
-              <Card.Body css={{ margin: "auto", padding: "$sm" }}>
+              <Card.Body className="mx-auto p-2 ">
                 <Row justify="center" align="center">
-                  <Image alt={item.title} src={item.src} height={40} />
-                  <Spacer x={0.5} />
-                  <h2 className="title sm:text-base text-sm text-gray-700">
+                  <Image alt={item.title} src={item.src} height={30} />
+                  <h2 className="title sm:text-base text-sm text-gray-700 px-2">
                     {item.title}
                   </h2>
                 </Row>

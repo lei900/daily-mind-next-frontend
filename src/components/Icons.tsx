@@ -68,6 +68,99 @@ export const InformationCircleIcon = ({ className = "w-6 h-6" }) => {
   );
 };
 
+export const MoreIcon = ({ className = "w-6 h-6" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className={className}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+      />
+    </svg>
+  );
+};
+
+export const HeartIcon = ({ className = "w-6 h-6" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className={className}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+      />
+    </svg>
+  );
+};
+
+export const ChatIcon = ({ className = "w-6 h-6" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className={className}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
+      />
+    </svg>
+  );
+};
+
+export const BookmarkIcon = ({ className = "w-6 h-6" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className={className}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
+      />
+    </svg>
+  );
+};
+
+export const GlobeAsiaIcon = ({ className = "w-4 h-4" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      fill="#0284c7"
+      className={className}
+    >
+      <path
+        fillRule="evenodd"
+        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6.5 6.326a6.52 6.52 0 01-1.5.174 6.487 6.487 0 01-5.011-2.36l.49-.98a.423.423 0 01.614-.164l.294.196a.992.992 0 001.491-1.139l-.197-.593a.252.252 0 01.126-.304l1.973-.987a.938.938 0 00.361-1.359.375.375 0 01.239-.576l.125-.025A2.421 2.421 0 0012.327 6.6l.05-.149a1 1 0 00-.242-1.023l-1.489-1.489a.5.5 0 01-.146-.353v-.067a6.5 6.5 0 015.392 9.23 1.398 1.398 0 00-.68-.244l-.566-.566a1.5 1.5 0 00-1.06-.439h-.172a1.5 1.5 0 00-1.06.44l-.593.592a.501.501 0 01-.13.093l-1.578.79a1 1 0 00-.553.894v.191a1 1 0 001 1h.5a.5.5 0 01.5.5v.326z"
+        clipRule="evenodd"
+      />
+    </svg>
+  );
+};
+
 export const FightIcon = ({ className = "w-10 h-10" }) => {
   return (
     <svg
@@ -144,7 +237,7 @@ export const IdeaIcon = ({ className = "w-10 h-10" }) => {
   );
 };
 
-export const Great = ({ className = "w-5 h-5" }) => {
+export const Great = ({ className = "w-4 h-4" }) => {
   return (
     <svg
       fill="#16a34a"
@@ -160,7 +253,7 @@ export const Great = ({ className = "w-5 h-5" }) => {
   );
 };
 
-export const Good = ({ className = "w-5 h-5" }) => {
+export const Good = ({ className = "w-4 h-4" }) => {
   return (
     <svg
       fill="#65a30d"
@@ -176,7 +269,7 @@ export const Good = ({ className = "w-5 h-5" }) => {
   );
 };
 
-export const Neutral = ({ className = "w-5 h-5" }) => {
+export const Neutral = ({ className = "w-4 h-4" }) => {
   return (
     <svg
       fill="#0d9488"
@@ -192,7 +285,7 @@ export const Neutral = ({ className = "w-5 h-5" }) => {
   );
 };
 
-export const Bad = ({ className = "w-5 h-5" }) => {
+export const Bad = ({ className = "w-4 h-4" }) => {
   return (
     <svg
       fill="#0369a1"
@@ -208,7 +301,7 @@ export const Bad = ({ className = "w-5 h-5" }) => {
   );
 };
 
-export const Terrible = ({ className = "w-5 h-5" }) => {
+export const Terrible = ({ className = "w-4 h-4" }) => {
   return (
     <svg
       fill="#3730a3"
