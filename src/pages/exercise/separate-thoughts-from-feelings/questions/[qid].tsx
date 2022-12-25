@@ -104,7 +104,7 @@ export default function QuestionDetailPage({ question }: Props) {
                 </h2>
                 <Spacer x={0.5} />
                 <p className="text-center sm:text-lg text-base self-end">
-                  (Q {questionId} / 4)
+                  (Q {questionId} / {QUESTION_NUMBER})
                 </p>
               </Row>
             </Grid>
