@@ -14,7 +14,7 @@ type Props = {
 };
 
 // !Caution: the number of questions is hard-coded
-const QUESTION_NUMBER = 10;
+const QUESTION_NUMBER = 8;
 
 export default function QuestionDetailPage({
   questionData,
