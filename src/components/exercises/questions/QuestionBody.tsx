@@ -17,7 +17,9 @@ export default function QuestionBody({ questionBody }: Props) {
         </Fragment>
       ))}
       <br />
-      <p className="sm:text-xl font-semibold text-lg">{lastSentence}</p>
+      <p className="sm:text-xl font-semibold text-lg text-center">
+        {lastSentence}
+      </p>
     </div>
   );
 }
