@@ -19,7 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
         </Layout>
         <ToastContainer
           position="top-center"
-          autoClose={3500}
+          autoClose={4000}
           hideProgressBar={false}
           newestOnTop
           closeOnClick
