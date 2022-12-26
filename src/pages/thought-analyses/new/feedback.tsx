@@ -7,7 +7,6 @@ import {
   Neutral,
   Bad,
   HaveFiveImage,
-  ConnectionImage,
   AppreciationImage,
 } from "components/Icons";
 

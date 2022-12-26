@@ -16,19 +16,19 @@ export default function App({ Component, pageProps }: AppProps) {
       <AuthContextProvider>
         <Layout>
           <Component {...pageProps} />
+          <ToastContainer
+            position="top-center"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss={false}
+            draggable={false}
+            pauseOnHover={false}
+            theme="colored"
+          />
         </Layout>
-        <ToastContainer
-          position="top-center"
-          autoClose={4000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable={false}
-          pauseOnHover={false}
-          theme="colored"
-        />
       </AuthContextProvider>
     </NextUIProvider>
   );
