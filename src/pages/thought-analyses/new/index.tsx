@@ -241,7 +241,9 @@ export default function NewAnalysisPage() {
     distortions: [],
     newThought: "",
   });
-  const [selectedCommunity, setSelectedCommunity] = useState<Community | null>(null);
+  const [selectedCommunity, setSelectedCommunity] = useState<Community | null>(
+    null
+  );
   const [selectedStatus, setSelectedStatus] = useState(statuses[0]);
 
   useEffect(() => {
@@ -365,7 +367,9 @@ export default function NewAnalysisPage() {
         );
         if (response.status === 200) {
           toast.success("ゆがみ分析記録が作成できました！");
-          router.push("/thought-analyses/new/feedback");
+          setTimeout(function () {
+            router.push("/thought-analyses/new/feedback");
+          }, 3000);
         } else {
           toast.error("ゆがみ分析記録が作成できませんでした");
         }

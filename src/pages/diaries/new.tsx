@@ -109,7 +109,9 @@ export default function NewDiaryPage() {
         );
         if (response.status === 200) {
           toast.success("気持ち記録が作成できました！");
-          router.push("/");
+          setTimeout(function () {
+            router.push("/");
+          }, 3000);
         } else {
           toast.error("気持ち記録が作成できませんでした");
         }
