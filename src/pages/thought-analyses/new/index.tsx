@@ -382,505 +382,497 @@ export default function NewAnalysisPage() {
     }
   };
 
-  const ModalComponent = () => {
-    return (
-      <Modal
-        aria-labelledby="modal-title"
-        width="50em"
-        open={visible}
-        onClose={closeHandler}
-        className="sm:w-4/5 mx-auto"
-      >
-        {showDistortionInfo && (
-          <Modal.Header className="py-6">
-            {distortionToModal && <distortionToModal.icon />}
-            <Spacer x={1} />
-            <h1
-              id="modal-title"
-              className="sm:text-3xl text-2xl font-semibold text-gray-700"
-            >
-              {distortionToModal?.name}
-            </h1>
-          </Modal.Header>
-        )}
-
-        <Modal.Body>
-          {showNegaThoughtInfo && (
-            <div className="sm:p-4 mx-auto">
-              <Row justify="center" align="center">
-                <IdeaIcon />
-                <h2 className="sm:text-2xl text-lg font-semibold text-gray-700">
-                  自動思考とは
-                </h2>
-              </Row>
-              <Spacer y={1.5} />
-              <p className="sm:text-lg text-base text-left text-gray-700">
-                自動的に根拠なく思い浮かぶ考えは「自動思考」と言います。
-              </p>
-              <p className="sm:text-lg text-base text-left text-gray-700">
-                自分で考えているつもりはないのに、
-                <strong className="sm:text-lg text-base border-b-2 border-purple-700 text-gray-700 border-opacity-50">
-                  瞬間的に頭に浮かんでくる
-                </strong>
-                考えやイメージです。
-              </p>
-              <Spacer y={1} />
-              <h3 className="sm:text-lg text-base text-left">例：</h3>
-              <p className="sm:text-lg text-base text-left text-gray-700">
-                「どうぜまた嫌われるんだろう」
-              </p>
-              <p className="sm:text-lg text-base text-left text-gray-700">
-                「なんなんだあの人、ひどい」
-              </p>
-              <p className="sm:text-lg text-base text-left text-gray-700">
-                「また怒られた! なんで毎回こうなんだ」
-              </p>
-              <p className="sm:text-lg text-base text-left text-gray-700">
-                「今度失敗したら、もう終わりだ」
-              </p>
-              <p className="sm:text-lg text-base text-left text-gray-700">
-                「やってしまった! 私は本当ダメ人間だ」
-              </p>
-            </div>
-          )}
-          {showDistortionInfo && (
-            <div className="mx-auto px-4">
-              <p className="text-lg sm:text-xl font-semibold">定義：</p>
-              <p className="sm:text-xl text-lg text-gray-800">
-                {distortionToModal?.definition}
-              </p>
-              <br />
-              <p className="text-lg sm:text-xl font-semibold">具体例：</p>
-
-              {distortionToModal?.description.map((desc, index) => (
-                <li
-                  className="sm:text-xl text-lg text-gray-800 pl-4"
-                  key={index}
-                >
-                  {desc}
-                </li>
-              ))}
-            </div>
-          )}
-          {showNewThoughInfo && (
-            <div className="sm:p-8 p-2 mx-auto">
-              <Row justify="center" align="center">
-                <FightIcon />
-                <h2 className="sm:text-2xl text-lg font-semibold text-gray-700 pl-2">
-                  反論の出し方
-                </h2>
-              </Row>
-              <Spacer y={1} />
-              <p className="sm:text-lg text-base text-left text-gray-700">
-                自動思考と矛盾する事実や自分に対してのアドバイスを書き出してみましょう。
-              </p>
-              <Spacer y={1} />
-              <h3 className="sm:text-lg text-base text-left text-indigo-700 font-semibold">
-                ヒント：
-              </h3>
-              <ul className="list-disc px-6">
-                <li className="sm:text-lg text-base text-left text-gray-700">
-                  客観的な事実と自分の考えをちゃんと分けたでしょうか。
-                </li>
-                <li className="sm:text-lg text-base text-left text-gray-700">
-                  相手の心を読むような勝手な思い込みや自分の解釈ではないでしょうか。
-                </li>
-                <li className="sm:text-lg text-base text-left text-gray-700">
-                  その考えを裏づける根拠となる事実はあるでしょうか。
-                </li>
-                <li className="sm:text-lg text-base text-left text-gray-700">
-                  その証拠と矛盾する事実はないでしょうか。
-                </li>
-                <li className="sm:text-lg text-base text-left text-gray-700">
-                  見逃していることはないでしょうか。
-                </li>
-                <li className="sm:text-lg text-base text-left text-gray-700">
-                  自分の力だけではどうしようもない事柄について自分を責めてはないでしょうか。
-                </li>
-                <li className="sm:text-lg text-base text-left text-gray-700">
-                  親しい人が同じような考え方をしていたら、あなたはどのようにアドバイスしますか。
-                </li>
-                <li className="sm:text-lg text-base text-left text-gray-700">
-                  その考えが当たっているとして、その先、最悪のシナリオはどんなものでしょう。そして最良のシナリオと一番現実的なシナリオはどんなものでしょう。
-                </li>
-              </ul>
-              <Spacer y={2} />
-              <p className="sm:text-base text-sm text-left text-gray-500">
-                参照：
-              </p>
-              <p className="sm:text-base text-sm text-left text-gray-500">
-                大野裕『こころが晴れるノート
-                うつと不安の認知療法自習帳』（創元社、2003）
-              </p>
-            </div>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          {showDistortionInfo ? (
-            <Row justify="center">
-              <button
-                type="button"
-                onClick={() => handleDistortionConfirm(distortionToModal!)}
-                className="block rounded-lg bg-indigo-500 px-8 py-3 text-white  transition hover:bg-indigo-700 focus:outline-none focus:ring"
-              >
-                <span className="text-base sm:text-lg font-semibold">
-                  {isSelected(distortionToModal!) ? "選択解除" : "選択する"}
-                </span>
-              </button>
-              <Spacer x={4} />
-              <button
-                type="button"
-                onClick={closeHandler}
-                className="block rounded-lg bg-indigo-500 px-8 py-3 text-white  transition hover:bg-indigo-700 focus:outline-none focus:ring"
-              >
-                <span className="text-base sm:text-lg font-semibold">戻る</span>
-              </button>
-            </Row>
-          ) : (
-            <button
-              type="button"
-              onClick={closeHandler}
-              className="block rounded-lg bg-indigo-500 px-8 py-3 text-white mx-auto transition hover:bg-indigo-700 focus:outline-none focus:ring"
-            >
-              <span className="text-base sm:text-lg font-semibold">閉じる</span>
-            </button>
-          )}
-        </Modal.Footer>
-      </Modal>
-    );
-  };
-
-  const NegaThoughtSection = () => {
-    return (
-      <section className="p-2 w-full">
-        <div className="mx-auto">
-          <div className="sm:mr-10">
-            <h1 className="sm:text-2xl text-xl text-center font-semibold text-gray-700 ">
-              どのようなネガティブ思考が浮かんでいたか？
-            </h1>
-            <Spacer y={1} />
-            <Row
-              className="sm:w-40 mx-auto p-2 rounded-lg justify-center items-center cursor-pointer hover:bg-gray-100"
-              onClick={() => setVisible(true)}
-            >
-              <InformationCircleIcon className="w-6 h-6 inline-block" />
-              <p className="sm:text-lg text-base text-center text-gray-700 ">
-                自動思考とは
-              </p>
-            </Row>
-          </div>
-
-          <div className="p-2 w-full">
-            <div className="relative">
-              <div className="mb-2"></div>
-              <Textarea
-                value={thoughtInputs.negatetiveThought}
-                aria-label="Negative thought"
-                fullWidth
-                rows={10}
-                size="xl"
-                required
-                placeholder="頭の中に浮かんだイヤな考えやイメージを書き出しましょう"
-                status="primary"
-                onChange={handleNegaInputChange}
-              />
-            </div>
-          </div>
-          <div className="p-2 w-full sm:mt-10 mt-6">
-            <button
-              type="button"
-              className="block mx-auto sm:w-1/2 w-full text-white font-semibold bg-indigo-500 border-0 py-4 focus:outline-none hover:bg-indigo-600 rounded-xl sm:text-lg"
-              onClick={handleGoDistortionSection}
-            >
-              続ける
-            </button>
-          </div>
-        </div>
-      </section>
-    );
-  };
-
-  const DistortionSection = () => {
-    return (
-      <section className="p-2 w-full">
-        <div className="relative mx-auto">
-          <div className="sm:mr-10">
-            <h1 className="sm:text-2xl text-xl text-center font-semibold text-gray-700 ">
-              その考えには、ゆがみがありますか？
-            </h1>
-            <p className="sm:text-base text-sm text-center sm:mb-10 mb-6 text-gray-700">
-              自分に当てはまると思うゆがみを選んでください。
-            </p>
-          </div>
-          <div>
-            {distortionArray.map((distortion) => (
-              <Card
-                isPressable
-                variant="bordered"
-                className={`${
-                  isSelected(distortion) ? "bg-blue-200" : "bg-blue-50"
-                } border-none focus:outline-none hover:bg-blue-300 rounded-xl pl-4 my-2 mx-auto`}
-                onClick={() => handleOpenDistortionModal(distortion)}
-                key={distortion.id}
-              >
-                <Card.Header>
-                  <distortion.icon />
-                  <Grid.Container gap={0.5} css={{ pl: "$6" }}>
-                    <Grid xs={12} className="">
-                      <h2 className="sm:text-xl text-lg  text-gray-900">
-                        {distortion.name}
-                      </h2>
-                    </Grid>
-                    <Grid xs={12}>
-                      <p className="sm:text-sm text-xs text-gray-600">
-                        {distortion.brief}
-                      </p>
-                    </Grid>
-                  </Grid.Container>
-                </Card.Header>
-              </Card>
-            ))}
-          </div>
-          <Row className="p-2 w-full sm:mt-10 mt-6">
-            <button
-              type="button"
-              className="block mx-auto text-white font-semibold bg-indigo-500 border-0 w-1/3 py-4 focus:outline-none hover:bg-indigo-600 rounded-xl sm:text-lg"
-              onClick={handleBackToNegaSection}
-            >
-              前へ
-            </button>
-            <button
-              type="button"
-              className="block mx-auto  text-white font-semibold bg-indigo-500 border-0 w-1/3 py-4 focus:outline-none hover:bg-indigo-600 rounded-xl sm:text-lg"
-              onClick={handleGoNewThoughtSection}
-            >
-              続ける
-            </button>
-          </Row>
-        </div>
-      </section>
-    );
-  };
-
-  const NewThoughtSection = () => {
-    return (
-      <section className="p-2 w-full">
-        <div className="relative mx-auto">
-          <h1 className="sm:text-2xl text-xl text-center font-semibold text-gray-700 ">
-            その考えに反論するために、どうしたら良いですか？
-          </h1>
-          <Spacer y={0.5} />
-          <Row
-            className="sm:w-40 mx-auto p-2 rounded-lg justify-center items-center cursor-pointer hover:bg-gray-100"
-            onClick={() => setVisible(true)}
-          >
-            <InformationCircleIcon className="w-6 h-6 inline-block" />
-            <p className="sm:text-lg text-base text-center text-gray-700 ml-2">
-              反論の出し方
-            </p>
-          </Row>
-          <Spacer y={1} />
-          <Row align="center" wrap="wrap" className="px-2">
-            {thoughtInputs.distortions.map((distortion) => (
-              <Row
-                gap={1}
-                align="center"
-                className="bg-blue-100 w-fit py-1 px-2 m-1 rounded-lg"
-                key={distortion.id}
-              >
-                <distortion.icon className="w-4 h-4" />
-                <p className="sm:text-sm text-xs pl-1">{distortion.name}</p>
-              </Row>
-            ))}
-          </Row>
-          <div className="p-2 w-full">
-            <div className="relative">
-              <div className="mb-2"></div>
-              <Textarea
-                value={thoughtInputs.newThought}
-                aria-label="Negative thought"
-                fullWidth
-                rows={10}
-                size="xl"
-                placeholder="ネガティブ思考に反論を書き出しましょう"
-                status="primary"
-                onChange={handleNewInputChange}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="flex justify-between px-4 mt-2 w-full">
-          <Listbox value={selectedCommunity} onChange={setSelectedCommunity}>
-            {({ open }) => (
-              <>
-                <div className="relative mt-1 w-56">
-                  <Listbox.Button className="relative w-full cursor-default rounded-xl bg-blue-50 py-2 pl-3 pr-10 text-left shadow-sm text-sm focus:ring-1 focus:ring-indigo-500">
-                    <span className="flex items-center">
-                      {selectedCommunity && (
-                        <Image
-                          src={selectedCommunity.image}
-                          alt="日常生活"
-                          width={30}
-                          height={30}
-                          className="h-6 w-6 flex-shrink-0 rounded-full"
-                        />
-                      )}
-                      <span className="ml-3 block truncate text-blue-600">
-                        {selectedCommunity
-                          ? selectedCommunity.name
-                          : "コミュニティーを選ぶ"}
-                      </span>
-                    </span>
-                    <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                      <ChevronUpDownIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
-                    </span>
-                  </Listbox.Button>
-
-                  <Transition
-                    show={open}
-                    as={Fragment}
-                    leave="transition ease-in duration-100"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                  >
-                    <Listbox.Options className="absolute z-10 w-full overflow-auto rounded-xl bg-white text-sm shadow-lg  p-2">
-                      {communities.map((community) => (
-                        <Listbox.Option
-                          key={community.id}
-                          className={({ active }) =>
-                            classNames(
-                              active
-                                ? "text-blue-600 bg-blue-50"
-                                : "text-gray-800",
-                              "relative cursor-default py-2 pl-3 pr-9 select-none rounded-xl text-sm"
-                            )
-                          }
-                          value={community}
-                        >
-                          {({ selected, active }) => (
-                            <>
-                              <div className="flex items-center">
-                                <Image
-                                  src={community.image}
-                                  alt={community.name}
-                                  width={15}
-                                  height={15}
-                                  className="h-6 w-6 flex-shrink-0 rounded-full"
-                                />
-                                <span
-                                  className={classNames("ml-3 block truncate")}
-                                >
-                                  {community.name}
-                                </span>
-                              </div>
-
-                              {selected ? (
-                                <span
-                                  className="text-blue-600 
-                                absolute inset-y-0 right-0 flex items-center pr-4"
-                                >
-                                  <CheckIcon className="h-5 w-5" />
-                                </span>
-                              ) : null}
-                            </>
-                          )}
-                        </Listbox.Option>
-                      ))}
-                    </Listbox.Options>
-                  </Transition>
-                </div>
-              </>
-            )}
-          </Listbox>
-          <Listbox value={selectedStatus} onChange={setSelectedStatus}>
-            {({ open }) => (
-              <>
-                <div className="relative mt-1 w-24">
-                  <Listbox.Button className="relative w-full cursor-default rounded-xl bg-blue-50 py-2 px-2  text-left shadow-sm text-sm focus:ring-1 focus:ring-indigo-500">
-                    <span className="flex items-center">
-                      <span className="ml-3 block truncate text-blue-600">
-                        {selectedStatus.displayName}
-                      </span>
-                    </span>
-                    <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                      <ChevronDownIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
-                    </span>
-                  </Listbox.Button>
-
-                  <Transition
-                    show={open}
-                    as={Fragment}
-                    leave="transition ease-in duration-100"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                  >
-                    <Listbox.Options className="absolute z-10 w-full overflow-auto rounded-xl bg-white text-sm shadow-lg  p-2">
-                      {statuses.map((status) => (
-                        <Listbox.Option
-                          key={status.id}
-                          className={({ active }) =>
-                            classNames(
-                              active
-                                ? "text-blue-600 bg-blue-50"
-                                : "text-gray-800",
-                              "relative cursor-default py-2 px-2 select-none rounded-xl text-sm"
-                            )
-                          }
-                          value={status}
-                        >
-                          {({ selected, active }) => (
-                            <>
-                              <div className="flex items-center">
-                                <span
-                                  className={classNames("ml-3 block truncate")}
-                                >
-                                  {status.displayName}
-                                </span>
-                              </div>
-                            </>
-                          )}
-                        </Listbox.Option>
-                      ))}
-                    </Listbox.Options>
-                  </Transition>
-                </div>
-              </>
-            )}
-          </Listbox>
-        </div>
-        <Row className="p-2 w-full sm:mt-10 mt-6">
-          <button
-            type="button"
-            className="block mx-auto text-white font-semibold bg-indigo-500 border-0 w-1/3 py-4 focus:outline-none hover:bg-indigo-600 rounded-xl sm:text-lg"
-            onClick={handleBackToDistortionSection}
-          >
-            前へ
-          </button>
-          <button
-            type="submit"
-            className="block mx-auto sm:w-1/2 w-full text-white font-semibold bg-indigo-500 border-0 py-4 focus:outline-none hover:bg-indigo-600 rounded-xl sm:text-lg"
-          >
-            思考分析記録を作成する
-          </button>
-        </Row>
-      </section>
-    );
-  };
-
   return (
     <div className="container sm:px-5 px-1 sm:mt-10 mt-6 mx-auto">
       <div className="lg:w-1/2 md:w-2/3 mx-auto">
         <form onSubmit={sendEntry}>
-          {showNegaThoughtSection && <NegaThoughtSection />}
-          {showDistortionSection && <DistortionSection />}
-          {showNewThoughtSection && <NewThoughtSection />}
-          <ModalComponent />
+          {showNegaThoughtSection && (
+            <section className="p-2 w-full">
+              <div className="mx-auto">
+                <div className="sm:mr-10">
+                  <h1 className="sm:text-2xl text-xl text-center font-semibold text-gray-700 ">
+                    どのようなネガティブ思考が浮かんでいたか？
+                  </h1>
+                  <Spacer y={1} />
+                  <Row
+                    className="sm:w-40 mx-auto p-2 rounded-lg justify-center items-center cursor-pointer hover:bg-gray-100"
+                    onClick={() => setVisible(true)}
+                  >
+                    <InformationCircleIcon className="w-6 h-6 inline-block" />
+                    <p className="sm:text-lg text-base text-center text-gray-700 ">
+                      自動思考とは
+                    </p>
+                  </Row>
+                </div>
+
+                <div className="p-2 w-full">
+                  <div className="relative">
+                    <textarea
+                      value={thoughtInputs.negatetiveThought}
+                      aria-label="Negative thought"
+                      id="body"
+                      name="body"
+                      rows={10}
+                      placeholder="頭の中に浮かんだイヤな考えやイメージを書き出しましょう"
+                      className="w-full rounded-2xl bg-blue-300 bg-opacity-50 focus:shadow sm:text-lg text-base outline-none  text-blue-600 py-3 px-3 focus:bg-blue-200"
+                      onChange={handleNegaInputChange}
+                    ></textarea>
+                  </div>
+                </div>
+                <div className="p-2 w-full sm:mt-10 mt-6">
+                  <button
+                    type="button"
+                    className="block mx-auto sm:w-1/2 w-full text-white font-semibold bg-indigo-500 border-0 py-4 focus:outline-none hover:bg-indigo-600 rounded-xl sm:text-lg"
+                    onClick={handleGoDistortionSection}
+                  >
+                    続ける
+                  </button>
+                </div>
+              </div>
+            </section>
+          )}
+          {showDistortionSection && (
+            <section className="p-2 w-full">
+              <div className="relative mx-auto">
+                <div className="sm:mr-10">
+                  <h1 className="sm:text-2xl text-xl text-center font-semibold text-gray-700 ">
+                    その考えには、ゆがみがありますか？
+                  </h1>
+                  <p className="sm:text-base text-sm text-center sm:mb-10 mb-6 text-gray-700">
+                    自分に当てはまると思うゆがみを選んでください。
+                  </p>
+                </div>
+                <div>
+                  {distortionArray.map((distortion) => (
+                    <Card
+                      isPressable
+                      variant="bordered"
+                      className={`${
+                        isSelected(distortion) ? "bg-blue-200" : "bg-blue-50"
+                      } border-none focus:outline-none hover:bg-blue-300 rounded-xl pl-4 my-2 mx-auto`}
+                      onClick={() => handleOpenDistortionModal(distortion)}
+                      key={distortion.id}
+                    >
+                      <Card.Header>
+                        <distortion.icon />
+                        <Grid.Container gap={0.5} css={{ pl: "$6" }}>
+                          <Grid xs={12} className="">
+                            <h2 className="sm:text-xl text-lg  text-gray-900">
+                              {distortion.name}
+                            </h2>
+                          </Grid>
+                          <Grid xs={12}>
+                            <p className="sm:text-sm text-xs text-gray-600">
+                              {distortion.brief}
+                            </p>
+                          </Grid>
+                        </Grid.Container>
+                      </Card.Header>
+                    </Card>
+                  ))}
+                </div>
+                <Row className="p-2 w-full sm:mt-10 mt-6">
+                  <button
+                    type="button"
+                    className="block mx-auto text-white font-semibold bg-indigo-500 border-0 w-1/3 py-4 focus:outline-none hover:bg-indigo-600 rounded-xl sm:text-lg"
+                    onClick={handleBackToNegaSection}
+                  >
+                    前へ
+                  </button>
+                  <button
+                    type="button"
+                    className="block mx-auto  text-white font-semibold bg-indigo-500 border-0 w-1/3 py-4 focus:outline-none hover:bg-indigo-600 rounded-xl sm:text-lg"
+                    onClick={handleGoNewThoughtSection}
+                  >
+                    続ける
+                  </button>
+                </Row>
+              </div>
+            </section>
+          )}
+          {showNewThoughtSection && (
+            <section className="p-2 w-full">
+              <div className="relative mx-auto">
+                <h1 className="sm:text-2xl text-xl text-center font-semibold text-gray-700 ">
+                  その考えに反論するために、どうしたら良いですか？
+                </h1>
+                <Spacer y={0.5} />
+                <Row
+                  className="sm:w-40 mx-auto p-2 rounded-lg justify-center items-center cursor-pointer hover:bg-gray-100"
+                  onClick={() => setVisible(true)}
+                >
+                  <InformationCircleIcon className="w-6 h-6 inline-block" />
+                  <p className="sm:text-lg text-base text-center text-gray-700 ml-2">
+                    反論の出し方
+                  </p>
+                </Row>
+                <Spacer y={1} />
+                <Row align="center" wrap="wrap" className="px-2">
+                  {thoughtInputs.distortions.map((distortion) => (
+                    <Row
+                      gap={1}
+                      align="center"
+                      className="bg-blue-100 w-fit py-1 px-2 m-1 rounded-lg"
+                      key={distortion.id}
+                    >
+                      <distortion.icon className="w-4 h-4" />
+                      <p className="sm:text-sm text-xs pl-1">
+                        {distortion.name}
+                      </p>
+                    </Row>
+                  ))}
+                </Row>
+                <div className="p-2 w-full">
+                  <div className="relative">
+                    <textarea
+                      value={thoughtInputs.newThought}
+                      aria-label="New thought"
+                      id="body"
+                      name="body"
+                      rows={10}
+                      placeholder="ネガティブ思考に反論を書き出しましょう"
+                      className="w-full rounded-2xl bg-blue-300 bg-opacity-50 focus:shadow sm:text-lg text-base outline-none  text-blue-600 py-3 px-3 focus:bg-blue-200"
+                      onChange={handleNewInputChange}
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-between px-2 mt-2 w-full">
+                <Listbox
+                  value={selectedCommunity}
+                  onChange={setSelectedCommunity}
+                >
+                  {({ open }) => (
+                    <>
+                      <div className="relative mt-1 w-52">
+                        <Listbox.Button className="relative w-full cursor-default rounded-xl bg-blue-50 py-2 pl-3 pr-10 text-left shadow-sm text-sm focus:ring-1 focus:ring-indigo-500">
+                          <span className="flex items-center">
+                            {selectedCommunity && (
+                              <Image
+                                src={selectedCommunity.image}
+                                alt="日常生活"
+                                width={30}
+                                height={30}
+                                className="h-6 w-6 flex-shrink-0 rounded-full"
+                              />
+                            )}
+                            <span className="ml-3 block truncate text-blue-600">
+                              {selectedCommunity
+                                ? selectedCommunity.name
+                                : "コミュニティーを選ぶ"}
+                            </span>
+                          </span>
+                          <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+                            <ChevronUpDownIcon
+                              className="h-5 w-5 text-gray-400"
+                              aria-hidden="true"
+                            />
+                          </span>
+                        </Listbox.Button>
+
+                        <Transition
+                          show={open}
+                          as={Fragment}
+                          leave="transition ease-in duration-100"
+                          leaveFrom="opacity-100"
+                          leaveTo="opacity-0"
+                        >
+                          <Listbox.Options className="absolute z-10 w-full overflow-auto rounded-xl bg-white text-sm shadow-lg  p-2">
+                            {communities.map((community) => (
+                              <Listbox.Option
+                                key={community.id}
+                                className={({ active }) =>
+                                  classNames(
+                                    active
+                                      ? "text-blue-600 bg-blue-50"
+                                      : "text-gray-800",
+                                    "relative cursor-default py-2 pl-3 pr-9 select-none rounded-xl text-sm"
+                                  )
+                                }
+                                value={community}
+                              >
+                                {({ selected, active }) => (
+                                  <>
+                                    <div className="flex items-center">
+                                      <Image
+                                        src={community.image}
+                                        alt={community.name}
+                                        width={15}
+                                        height={15}
+                                        className="h-6 w-6 flex-shrink-0 rounded-full"
+                                      />
+                                      <span
+                                        className={classNames(
+                                          "ml-3 block truncate"
+                                        )}
+                                      >
+                                        {community.name}
+                                      </span>
+                                    </div>
+
+                                    {selected ? (
+                                      <span
+                                        className="text-blue-600 
+                                absolute inset-y-0 right-0 flex items-center pr-4"
+                                      >
+                                        <CheckIcon className="h-5 w-5" />
+                                      </span>
+                                    ) : null}
+                                  </>
+                                )}
+                              </Listbox.Option>
+                            ))}
+                          </Listbox.Options>
+                        </Transition>
+                      </div>
+                    </>
+                  )}
+                </Listbox>
+                <Listbox value={selectedStatus} onChange={setSelectedStatus}>
+                  {({ open }) => (
+                    <>
+                      <div className="relative mt-1 w-24">
+                        <Listbox.Button className="relative w-full cursor-default rounded-xl bg-blue-50 py-2 px-2  text-left shadow-sm text-sm focus:ring-1 focus:ring-indigo-500">
+                          <span className="flex items-center">
+                            <span className="ml-3 block truncate text-blue-600">
+                              {selectedStatus.displayName}
+                            </span>
+                          </span>
+                          <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+                            <ChevronDownIcon
+                              className="h-5 w-5 text-gray-400"
+                              aria-hidden="true"
+                            />
+                          </span>
+                        </Listbox.Button>
+
+                        <Transition
+                          show={open}
+                          as={Fragment}
+                          leave="transition ease-in duration-100"
+                          leaveFrom="opacity-100"
+                          leaveTo="opacity-0"
+                        >
+                          <Listbox.Options className="absolute z-10 w-full overflow-auto rounded-xl bg-white text-sm shadow-lg  p-2">
+                            {statuses.map((status) => (
+                              <Listbox.Option
+                                key={status.id}
+                                className={({ active }) =>
+                                  classNames(
+                                    active
+                                      ? "text-blue-600 bg-blue-50"
+                                      : "text-gray-800",
+                                    "relative cursor-default py-2 px-2 select-none rounded-xl text-sm"
+                                  )
+                                }
+                                value={status}
+                              >
+                                {({ selected, active }) => (
+                                  <>
+                                    <div className="flex items-center">
+                                      <span
+                                        className={classNames(
+                                          "ml-3 block truncate"
+                                        )}
+                                      >
+                                        {status.displayName}
+                                      </span>
+                                    </div>
+                                  </>
+                                )}
+                              </Listbox.Option>
+                            ))}
+                          </Listbox.Options>
+                        </Transition>
+                      </div>
+                    </>
+                  )}
+                </Listbox>
+              </div>
+              <Row className="p-2 w-full sm:mt-10 mt-6">
+                <button
+                  type="button"
+                  className="block mx-auto text-white font-semibold bg-indigo-500 border-0 w-1/3 py-4 focus:outline-none hover:bg-indigo-600 rounded-xl sm:text-lg"
+                  onClick={handleBackToDistortionSection}
+                >
+                  前へ
+                </button>
+                <button
+                  type="submit"
+                  className="block mx-auto sm:w-1/2 w-full text-white font-semibold bg-indigo-500 border-0 py-4 focus:outline-none hover:bg-indigo-600 rounded-xl sm:text-lg"
+                >
+                  思考分析記録を作成する
+                </button>
+              </Row>
+            </section>
+          )}
+          <Modal
+            aria-labelledby="modal-title"
+            width="50em"
+            open={visible}
+            onClose={closeHandler}
+            className="sm:w-4/5 mx-auto"
+          >
+            {showDistortionInfo && (
+              <Modal.Header className="py-6">
+                {distortionToModal && <distortionToModal.icon />}
+                <Spacer x={1} />
+                <h1
+                  id="modal-title"
+                  className="sm:text-3xl text-2xl font-semibold text-gray-700"
+                >
+                  {distortionToModal?.name}
+                </h1>
+              </Modal.Header>
+            )}
+
+            <Modal.Body>
+              {showNegaThoughtInfo && (
+                <div className="sm:p-4 mx-auto">
+                  <Row justify="center" align="center">
+                    <IdeaIcon />
+                    <h2 className="sm:text-2xl text-lg font-semibold text-gray-700">
+                      自動思考とは
+                    </h2>
+                  </Row>
+                  <Spacer y={1.5} />
+                  <p className="sm:text-lg text-base text-left text-gray-700">
+                    自動的に根拠なく思い浮かぶ考えは「自動思考」と言います。
+                  </p>
+                  <p className="sm:text-lg text-base text-left text-gray-700">
+                    自分で考えているつもりはないのに、
+                    <strong className="sm:text-lg text-base border-b-2 border-purple-700 text-gray-700 border-opacity-50">
+                      瞬間的に頭に浮かんでくる
+                    </strong>
+                    考えやイメージです。
+                  </p>
+                  <Spacer y={1} />
+                  <h3 className="sm:text-lg text-base text-left">例：</h3>
+                  <p className="sm:text-lg text-base text-left text-gray-700">
+                    「どうぜまた嫌われるんだろう」
+                  </p>
+                  <p className="sm:text-lg text-base text-left text-gray-700">
+                    「なんなんだあの人、ひどい」
+                  </p>
+                  <p className="sm:text-lg text-base text-left text-gray-700">
+                    「また怒られた! なんで毎回こうなんだ」
+                  </p>
+                  <p className="sm:text-lg text-base text-left text-gray-700">
+                    「今度失敗したら、もう終わりだ」
+                  </p>
+                  <p className="sm:text-lg text-base text-left text-gray-700">
+                    「やってしまった! 私は本当ダメ人間だ」
+                  </p>
+                </div>
+              )}
+              {showDistortionInfo && (
+                <div className="mx-auto px-4">
+                  <p className="text-lg sm:text-xl font-semibold">定義：</p>
+                  <p className="sm:text-xl text-lg text-gray-800">
+                    {distortionToModal?.definition}
+                  </p>
+                  <br />
+                  <p className="text-lg sm:text-xl font-semibold">具体例：</p>
+
+                  {distortionToModal?.description.map((desc, index) => (
+                    <li
+                      className="sm:text-xl text-lg text-gray-800 pl-4"
+                      key={index}
+                    >
+                      {desc}
+                    </li>
+                  ))}
+                </div>
+              )}
+              {showNewThoughInfo && (
+                <div className="sm:p-8 p-2 mx-auto">
+                  <Row justify="center" align="center">
+                    <FightIcon />
+                    <h2 className="sm:text-2xl text-lg font-semibold text-gray-700 pl-2">
+                      反論の出し方
+                    </h2>
+                  </Row>
+                  <Spacer y={1} />
+                  <p className="sm:text-lg text-base text-left text-gray-700">
+                    自動思考と矛盾する事実や自分に対してのアドバイスを書き出してみましょう。
+                  </p>
+                  <Spacer y={1} />
+                  <h3 className="sm:text-lg text-base text-left text-indigo-700 font-semibold">
+                    ヒント：
+                  </h3>
+                  <ul className="list-disc px-6">
+                    <li className="sm:text-lg text-base text-left text-gray-700">
+                      客観的な事実と自分の考えをちゃんと分けたでしょうか。
+                    </li>
+                    <li className="sm:text-lg text-base text-left text-gray-700">
+                      相手の心を読むような勝手な思い込みや自分の解釈ではないでしょうか。
+                    </li>
+                    <li className="sm:text-lg text-base text-left text-gray-700">
+                      その考えを裏づける根拠となる事実はあるでしょうか。
+                    </li>
+                    <li className="sm:text-lg text-base text-left text-gray-700">
+                      その証拠と矛盾する事実はないでしょうか。
+                    </li>
+                    <li className="sm:text-lg text-base text-left text-gray-700">
+                      見逃していることはないでしょうか。
+                    </li>
+                    <li className="sm:text-lg text-base text-left text-gray-700">
+                      自分の力だけではどうしようもない事柄について自分を責めてはないでしょうか。
+                    </li>
+                    <li className="sm:text-lg text-base text-left text-gray-700">
+                      親しい人が同じような考え方をしていたら、あなたはどのようにアドバイスしますか。
+                    </li>
+                    <li className="sm:text-lg text-base text-left text-gray-700">
+                      その考えが当たっているとして、その先、最悪のシナリオはどんなものでしょう。そして最良のシナリオと一番現実的なシナリオはどんなものでしょう。
+                    </li>
+                  </ul>
+                  <Spacer y={2} />
+                  <p className="sm:text-base text-sm text-left text-gray-500">
+                    参照：
+                  </p>
+                  <p className="sm:text-base text-sm text-left text-gray-500">
+                    大野裕『こころが晴れるノート
+                    うつと不安の認知療法自習帳』（創元社、2003）
+                  </p>
+                </div>
+              )}
+            </Modal.Body>
+            <Modal.Footer>
+              {showDistortionInfo ? (
+                <Row justify="center">
+                  <button
+                    type="button"
+                    onClick={() => handleDistortionConfirm(distortionToModal!)}
+                    className="block rounded-lg bg-indigo-500 px-8 py-3 text-white  transition hover:bg-indigo-700 focus:outline-none focus:ring"
+                  >
+                    <span className="text-base sm:text-lg font-semibold">
+                      {isSelected(distortionToModal!) ? "選択解除" : "選択する"}
+                    </span>
+                  </button>
+                  <Spacer x={4} />
+                  <button
+                    type="button"
+                    onClick={closeHandler}
+                    className="block rounded-lg bg-indigo-500 px-8 py-3 text-white  transition hover:bg-indigo-700 focus:outline-none focus:ring"
+                  >
+                    <span className="text-base sm:text-lg font-semibold">
+                      戻る
+                    </span>
+                  </button>
+                </Row>
+              ) : (
+                <button
+                  type="button"
+                  onClick={closeHandler}
+                  className="block rounded-lg bg-indigo-500 px-8 py-3 text-white mx-auto transition hover:bg-indigo-700 focus:outline-none focus:ring"
+                >
+                  <span className="text-base sm:text-lg font-semibold">
+                    閉じる
+                  </span>
+                </button>
+              )}
+            </Modal.Footer>
+          </Modal>
         </form>
       </div>
     </div>

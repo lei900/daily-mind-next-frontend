@@ -67,12 +67,12 @@ export default function NewThoughtFeedbackPage() {
           </section>
         )}
         {showFeedback && (
-          <section className="p-2 w-full mx-auto">
+          <section className="px-2 w-full mx-auto">
             <div className="mx-auto">
               {isBetter ? (
                 <>
                   <HaveFiveImage className="mx-auto" />
-                  <Spacer y={2} />
+                  <Spacer y={1.5} />
                   <h1 className="sm:text-4xl text-2xl font-semibold text-gray-700 text-center">
                     お疲れ様でした
                   </h1>
@@ -81,7 +81,7 @@ export default function NewThoughtFeedbackPage() {
                     <p className="sm:text-lg text-base text-left text-gray-700">
                       自分の思考を分析することで、ネガティブな思考パターンに気づき、より柔軟な考え方で気分を変えることができるのです。
                     </p>
-                    <Spacer y={2} />
+                    <Spacer y={1} />
                     <p className="sm:text-lg text-base text-left text-gray-700">
                       記録習慣を続けて、思考のゆがみを見つけ直していきましょう。
                     </p>
@@ -90,7 +90,7 @@ export default function NewThoughtFeedbackPage() {
               ) : (
                 <>
                   <AppreciationImage className="mx-auto" />
-                  <Spacer y={2} />
+                  <Spacer y={1.5} />
                   <h1 className="sm:text-4xl text-2xl font-semibold text-gray-700 text-center">
                     お疲れ様でした
                   </h1>
