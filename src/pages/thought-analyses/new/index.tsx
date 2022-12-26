@@ -689,19 +689,19 @@ export default function NewAnalysisPage() {
                   )}
                 </Listbox>
               </div>
-              <Row className="p-2 w-full sm:mt-10 mt-6">
+              <Row className="sm:p-2 w-full sm:mt-10 mt-6">
                 <button
                   type="button"
-                  className="block mx-auto text-white font-semibold bg-indigo-500 border-0 w-1/3 py-4 focus:outline-none hover:bg-indigo-600 rounded-xl sm:text-lg"
+                  className="block mx-auto text-white font-semibold bg-indigo-500 border-0 py-4 px-8 focus:outline-none hover:bg-indigo-600 rounded-xl sm:text-lg text-base"
                   onClick={handleBackToDistortionSection}
                 >
                   前へ
                 </button>
                 <button
                   type="submit"
-                  className="block mx-auto sm:w-1/2 w-full text-white font-semibold bg-indigo-500 border-0 py-4 focus:outline-none hover:bg-indigo-600 rounded-xl sm:text-lg"
+                  className="block mx-auto  text-white font-semibold bg-indigo-500 border-0 py-4 px-10 focus:outline-none hover:bg-indigo-600 rounded-xl sm:text-lg text-base"
                 >
-                  思考分析記録を作成する
+                  作成する
                 </button>
               </Row>
             </section>
