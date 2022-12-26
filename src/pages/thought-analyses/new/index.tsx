@@ -241,7 +241,7 @@ export default function NewAnalysisPage() {
     distortions: [],
     newThought: "",
   });
-  const [selectedCommunity, setSelectedCommunity] = useState<Community>();
+  const [selectedCommunity, setSelectedCommunity] = useState<Community | null>(null);
   const [selectedStatus, setSelectedStatus] = useState(statuses[0]);
 
   useEffect(() => {
@@ -340,6 +340,7 @@ export default function NewAnalysisPage() {
     e.preventDefault();
     const distortion_ids = thoughtInputs.distortions.map((d) => d.id);
     const token = await currentUser?.getIdToken();
+    console.log("calling with " + token);
     const config = {
       headers: { authorization: `Bearer ${token}` },
     };
