@@ -1,5 +1,6 @@
 import { Card, Row, Dropdown } from "@nextui-org/react";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 
 import {
   GlobeAsiaIcon,
@@ -18,11 +19,21 @@ type Props = {
 };
 
 export const EntryListItem = ({ entry }: Props) => {
-  const { currentUser } = useAuthContext();
+  const { currentUser, loading } = useAuthContext();
+  const [isAuthor, setIsAuthor] = useState(false);
+
   const diary = entry.attributes.diary;
   const thoughtAnalysis = entry.attributes.thoughtAnalysis;
   const distortions = entry.attributes.distortions;
   const user = entry.attributes.user;
+
+  useEffect(() => {
+    if (!loading) {
+      if (currentUser && currentUser.uid === user.uid) {
+        setIsAuthor(true);
+      }
+    }
+  }, [currentUser]);
 
   return (
     <Card

@@ -1,7 +1,9 @@
 import { StaticImageData } from "next/image";
 
+export type Mood = "terrible" | "bad" | "neutral" | "good" | "great";
+
 export interface DiaryData {
-  mood: "terrible" | "bad" | "neutral" | "good" | "great";
+  mood: Mood;
   title: string;
   body: string;
 }
