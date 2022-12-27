@@ -1,7 +1,8 @@
 import { Great, Good, Neutral, Bad, Terrible } from "components/Icons";
+import { Mood } from "types/types";
 
 type Props = {
-  mood: "terrible" | "bad" | "neutral" | "good" | "great";
+  mood: Mood;
 };
 
 export const DiaryMoodIcon = ({ mood }: Props) => {

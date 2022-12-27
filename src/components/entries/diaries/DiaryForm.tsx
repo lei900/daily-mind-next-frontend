@@ -1,7 +1,5 @@
-import { useState, Fragment, useRef, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useState, Fragment } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Listbox, Transition } from "@headlessui/react";
@@ -17,237 +15,98 @@ import {
   Bad,
   Terrible,
 } from "components/Icons";
-import { useAuthContext } from "context/AuthContext";
 import { Community } from "types/types";
-import engineerIcon from "components/communities/images/engineerIcon.png";
-import careerIcon from "components/communities/images/careerIcon.png";
-import lifeIcon from "components/communities/images/lifeIcon.png";
-import otherIcon from "components/communities/images/otherIcon.png";
-import { EntryData, Mood } from "types/types";
-
-interface DiaryInputs {
-  mood: string;
-  title: string;
-  body: string;
-}
+import {
+  EntryData,
+  Mood,
+  DiaryData,
+  EntryRequestData,
+  Status,
+} from "types/types";
+import useAxios from "hooks/useAxios";
+import useListBox from "hooks/useListBoxt";
 
 type Props = {
   entryData?: EntryData;
 };
 
-const communities = [
-  {
-    id: 1,
-    name: "日常生活",
-    image: lifeIcon,
-  },
-  {
-    id: 2,
-    name: "職場キャリア",
-    image: careerIcon,
-  },
-  {
-    id: 3,
-    name: "エンジニア部屋",
-    image: engineerIcon,
-  },
-  {
-    id: 4,
-    name: "その他",
-    image: otherIcon,
-  },
-];
-
-const statuses = [
-  { id: 1, displayName: "公開", name: "published" },
-  { id: 2, displayName: "非公開", name: "private" },
-  { id: 3, displayName: "下書き", name: "draft" },
-];
-
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(" ");
-}
-
-const selectedEntryCommunity = (id?: number) => {
-  if (id) {
-    switch (id) {
-      case 1:
-        return communities[0];
-      case 2:
-        return communities[1];
-      case 3:
-        return communities[2];
-      case 4:
-        return communities[3];
-      default:
-        return null;
-    }
-  } else {
-    return null;
-  }
-};
-
-const selectedEntryStatus = (status: string) => {
-  switch (status) {
-    case "published":
-      return statuses[0];
-    case "private":
-      return statuses[1];
-    case "draft":
-      return statuses[2];
-    default:
-      return statuses[0];
-  }
-};
-
-const selectedMood = (mood: string) => {
-  switch (mood) {
-    case "terrible":
-      return statuses[0];
-    case "bad":
-      return statuses[1];
-    case "neutral":
-      return statuses[2];
-    default:
-      return statuses[0];
-  }
-};
-
 export default function DiaryForm({ entryData }: Props) {
-  const { currentUser } = useAuthContext();
-  const router = useRouter();
-  const [hasSelectedMood, setHasSelectedMood] = useState(false);
+  const {
+    communities,
+    statuses,
+    selectedEntryCommunity,
+    selectedEntryStatus,
+    classNames,
+  } = useListBox();
   const [showMoodSelect, setShowMoodSelect] = useState(true);
-  const [selectedMood, setSelectedMood] = useState(
-    entryData ? entryData.attributes.diary!.mood : ""
-  );
+  //   entryData ? entryData.attributes.diary!.mood : ""
+  // );
   const [selectedCommunity, setSelectedCommunity] = useState<Community | null>(
-    () => selectedEntryCommunity(entryData?.attributes.community?.id)
+    entryData && entryData.attributes.community
+      ? selectedEntryCommunity(entryData.attributes.community.id)
+      : null
   );
   const [selectedStatus, setSelectedStatus] = useState(
     entryData ? selectedEntryStatus(entryData.attributes.status) : statuses[0]
   );
-  const bodyRef = useRef<HTMLTextAreaElement>(null);
-  const { register, handleSubmit } = useForm<DiaryInputs>();
+  const { register, handleSubmit, getValues } = useForm<DiaryData>();
+  const { axioRequest } = useAxios();
 
   const entry = entryData;
   const diary = entry?.attributes.diary;
-  const community = entry?.attributes.community;
   const isAddMode = !entry;
 
   const isCheckedMood = (mood: Mood) => {
-    if (mood === selectedMood) {
-      return true;
-    } else {
-      return false;
-    }
+    const result = mood === diary?.mood ? true : false;
+    return result;
   };
 
-  useEffect(() => {
-    if (community) {
-      selectedEntryCommunity(community.id);
-    }
-  });
-
-  const onSubmit: SubmitHandler<DiaryInputs> = (diaryInputData) => {
-    return isAddMode
-      ? createDiary(diaryInputData)
-      : updateDiary(entry.id, diaryInputData);
-  };
-
-  async function setConfig() {
-    const token = await currentUser?.getIdToken();
-    const config = {
-      headers: { authorization: `Bearer ${token}` },
+  const onSubmit: SubmitHandler<DiaryData> = (diaryInputData) => {
+    const data: EntryRequestData = {
+      entry: {
+        entryable_type: "Diary",
+        status: selectedStatus.name as Status,
+        community_id: selectedCommunity ? selectedCommunity.id : null,
+        entryable_attributes: diaryInputData,
+      },
     };
-    return config;
-  }
 
-  async function createDiary(diaryInputData: DiaryInputs) {
-    const config = await setConfig();
-
-    if (!showMoodSelect && !bodyRef.current?.value) {
+    if (!showMoodSelect && !diaryInputData.body) {
       toast.info("詳細記録は記入必須です。");
     } else {
-      try {
-        const response = await axios.post(
-          "/entries",
-          {
-            entry: {
-              entryable_type: "Diary",
-              status: selectedStatus.name,
-              community_id: selectedCommunity?.id,
-              entryable_attributes: diaryInputData,
-            },
-          },
-          config
-        );
-        if (response.status === 200) {
-          toast.success("気持ち記録が作成できました！");
-          setTimeout(() => {
-            router.push("/");
-          }, 3000);
-        } else {
-          toast.error("気持ち記録が作成できませんでした");
-        }
-      } catch (err) {
-        let message;
-        if (axios.isAxiosError(err) && err.response) {
-          console.error(err.response.data.message);
-        } else {
-          message = String(err);
-          console.error(message);
-        }
-      }
+      return isAddMode ? createDiary(data) : updateDiary(entry.id, data);
     }
-  }
-
-  async function updateDiary(id: number, diaryInputData: DiaryInputs) {
-    const config = await setConfig();
-
-    if (!showMoodSelect && !bodyRef.current?.value) {
-      toast.info("詳細記録は記入必須です。");
-    } else {
-      try {
-        const response = await axios.patch(
-          `/entries/${id}`,
-          {
-            entry: {
-              entryable_type: "Diary",
-              status: selectedStatus.name,
-              community_id: selectedCommunity?.id,
-              entryable_attributes: diaryInputData,
-            },
-          },
-          config
-        );
-        if (response.status === 200) {
-          toast.success("気持ち記録が更新できました！");
-          setTimeout(() => {
-            router.push(`/entries/${id.toString()}`);
-          }, 3000);
-        } else {
-          toast.error("気持ち記録が更新できませんでした");
-        }
-      } catch (err) {
-        let message;
-        if (axios.isAxiosError(err) && err.response) {
-          console.error(err.response.data.message);
-        } else {
-          message = String(err);
-          console.error(message);
-        }
-      }
-    }
-  }
-
-  const handleMoodChange = (mood: Mood) => {
-    setSelectedMood(mood);
-    setHasSelectedMood(true);
   };
+
+  function createDiary(data: EntryRequestData) {
+    const method = "post";
+    const url = "/entries";
+    const onSuccess = { msg: "気持ち記録が作成できました！", redirectUrl: "/" };
+    const onFailure = {
+      msg: "気持ち記録が作成できませんでした",
+      redirectUrl: "",
+    };
+
+    axioRequest(method, url, onSuccess, onFailure, data);
+  }
+
+  function updateDiary(id: number, data: EntryRequestData) {
+    const method = "patch";
+    const url = `/entries/${id}`;
+    const onSuccess = {
+      msg: "気持ち記録が更新できました！",
+      redirectUrl: `/entries/${id.toString()}`,
+    };
+    const onFailure = {
+      msg: "気持ち記録が更新できませんでした",
+      redirectUrl: "",
+    };
+
+    axioRequest(method, url, onSuccess, onFailure, data);
+  }
 
   const handleClickNext = () => {
-    if (hasSelectedMood === true) {
+    if (getValues("mood")) {
       setShowMoodSelect(false);
     } else {
       toast.info("気分を選んでくださいね");
@@ -272,8 +131,7 @@ export default function DiaryForm({ entryData }: Props) {
                       id="terrible"
                       value="terrible"
                       className="sr-only peer/terrible"
-                      onChange={() => handleMoodChange("terrible")}
-                      checked={isCheckedMood("terrible")}
+                      defaultChecked={isCheckedMood("terrible")}
                     />
                     <label
                       htmlFor="terrible"
@@ -292,8 +150,7 @@ export default function DiaryForm({ entryData }: Props) {
                       id="bad"
                       value="bad"
                       className="sr-only peer/bad"
-                      onChange={() => handleMoodChange("bad")}
-                      checked={isCheckedMood("bad")}
+                      defaultChecked={isCheckedMood("bad")}
                     />
                     <label
                       htmlFor="bad"
@@ -312,8 +169,7 @@ export default function DiaryForm({ entryData }: Props) {
                       id="neutral"
                       value="neutral"
                       className="sr-only peer/neutral"
-                      onChange={() => handleMoodChange("neutral")}
-                      checked={isCheckedMood("neutral")}
+                      defaultChecked={isCheckedMood("neutral")}
                     />
                     <label
                       htmlFor="neutral"
@@ -333,8 +189,7 @@ export default function DiaryForm({ entryData }: Props) {
                       id="good"
                       value="good"
                       className="sr-only peer/good"
-                      onChange={() => handleMoodChange("good")}
-                      checked={isCheckedMood("good")}
+                      defaultChecked={isCheckedMood("good")}
                     />
                     <label
                       htmlFor="good"
@@ -354,8 +209,7 @@ export default function DiaryForm({ entryData }: Props) {
                       id="great"
                       value="great"
                       className="sr-only peer/great"
-                      onChange={() => handleMoodChange("great")}
-                      checked={isCheckedMood("great")}
+                      defaultChecked={isCheckedMood("great")}
                     />
                     <label
                       htmlFor="great"
@@ -418,7 +272,6 @@ export default function DiaryForm({ entryData }: Props) {
                     name="body"
                     rows={10}
                     defaultValue={diary?.body}
-                    ref={bodyRef}
                     placeholder="今日は何かありましたか？"
                     className="w-full rounded-2xl bg-blue-300 bg-opacity-50 focus:shadow sm:text-lg text-base outline-none  text-blue-600 py-3 px-3 focus:bg-blue-200"
                   ></textarea>

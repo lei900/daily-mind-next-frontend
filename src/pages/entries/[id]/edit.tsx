@@ -31,8 +31,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 ) => {
   const { id } = context.query;
 
-  // const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/posts/${id}`);
-  const res = await fetch(`http://127.0.0.1:3001/api/v1/entries/${id}`);
+  const res = await fetch(
+    process.env.NEXT_PUBLIC_BASE_URL
+      ? `${process.env.NEXT_PUBLIC_BASE_URL}/posts/${id}`
+      : `http://127.0.0.1:3001/api/v1/entries/${id}`
+  );
 
   const raw = (await res.json()) as any;
   const entryData: EntryData = raw.data;

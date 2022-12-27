@@ -1,6 +1,8 @@
 import { StaticImageData } from "next/image";
 
 export type Mood = "terrible" | "bad" | "neutral" | "good" | "great";
+export type Status = "published" | "private" | "draft";
+export type EntryableType = "Diary" | "thoughtAnalysis";
 
 export interface DiaryData {
   mood: Mood;
@@ -8,13 +10,13 @@ export interface DiaryData {
   body: string;
 }
 
-export interface Diary {
-  title: string;
-  body: string;
-  // mood: ({ className }: { className?: string | undefined }) => JSX.Element;
-}
+// export interface Diary {
+//   title: string;
+//   body: string;
+//   // mood: ({ className }: { className?: string | undefined }) => JSX.Element;
+// }
 
-export interface ThoughtAnalysis {
+export interface ThoughtAnalysisData {
   negativeThought: string;
   newThought: string;
 }
@@ -35,45 +37,36 @@ export interface EntryDistortionData {
     | "感情による決めつけ";
 }
 
-export interface EntryDistortion extends EntryDistortionData {
-  icon: ({ className }: { className?: string | undefined }) => JSX.Element;
+// export interface EntryDistortion extends EntryDistortionData {
+//   icon: ({ className }: { className?: string | undefined }) => JSX.Element;
+// }
+
+export interface EntryRequestData {
+  entry: {
+    entryable_type: EntryableType;
+    status: Status;
+    community_id: number | null;
+    entryable_attributes: DiaryData | ThoughtAnalysisData;
+  };
 }
 
 export interface EntryData {
   id: number;
-  attributes: {
-    entryableType: string;
-    status: "published" | "private" | "draft";
-    user: User;
-    diary: DiaryData | null;
-    community: {
-      id: number;
-      name: string;
-    } | null;
-    thoughtAnalysis: ThoughtAnalysis | null;
-    distortions: EntryDistortionData[] | null;
-  };
+  attributes: EntryAttributes;
 }
 
-export interface Entry {
+export interface Entry extends EntryAttributes {
   id: number;
-  entryableType: string;
-  status: string;
-  user: {
-    uid: string;
-    avatar: string;
-    nickname: string;
-  };
-  diary: Diary | null;
-  community: {
-    id: number;
-    name: string;
-  } | null;
-  thoughtAnalysis: {
-    negativeThought: string;
-    newThought: string;
-  } | null;
-  distortions: EntryDistortion[] | null;
+}
+
+export interface EntryAttributes {
+  entryableType: EntryableType;
+  status: Status;
+  user: User;
+  diary: DiaryData | null;
+  community: CommunityData | null;
+  thoughtAnalysis: ThoughtAnalysisData | null;
+  distortions: EntryDistortionData[] | null;
 }
 
 export interface User {
@@ -125,16 +118,13 @@ export interface DistortionData {
   description: string;
 }
 
-export interface Community {
-  id: number;
-  name: string;
+export interface Community extends CommunityData {
   image: StaticImageData;
 }
 
 export interface CommunityData {
   id: number;
   name: string;
-  icon: string;
 }
 
 export interface DistortionInfo {

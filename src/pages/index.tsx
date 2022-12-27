@@ -8,7 +8,7 @@ import {
   Col,
   Modal,
 } from "@nextui-org/react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import fetch from "node-fetch";
@@ -17,229 +17,11 @@ import { useAuthContext } from "context/AuthContext";
 import { CommunityList } from "components/communities/communityList";
 import { ExerciseSection } from "components/home/ExerciseSection";
 import { HeroSection } from "components/home/HeroSection";
-import engineerIcon from "components/communities/images/engineerIcon.png";
-import careerIcon from "components/communities/images/engineerIcon.png";
-import lifeIcon from "components/communities/images/engineerIcon.png";
-import otherIcon from "components/communities/images/engineerIcon.png";
 import diaryIcon from "components/home/images/diaryIcon.png";
 import analysisIcon from "components/home/images/analysisIcon.png";
-import {
-  BlackAndWhiteThinking,
-  Overgeneralization,
-  Personalization,
-  ShouldStatements,
-  MagnificationAndMinimization,
-  MentalFilter,
-  DisqualifyPositive,
-  MindReading,
-  FortuneTeller,
-  Labeling,
-  EmotionalReasoning,
-} from "components/entries/thought-analyses/distortionIcon";
-import {
-  Great,
-  Good,
-  Neutral,
-  Bad,
-  Terrible,
-  GlobeAsiaIcon,
-  BookmarkIcon,
-  ChatIcon,
-  HeartIcon,
-  MoreIcon,
-  ExclamationCircleIcon,
-} from "components/Icons";
+import { ExclamationCircleIcon } from "components/Icons";
 import { EntryCardInfo, EntryData } from "types/types";
 import { EntryListItem } from "components/entries/EntryListItem";
-
-interface entry {
-  id: number;
-  entryableType: string;
-  status: string;
-  user: {
-    uid: string;
-    avatar: string;
-    nickname: string;
-  };
-  diary: {
-    title: string;
-    body: string;
-    mood: ({ className }: { className?: string | undefined }) => JSX.Element;
-  } | null;
-  community: {
-    id: number;
-    name: string;
-    icon: StaticImageData;
-  } | null;
-  thoughtAnalysis: {
-    negativeThought: string;
-    newThought: string;
-  } | null;
-  distortions:
-    | {
-        id: number;
-        name: string;
-        icon: ({
-          className,
-        }: {
-          className?: string | undefined;
-        }) => JSX.Element;
-      }[]
-    | null;
-}
-
-const ENTRIES: entry[] = [
-  {
-    id: 1,
-    entryableType: "Diary",
-    status: "published",
-    user: {
-      uid: "GQeQoXhM4aQOoKeGQxd12kuE7VN2",
-      avatar:
-        "https://pbs.twimg.com/profile_images/1517837311631040514/aCaLxlJ1_normal.jpg",
-      nickname: "Lei",
-    },
-    diary: {
-      title: "上司に叱れた、もう辞めたい",
-      body: "先週提出した提案書、結構完璧だと思ったけど、また受注できなかった。\n\n上司はまた頑張ろうと言ってくれたけど、本当は失望しているだろう。情けない。\n\nこんなダメな私は、やっぱりこの仕事に向いていないだろう。",
-      mood: Terrible,
-    },
-    community: {
-      id: 1,
-      name: "日常生活",
-      icon: lifeIcon,
-    },
-    thoughtAnalysis: null,
-    distortions: null,
-  },
-  {
-    id: 2,
-    entryableType: "ThoughtAnalysis",
-    status: "published",
-    user: {
-      uid: "GQeQoXhM4aQOoKeGQxd12kuE7VN2",
-      avatar:
-        "https://lh3.googleusercontent.com/a/ALm5wu32vHBl6Mz_K6eEb3fTK5yNsGk-1Ktnaf5HjXTJgg=s96-c",
-      nickname: "Lei",
-    },
-    diary: null,
-    community: {
-      id: 1,
-      name: "職場キャリア",
-      icon: careerIcon,
-    },
-    thoughtAnalysis: {
-      negativeThought:
-        "いつも失敗している。このままじゃクビになったらどうしよう。",
-      newThought:
-        "いつも失敗している訳ではない。この間の提案は結構良いと言われた。ただ今期予算が足りないということだけだ。\n\n受注できないのは、いろんな原因があり、私のせいではない。営業側ともっと連携できたら良いかも。\n\nクビになるのは考え過ぎたな。未来のことは、誰も予測できないし。私はそんなにダメなわけでもない。",
-    },
-    distortions: [
-      { id: 1, name: "白黒思考", icon: BlackAndWhiteThinking },
-      { id: 2, name: "過度の一般化", icon: Overgeneralization },
-    ],
-  },
-  {
-    id: 3,
-    entryableType: "Diary",
-    status: "published",
-    user: {
-      uid: "GQeQoXhM4aQOoKeGQxd12kuE7VN2",
-      avatar:
-        "https://lh3.googleusercontent.com/a/ALm5wu32vHBl6Mz_K6eEb3fTK5yNsGk-1Ktnaf5HjXTJgg=s96-c",
-      nickname: "Lei",
-    },
-    diary: {
-      title: "上司に叱れた、もう辞めたい",
-      body: "先週提出した提案書、結構完璧だと思ったけど、また受注できなかった。\n\n上司はまた頑張ろうと言ってくれたけど、本当は失望しているだろう。情けない。\n\nこんなダメな私は、やっぱりこの仕事に向いていないだろう。",
-      mood: Bad,
-    },
-    community: {
-      id: 1,
-      name: "日常生活",
-      icon: lifeIcon,
-    },
-    thoughtAnalysis: null,
-    distortions: null,
-  },
-  {
-    id: 4,
-    entryableType: "ThoughtAnalysis",
-    status: "published",
-    user: {
-      uid: "GQeQoXhM4aQOoKeGQxd12kuE7VN2",
-      avatar:
-        "https://lh3.googleusercontent.com/a/ALm5wu32vHBl6Mz_K6eEb3fTK5yNsGk-1Ktnaf5HjXTJgg=s96-c",
-      nickname: "Lei",
-    },
-    diary: null,
-    community: {
-      id: 1,
-      name: "職場キャリア",
-      icon: careerIcon,
-    },
-    thoughtAnalysis: {
-      negativeThought:
-        "いつも失敗している。このままじゃクビになったらどうしよう。",
-      newThought:
-        "いつも失敗している訳ではない。この間の提案は結構良いと言われた。ただ今期予算が足りないということだけだ。\n\n受注できないのは、いろんな原因があり、私のせいではない。営業側ともっと連携できたら良いかも。\n\nクビになるのは考え過ぎたな。未来のことは、誰も予測できないし。私はそんなにダメなわけでもない。",
-    },
-    distortions: [
-      { id: 1, name: "白黒思考", icon: BlackAndWhiteThinking },
-      { id: 2, name: "過度の一般化", icon: Overgeneralization },
-    ],
-  },
-  {
-    id: 5,
-    entryableType: "Diary",
-    status: "published",
-    user: {
-      uid: "GQeQoXhM4aQOoKeGQxd12kuE7VN2",
-      avatar:
-        "https://lh3.googleusercontent.com/a/ALm5wu32vHBl6Mz_K6eEb3fTK5yNsGk-1Ktnaf5HjXTJgg=s96-c",
-      nickname: "Lei",
-    },
-    diary: {
-      title: "上司に叱れた、もう辞めたい",
-      body: "先週提出した提案書、結構完璧だと思ったけど、また受注できなかった。\n\n上司はまた頑張ろうと言ってくれたけど、本当は失望しているだろう。情けない。\n\nこんなダメな私は、やっぱりこの仕事に向いていないだろう。",
-      mood: Bad,
-    },
-    community: {
-      id: 1,
-      name: "日常生活",
-      icon: lifeIcon,
-    },
-    thoughtAnalysis: null,
-    distortions: null,
-  },
-  {
-    id: 6,
-    entryableType: "ThoughtAnalysis",
-    status: "published",
-    user: {
-      uid: "GQeQoXhM4aQOoKeGQxd12kuE7VN2",
-      avatar:
-        "https://lh3.googleusercontent.com/a/ALm5wu32vHBl6Mz_K6eEb3fTK5yNsGk-1Ktnaf5HjXTJgg=s96-c",
-      nickname: "Lei",
-    },
-    diary: null,
-    community: {
-      id: 1,
-      name: "職場キャリア",
-      icon: careerIcon,
-    },
-    thoughtAnalysis: {
-      negativeThought:
-        "いつも失敗している。このままじゃクビになったらどうしよう。",
-      newThought:
-        "いつも失敗している訳ではない。この間の提案は結構良いと言われた。ただ今期予算が足りないということだけだ。\n\n受注できないのは、いろんな原因があり、私のせいではない。営業側ともっと連携できたら良いかも。\n\nクビになるのは考え過ぎたな。未来のことは、誰も予測できないし。私はそんなにダメなわけでもない。",
-    },
-    distortions: [
-      { id: 1, name: "白黒思考", icon: BlackAndWhiteThinking },
-      { id: 2, name: "過度の一般化", icon: Overgeneralization },
-    ],
-  },
-];
 
 const entryCardInfos = [
   {
@@ -392,11 +174,12 @@ export default function Home({ entriesData }: Props) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async (
-  context
-) => {
-  // const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/entries/`);
-  const res = await fetch("http://127.0.0.1:3001/api/v1/entries/");
+export const getServerSideProps: GetServerSideProps<Props> = async () => {
+  const res = await fetch(
+    process.env.NEXT_PUBLIC_BASE_URL
+      ? `${process.env.NEXT_PUBLIC_BASE_URL}/entries/`
+      : "http://127.0.0.1:3001/api/v1/entries/"
+  );
 
   const data = (await res.json()) as any;
   const entriesData = data.data;
