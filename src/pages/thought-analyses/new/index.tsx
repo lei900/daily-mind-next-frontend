@@ -1,13 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import {
-  Card,
-  Textarea,
-  Row,
-  Grid,
-  Spacer,
-  Modal,
-  FormElement,
-} from "@nextui-org/react";
+import { Card, Row, Grid, Spacer, Modal, FormElement } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -342,7 +334,7 @@ export default function NewAnalysisPage() {
     e.preventDefault();
     const distortion_ids = thoughtInputs.distortions.map((d) => d.id);
     const token = await currentUser?.getIdToken();
-    console.log("calling with " + token);
+    // console.log("calling with " + token);
     const config = {
       headers: { authorization: `Bearer ${token}` },
     };
@@ -367,7 +359,7 @@ export default function NewAnalysisPage() {
         );
         if (response.status === 200) {
           toast.success("ゆがみ分析記録が作成できました！");
-          setTimeout(function () {
+          setTimeout(() => {
             router.push("/thought-analyses/new/feedback");
           }, 3000);
         } else {
