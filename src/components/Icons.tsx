@@ -82,7 +82,7 @@ export const AvatarIcon = ({ className = "w-12 h-12" }) => {
       fill="currentColor"
       className={className}
     >
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g id="SVGRepo_iconCarrier">
         <defs>
           <style>

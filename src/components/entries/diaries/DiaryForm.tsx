@@ -1,46 +1,30 @@
-import { useState, Fragment } from "react";
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Listbox, Transition } from "@headlessui/react";
-import Image from "next/image";
 
-import {
-  CheckIcon,
-  ChevronUpDownIcon,
-  ChevronDownIcon,
-  Great,
-  Good,
-  Neutral,
-  Bad,
-  Terrible,
-} from "components/Icons";
-import { Community } from "types/types";
+import { Great, Good, Neutral, Bad, Terrible } from "components/Icons";
 import {
   EntryData,
   Mood,
   DiaryData,
   EntryRequestData,
   Status,
+  Community,
 } from "types/types";
 import useAxios from "hooks/useAxios";
 import useListBox from "hooks/useListBoxt";
+import CommunityListBox from "../CommunityListBox";
+import StatusListBox from "../StatusListBox";
 
 type Props = {
   entryData?: EntryData;
 };
 
 export default function DiaryForm({ entryData }: Props) {
-  const {
-    communities,
-    statuses,
-    selectedEntryCommunity,
-    selectedEntryStatus,
-    classNames,
-  } = useListBox();
+  const { statuses, selectedEntryCommunity, selectedEntryStatus } =
+    useListBox();
   const [showMoodSelect, setShowMoodSelect] = useState(true);
-  //   entryData ? entryData.attributes.diary!.mood : ""
-  // );
   const [selectedCommunity, setSelectedCommunity] = useState<Community | null>(
     entryData && entryData.attributes.community
       ? selectedEntryCommunity(entryData.attributes.community.id)
@@ -278,151 +262,14 @@ export default function DiaryForm({ entryData }: Props) {
                 </div>
               </div>
               <div className="flex justify-between px-2 mt-2 w-full">
-                <Listbox
-                  value={selectedCommunity}
-                  onChange={setSelectedCommunity}
-                >
-                  {({ open }) => (
-                    <>
-                      <div className="relative mt-1 w-52">
-                        <Listbox.Button className="relative w-full cursor-default rounded-xl bg-blue-50 py-2 pl-3 pr-10 text-left shadow-sm text-sm focus:ring-1 focus:ring-indigo-500">
-                          <span className="flex items-center">
-                            {selectedCommunity && (
-                              <Image
-                                src={selectedCommunity.image}
-                                alt="日常生活"
-                                width={30}
-                                height={30}
-                                className="h-6 w-6 flex-shrink-0 rounded-full"
-                              />
-                            )}
-                            <span className="ml-3 block truncate text-blue-600">
-                              {selectedCommunity
-                                ? selectedCommunity.name
-                                : "コミュニティーを選ぶ"}
-                            </span>
-                          </span>
-                          <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                            <ChevronUpDownIcon className="h-5 w-5 text-gray-400" />
-                          </span>
-                        </Listbox.Button>
-
-                        <Transition
-                          show={open}
-                          as={Fragment}
-                          leave="transition ease-in duration-100"
-                          leaveFrom="opacity-100"
-                          leaveTo="opacity-0"
-                        >
-                          <Listbox.Options className="absolute z-10 w-full overflow-auto rounded-xl bg-white text-sm shadow-lg  p-2">
-                            {communities.map((community) => (
-                              <Listbox.Option
-                                key={community.id}
-                                className={({ active }) =>
-                                  classNames(
-                                    active
-                                      ? "text-blue-600 bg-blue-50"
-                                      : "text-gray-800",
-                                    "relative cursor-default py-2 pl-3 pr-9 select-none rounded-xl text-sm"
-                                  )
-                                }
-                                value={community}
-                              >
-                                {({ selected, active }) => (
-                                  <>
-                                    <div className="flex items-center">
-                                      <Image
-                                        src={community.image}
-                                        alt={community.name}
-                                        width={15}
-                                        height={15}
-                                        className="h-6 w-6 flex-shrink-0 rounded-full"
-                                      />
-                                      <span
-                                        className={classNames(
-                                          "ml-3 block truncate"
-                                        )}
-                                      >
-                                        {community.name}
-                                      </span>
-                                    </div>
-
-                                    {selected ? (
-                                      <span
-                                        className="text-blue-600 
-                                    absolute inset-y-0 right-0 flex items-center pr-4"
-                                      >
-                                        <CheckIcon className="h-5 w-5" />
-                                      </span>
-                                    ) : null}
-                                  </>
-                                )}
-                              </Listbox.Option>
-                            ))}
-                          </Listbox.Options>
-                        </Transition>
-                      </div>
-                    </>
-                  )}
-                </Listbox>
-                <Listbox value={selectedStatus} onChange={setSelectedStatus}>
-                  {({ open }) => (
-                    <>
-                      <div className="relative mt-1 w-24">
-                        <Listbox.Button className="relative w-full cursor-default rounded-xl bg-blue-50 py-2 px-2  text-left shadow-sm text-sm focus:ring-1 focus:ring-indigo-500">
-                          <span className="flex items-center">
-                            <span className="ml-3 block truncate text-blue-600">
-                              {selectedStatus.displayName ||
-                                statuses[0].displayName}
-                            </span>
-                          </span>
-                          <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                            <ChevronDownIcon className="h-5 w-5 text-gray-400" />
-                          </span>
-                        </Listbox.Button>
-
-                        <Transition
-                          show={open}
-                          as={Fragment}
-                          leave="transition ease-in duration-100"
-                          leaveFrom="opacity-100"
-                          leaveTo="opacity-0"
-                        >
-                          <Listbox.Options className="absolute z-10 w-full overflow-auto rounded-xl bg-white text-sm shadow-lg  p-2">
-                            {statuses.map((status) => (
-                              <Listbox.Option
-                                key={status.id}
-                                className={({ active }) =>
-                                  classNames(
-                                    active
-                                      ? "text-blue-600 bg-blue-50"
-                                      : "text-gray-800",
-                                    "relative cursor-default py-2 px-2 select-none rounded-xl text-sm"
-                                  )
-                                }
-                                value={status}
-                              >
-                                {({ selected, active }) => (
-                                  <>
-                                    <div className="flex items-center">
-                                      <span
-                                        className={classNames(
-                                          "ml-3 block truncate"
-                                        )}
-                                      >
-                                        {status.displayName}
-                                      </span>
-                                    </div>
-                                  </>
-                                )}
-                              </Listbox.Option>
-                            ))}
-                          </Listbox.Options>
-                        </Transition>
-                      </div>
-                    </>
-                  )}
-                </Listbox>
+                <CommunityListBox
+                  selectedCommunity={selectedCommunity}
+                  setSelectedCommunity={setSelectedCommunity}
+                />
+                <StatusListBox
+                  selectedStatus={selectedStatus}
+                  setSelectedStatus={setSelectedStatus}
+                />
               </div>
               <div className="p-2 w-full sm:mt-10 mt-6">
                 <button

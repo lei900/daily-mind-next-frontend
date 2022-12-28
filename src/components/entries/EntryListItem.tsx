@@ -70,7 +70,7 @@ export const EntryListItem = ({ entry }: Props) => {
   return (
     <Card
       variant="flat"
-      className="bg-white flex flex-row cursor-pointer rounded-lg hover:bg-gray-50 p-4 gap-2 border-slate-300"
+      className="bg-white flex flex-row cursor-pointer  sm:rounded-xl rounded-none hover:bg-gray-50 sm:p-4 px-2 py-4 gap-2 border-slate-300 border-t-0 border-r-0 border-l-0 sm:border"
       key={entry.id}
     >
       <div className="flex">
@@ -121,7 +121,10 @@ export const EntryListItem = ({ entry }: Props) => {
             </Dropdown>
           )}
         </div>
-        <div className="p-0">
+        <div
+          className="p-0"
+          onClick={() => router.push(`/entries/${entry.id}`)}
+        >
           {diary && (
             <>
               <div className="font-semibold text-gray-700 mb-1 sm:text-base text-sm">
@@ -135,7 +138,7 @@ export const EntryListItem = ({ entry }: Props) => {
           {thoughtAnalysis && (
             <>
               <div className="font-semibold text-gray-700 mb-1 sm:text-base text-sm">
-                {thoughtAnalysis.negativeThought}
+                {thoughtAnalysis.negative_thought}
               </div>
               {distortions && (
                 <Row align="center" wrap="wrap" className="my-2">
@@ -158,7 +161,7 @@ export const EntryListItem = ({ entry }: Props) => {
                 反論：
               </div>
               <div className="whitespace-pre-line sm:text-base text-sm">
-                {thoughtAnalysis.newThought}
+                {thoughtAnalysis.new_thought}
               </div>
             </>
           )}

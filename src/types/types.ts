@@ -11,12 +11,12 @@ export interface DiaryData {
 }
 
 export interface ThoughtAnalysisData {
-  negativeThought: string;
-  newThought: string;
+  negative_thought: string;
+  new_thought: string;
 }
 
 export interface EntryDistortionData {
-  id: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
+  id: DistortionId;
   name:
     | "白黒思考"
     | "過度の一般化"
@@ -31,11 +31,15 @@ export interface EntryDistortionData {
     | "感情による決めつけ";
 }
 
+export type DistortionId = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
+export type DistortionIds = DistortionId[] | [];
+
 export interface EntryRequestData {
   entry: {
     entryable_type: EntryableType;
     status: Status;
     community_id: number | null;
+    distortion_ids?: DistortionIds;
     entryable_attributes: DiaryData | ThoughtAnalysisData;
   };
 }
