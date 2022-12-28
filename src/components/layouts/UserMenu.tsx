@@ -1,5 +1,6 @@
 import { Navbar, Text, Avatar, Dropdown, Popover } from "@nextui-org/react";
 import Link from "next/link";
+import { AvatarIcon, BellIcon, LogoutIcon } from "components/Icons";
 import { User } from "firebase/auth";
 
 type Props = {
@@ -8,22 +9,20 @@ type Props = {
 };
 
 const UserMenu = ({ currentUser, onLogout }: Props) => {
-  const userPhotoUrl = currentUser.photoURL;
-  const userName = currentUser.displayName;
+  // const userPhotoUrl = currentUser.photoURL;
+  const userName = "User_" + currentUser.uid.slice(0, 4);
 
   return (
-    <Navbar.Content
-      css={{
-        "@xs": {
-          w: "12%",
-          jc: "flex-end",
-        },
-      }}
-    >
+    <>
+      <Navbar.Item className="xs:flex hidden">
+        <div className="group rounded-full hover:bg-gray-100 p-2">
+          <BellIcon className="w-6 h-6 group-hover:stroke-gray-800" />
+        </div>
+      </Navbar.Item>
       <Dropdown placement="bottom-right">
         <Navbar.Item>
           <Dropdown.Trigger>
-            <Avatar as="button" size="md" src={userPhotoUrl!} />
+            <Avatar as="button" size="md" icon={<AvatarIcon />} />
           </Dropdown.Trigger>
         </Navbar.Item>
         <Dropdown.Menu
@@ -39,24 +38,33 @@ const UserMenu = ({ currentUser, onLogout }: Props) => {
               {userName!}
             </Text>
           </Dropdown.Item>
+          <Dropdown.Item key="add-diaries" withDivider>
+            <Link href="/diaries/new">今日の気持ち作成</Link>
+          </Dropdown.Item>
+          <Dropdown.Item key="add-thought-analyses">
+            <Link href="/thought-analyses/new">ゆがみ分析作成</Link>
+          </Dropdown.Item>
+          <Dropdown.Item key="entries" withDivider>
+            記録管理
+          </Dropdown.Item>
+          <Dropdown.Item key="likes" withDivider>
+            応援した投稿
+          </Dropdown.Item>
+          <Dropdown.Item key="bookmarks">保存した投稿</Dropdown.Item>
           <Dropdown.Item key="settings" withDivider>
-            My Settings
+            アカウント設定
           </Dropdown.Item>
-          <Dropdown.Item key="team_settings">Team Settings</Dropdown.Item>
-          <Dropdown.Item key="analytics" withDivider>
-            Analytics
-          </Dropdown.Item>
-          <Dropdown.Item key="system">System</Dropdown.Item>
-          <Dropdown.Item key="configurations">Configurations</Dropdown.Item>
-          <Dropdown.Item key="help_and_feedback" withDivider>
-            Help & Feedback
-          </Dropdown.Item>
-          <Dropdown.Item key="logout" withDivider color="error">
+          <Dropdown.Item
+            key="logout"
+            withDivider
+            color="error"
+            icon={<LogoutIcon />}
+          >
             <div onClick={onLogout}>ログアウト</div>
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-    </Navbar.Content>
+    </>
   );
 };
 
