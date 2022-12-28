@@ -2,19 +2,13 @@ import { StaticImageData } from "next/image";
 
 export type Mood = "terrible" | "bad" | "neutral" | "good" | "great";
 export type Status = "published" | "private" | "draft";
-export type EntryableType = "Diary" | "thoughtAnalysis";
+export type EntryableType = "Diary" | "ThoughtAnalysis";
 
 export interface DiaryData {
   mood: Mood;
   title: string;
   body: string;
 }
-
-// export interface Diary {
-//   title: string;
-//   body: string;
-//   // mood: ({ className }: { className?: string | undefined }) => JSX.Element;
-// }
 
 export interface ThoughtAnalysisData {
   negativeThought: string;
@@ -36,10 +30,6 @@ export interface EntryDistortionData {
     | "レッテル貼り"
     | "感情による決めつけ";
 }
-
-// export interface EntryDistortion extends EntryDistortionData {
-//   icon: ({ className }: { className?: string | undefined }) => JSX.Element;
-// }
 
 export interface EntryRequestData {
   entry: {

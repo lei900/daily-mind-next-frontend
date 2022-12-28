@@ -43,12 +43,18 @@ export default function useAxios() {
     data?: EntryRequestData
   ) {
     const config = await setConfig();
+    const sendRequest = () => {
+      if (method === "post") {
+        return axios.post(url, data, config);
+      } else if (method === "patch") {
+        return axios.patch(url, data, config);
+      } else {
+        return axios.delete(url, config);
+      }
+    };
 
     try {
-      const response =
-        method === "post"
-          ? await axios.post(url, data, config)
-          : await axios.patch(url, data, config);
+      const response = await sendRequest();
       if (response.status === 200) {
         toast.success(onSuccess.msg);
         router.push(onSuccess.redirectUrl);

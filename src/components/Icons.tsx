@@ -1,3 +1,148 @@
+export const LogoutIcon = ({ className = "w-6 h-6" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      strokeWidth={1.5}
+      stroke="#F31260"
+      className={className}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+      />
+    </svg>
+  );
+};
+
+export const BellIcon = ({ className = "w-6 h-6" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      strokeWidth={1.5}
+      stroke="#6b7280"
+      className={className}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
+      />
+    </svg>
+  );
+};
+
+export const EditIcon = ({ className = "w-6 h-6" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      strokeWidth={1.5}
+      stroke="#6b7280"
+      className={className}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+      />
+    </svg>
+  );
+};
+
+export const DeleteIcon = ({ className = "w-6 h-6" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      strokeWidth={1.5}
+      stroke="#6b7280"
+      className={className}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+      />
+    </svg>
+  );
+};
+
+export const AvatarIcon = ({ className = "w-12 h-12" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 128 128"
+      fill="currentColor"
+      className={className}
+    >
+      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g id="SVGRepo_iconCarrier">
+        <defs>
+          <style>
+            {`.cls-1{fill:#a7aece;}`}
+            {`.cls-2{fill:#ffffff;opacity:0.3;}`}
+            {`.cls-3{fill:#7f3838;}`}
+            {`.cls-4{fill:#bc5b57;}`}
+            {`.cls-5{fill:#ffd8c9;}`}
+            {`.cls-9{fill:none;stroke-linecap:round;}`}
+            {`.cls-6{stroke:#393c54;stroke-linejoin:round;}`}
+            {`.cls-6{stroke-width:3px;}`}
+            {`.cls-7{fill:#393c54;}`}
+            {`.cls-8{fill:#515570;}`}
+            {`.cls-9{stroke:#ffffff;stroke-miterlimit:10;stroke-width:2px;opacity:0.1;}`}
+            {`.cls-10{stroke-width:6px;}`}
+          </style>
+        </defs>
+        <circle className="cls-1" cx="64" cy="64" r="60"></circle>
+        <circle className="cls-2" cx="64" cy="64" r="48"></circle>
+        <path
+          className="cls-3"
+          d="M40,22A10,10,0,0,0,30,32v81.43a59.62,59.62,0,0,0,20,8.91V32A10,10,0,0,0,40,22Z"
+        ></path>
+        <path
+          className="cls-4"
+          d="M107.85,85.85c0-14.49-9.1-25-21.9-28.94l2-3.31a.59.59,0,0,0-.58-.9l-6,.82a.59.59,0,0,1-.54-1l2.66-3.2a.59.59,0,0,0-.54-1,100,100,0,0,0-21.07,5.4A35,35,0,0,0,40.15,85.85v3.22c0,15.48-1.65,21.18-6.36,26.76h0a59.94,59.94,0,0,0,72-8.77l0-.16A94.24,94.24,0,0,0,107.85,85.85Z"
+        ></path>
+        <path
+          className="cls-5"
+          d="M88.74,93.46a6.31,6.31,0,0,1-5-7.63,6.55,6.55,0,0,1,7.58-4.72l5.91,1A.8.8,0,0,0,98,81c-3.89-7-13.76-12.64-24-12.64S53.88,74,50,81a.8.8,0,0,0,.83,1.18l5.91-1a6.55,6.55,0,0,1,7.58,4.72,6.31,6.31,0,0,1-5.05,7.63L51.09,94.9a.8.8,0,0,0-.53,1.23c3.23,5,10.2,8.42,23.44,8.42s20.21-3.38,23.44-8.42a.8.8,0,0,0-.53-1.23Z"
+        ></path>
+        <path
+          className="cls-6"
+          d="M81.89,92.19a9,9,0,0,1-2.77,2.21,11.61,11.61,0,0,1-10.24,0"
+        ></path>
+        <path
+          className="cls-7"
+          d="M79.12,86.62c0,2.83-2.29,4.25-5.12,4.25s-5.12-1.42-5.12-4.25C68.88,85,79.12,84.75,79.12,86.62Z"
+        ></path>
+        <path
+          className="cls-7"
+          d="M57.33,87.48l3.05-.73a.71.71,0,0,1,.89.68,4,4,0,0,1-4.28,4,3.9,3.9,0,0,1-3-1.84,3.94,3.94,0,0,1,5.53-5.37.73.73,0,0,1,.08,1.11Z"
+        ></path>
+        <path
+          className="cls-7"
+          d="M90.4,87.48l3-.73a.72.72,0,0,1,.89.68,4,4,0,0,1-4.29,4,3.88,3.88,0,0,1-3-1.84,3.94,3.94,0,0,1,5.52-5.37.72.72,0,0,1,.09,1.11Z"
+        ></path>
+        <path
+          className="cls-7"
+          d="M92,29H15.28A59.76,59.76,0,0,0,7.09,45H92a8,8,0,0,0,0-16Z"
+        ></path>
+        <circle className="cls-8" cx="92" cy="37" r="8"></circle>
+        <circle className="cls-9" cx="92" cy="37" r="4.31"></circle>
+        <line className="cls-10" x1="13" x2="20.5" y1="42" y2="49.5"></line>
+        <line className="cls-10" x1="66" x2="74.38" y1="32.1" y2="23.72"></line>
+      </g>
+    </svg>
+  );
+};
+
 export const CheckIcon = ({ className = "w-5 h-5" }) => {
   return (
     <svg

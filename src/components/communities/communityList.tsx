@@ -10,16 +10,17 @@ import otherIcon from "./images/otherIcon.png";
 export const CommunityList = () => {
   const communityList = [
     {
-      title: "エンジニア部屋",
-      src: engineerIcon,
+      title: "日常生活",
+      src: lifeIcon,
     },
     {
       title: "職場・キャリア",
       src: careerIcon,
     },
+
     {
-      title: "日常生活",
-      src: lifeIcon,
+      title: "エンジニア部屋",
+      src: engineerIcon,
     },
     {
       title: "その他",
