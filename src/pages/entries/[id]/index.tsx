@@ -24,7 +24,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 
   const res = await fetch(
     process.env.NEXT_PUBLIC_BASE_URL
-      ? `${process.env.NEXT_PUBLIC_BASE_URL}/posts/${id}`
+      ? `${process.env.NEXT_PUBLIC_BASE_URL}/entries/${id}`
       : `http://127.0.0.1:3001/api/v1/entries/${id}`
   );
 

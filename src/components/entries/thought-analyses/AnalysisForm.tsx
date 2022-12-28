@@ -340,7 +340,10 @@ export default function AnalysisForm({ entryData, distortionIds }: Props) {
   function createAnalysis(data: EntryRequestData) {
     const method = "post";
     const url = "/entries";
-    const onSuccess = { msg: "分析記録が作成できました！", redirectUrl: "/" };
+    const onSuccess = {
+      msg: "分析記録が作成できました！",
+      redirectUrl: "/thought-analyses/new/feedback",
+    };
     const onFailure = {
       msg: "分析記録が作成できませんでした",
       redirectUrl: "",
