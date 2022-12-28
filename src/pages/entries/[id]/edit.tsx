@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { EntryData } from "types/types";
 import { useAuthContext } from "context/AuthContext";
 import DiaryForm from "components/entries/diaries/DiaryForm";
+import AnalysisForm from "components/entries/thought-analyses/AnalysisForm";
 
 type Props = {
   entryData: EntryData;
@@ -14,6 +15,7 @@ type Props = {
 export default function EditEntryPage({ entryData }: Props) {
   const { currentUser, loading } = useAuthContext();
   const router = useRouter();
+  const distortionIds = entryData.attributes.distortions?.map((d) => d.id);
 
   useEffect(() => {
     if (!loading) {
@@ -23,7 +25,15 @@ export default function EditEntryPage({ entryData }: Props) {
     }
   }, [currentUser]);
 
-  return <DiaryForm entryData={entryData} />;
+  return (
+    <>
+      {entryData.attributes.diary ? (
+        <DiaryForm entryData={entryData} />
+      ) : (
+        <AnalysisForm entryData={entryData} distortionIds={distortionIds} />
+      )}
+    </>
+  );
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async (
