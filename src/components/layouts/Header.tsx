@@ -19,7 +19,12 @@ export const Header = () => {
   ];
 
   return (
-    <Navbar isBordered maxWidth="lg" variant="sticky" className="bg-opacity-10">
+    <Navbar
+      isBordered
+      maxWidth="lg"
+      variant="sticky"
+      className="bg-opacity-10 justify-center"
+    >
       <Navbar.Toggle showIn="sm" />
       <Navbar.Brand
         css={{

@@ -1,6 +1,8 @@
-import { Card, Row, Dropdown } from "@nextui-org/react";
+import { Card, Row, Dropdown, Popover } from "@nextui-org/react";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Key } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 import {
   GlobeAsiaIcon,
@@ -8,11 +10,15 @@ import {
   ChatIcon,
   HeartIcon,
   MoreIcon,
+  AvatarIcon,
+  EditIcon,
+  DeleteIcon,
 } from "components/Icons";
 import { useAuthContext } from "context/AuthContext";
 import { EntryData } from "types/types";
 import { DiaryMoodIcon } from "./DiaryMoodIcon";
 import { EntryDistortionIcon } from "./EntryDistortionIcon";
+import useAxios from "hooks/useAxios";
 
 type Props = {
   entry: EntryData;
@@ -21,6 +27,8 @@ type Props = {
 export const EntryListItem = ({ entry }: Props) => {
   const { currentUser, loading } = useAuthContext();
   const [isAuthor, setIsAuthor] = useState(false);
+  const router = useRouter();
+  const { axioRequest } = useAxios();
 
   const diary = entry.attributes.diary;
   const thoughtAnalysis = entry.attributes.thoughtAnalysis;
@@ -35,6 +43,30 @@ export const EntryListItem = ({ entry }: Props) => {
     }
   }, [currentUser]);
 
+  const handleEntryAction = (key: Key) => {
+    if (key === "edit") {
+      router.push(`/entries/${entry.id}/edit`);
+    } else {
+      handleDeleteEntry();
+    }
+  };
+
+  const handleDeleteEntry = () => {
+    const method = "delete";
+    const url = `/entries/${entry.id}`;
+    const onSuccess = { msg: "記録が削除しました", redirectUrl: "" };
+    const onFailure = {
+      msg: "記録が削除できませんでした",
+      redirectUrl: "",
+    };
+
+    if (
+      window.confirm("削除してよろしいですか？削除した記録は復旧できません。")
+    ) {
+      axioRequest(method, url, onSuccess, onFailure);
+    }
+  };
+
   return (
     <Card
       variant="flat"
@@ -42,42 +74,67 @@ export const EntryListItem = ({ entry }: Props) => {
       key={entry.id}
     >
       <div className="flex">
-        <div className="sm:w-12 sm:h-12 w-8 h-8">
-          <Image
+        <AvatarIcon className="sm:w-12 sm:h-12 w-8 h-8" />
+        {/* <Image
             src={user.avatar}
             width={48}
             height={48}
             alt="Avatar"
             className="rounded-full"
-          />
-        </div>
+          /> */}
       </div>
       <div className="flex flex-col gap-2 w-full">
         <div className="flex flex-row justify-between">
           <div className="flex flex-row items-center gap-0.5">
-            <div className="inline-block mr-1 sm:text-xl text-lg text-gray-700">
+            <div className="inline-block mr-1 sm:text-base text-sm text-gray-600">
               {user.nickname}
             </div>
             {diary && <DiaryMoodIcon mood={diary.mood} />}
           </div>
-          <div className="group rounded-full p-2 hover:bg-blue-100">
-            <MoreIcon />
-          </div>
+          {isAuthor && (
+            <Dropdown placement="bottom-right">
+              <Dropdown.Trigger>
+                <div className="group rounded-full p-2 hover:bg-blue-100">
+                  <MoreIcon />
+                </div>
+              </Dropdown.Trigger>
+              <Dropdown.Menu
+                aria-label="Entry actions"
+                onAction={(key) => {
+                  handleEntryAction(key);
+                }}
+                css={{ $$dropdownMenuMinWidth: "130px" }}
+              >
+                <Dropdown.Item
+                  key="edit"
+                  icon={<EditIcon className="sm:w-6 sm:h-6 w-5 h-5" />}
+                >
+                  <p className="sm:text-base text-sm">編集</p>
+                </Dropdown.Item>
+                <Dropdown.Item
+                  key="delete"
+                  icon={<DeleteIcon className="sm:w-6 sm:h-6 w-5 h-5" />}
+                >
+                  <p className="sm:text-base text-sm">削除</p>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          )}
         </div>
         <div className="p-0">
           {diary && (
             <>
-              <div className="font-semibold text-gray-700 mb-1 text-sm sm:text-base">
+              <div className="font-semibold text-gray-700 mb-1 sm:text-base text-sm">
                 {diary.title}
               </div>
-              <div className="whitespace-pre-line text-sm sm:text-base">
+              <div className="whitespace-pre-line sm:text-base text-sm">
                 {diary.body}
               </div>
             </>
           )}
           {thoughtAnalysis && (
             <>
-              <div className="font-semibold text-gray-700 mb-1 text-sm sm:text-base">
+              <div className="font-semibold text-gray-700 mb-1 sm:text-base text-sm">
                 {thoughtAnalysis.negativeThought}
               </div>
               {distortions && (
@@ -97,8 +154,10 @@ export const EntryListItem = ({ entry }: Props) => {
                   ))}
                 </Row>
               )}
-
-              <div className="whitespace-pre-line text-sm sm:text-base">
+              <div className="sm:text-base text-sm font-semibold text-gray-700">
+                反論：
+              </div>
+              <div className="whitespace-pre-line sm:text-base text-sm">
                 {thoughtAnalysis.newThought}
               </div>
             </>
