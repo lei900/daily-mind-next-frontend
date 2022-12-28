@@ -39,37 +39,6 @@ const entryCardInfos = [
     src: analysisIcon,
   },
 ];
-const ENTRIES: EntryData[] = [
-  {
-    id: 2,
-    attributes: {
-      entryableType: "ThoughtAnalysis",
-      status: "published",
-      user: {
-        uid: "testuid1",
-        avatar: "avatar",
-        nickname: "User_test",
-        role: "gerenal",
-        bio: null,
-      },
-      diary: null,
-      community: {
-        id: 2,
-        name: "職場キャリア",
-      },
-      thoughtAnalysis: {
-        negativeThought:
-          "いつも失敗している。このままじゃクビになったらどうしよう。",
-        newThought:
-          "いつも失敗している訳ではない。この間の提案は結構良いと言われた。ただ今期予算が足りないということだけだ。\n\n受注できないのは、いろんな原因があり、私のせいではない。営業側ともっと連携できたら良いかも。\n\nクビになるのは考え過ぎたな。未来のことは、誰も予測できないし。私はそんなにダメなわけでもない。",
-      },
-      distortions: [
-        { id: 1, name: "白黒思考" },
-        { id: 2, name: "過度の一般化" },
-      ],
-    },
-  },
-];
 
 type Props = {
   entriesData: EntryData[];
