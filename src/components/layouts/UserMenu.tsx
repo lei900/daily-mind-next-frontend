@@ -1,4 +1,4 @@
-import { Navbar, Text, Avatar, Dropdown, Popover } from "@nextui-org/react";
+import { Navbar, Text, Avatar, Dropdown } from "@nextui-org/react";
 import Link from "next/link";
 import { AvatarIcon, BellIcon, LogoutIcon } from "components/Icons";
 import { User } from "firebase/auth";
@@ -28,7 +28,7 @@ const UserMenu = ({ currentUser, onLogout }: Props) => {
         <Dropdown.Menu
           aria-label="User menu actions"
           color="secondary"
-          onAction={(actionKey) => console.log({ actionKey })}
+          // onAction={(actionKey) => console.log({ actionKey })}
         >
           <Dropdown.Item key="profile" css={{ height: "$18" }}>
             <Text b color="inherit" css={{ d: "flex" }}>
@@ -43,16 +43,6 @@ const UserMenu = ({ currentUser, onLogout }: Props) => {
           </Dropdown.Item>
           <Dropdown.Item key="add-thought-analyses">
             <Link href="/thought-analyses/new">ゆがみ分析作成</Link>
-          </Dropdown.Item>
-          <Dropdown.Item key="entries" withDivider>
-            記録管理
-          </Dropdown.Item>
-          <Dropdown.Item key="likes" withDivider>
-            応援した投稿
-          </Dropdown.Item>
-          <Dropdown.Item key="bookmarks">保存した投稿</Dropdown.Item>
-          <Dropdown.Item key="settings" withDivider>
-            アカウント設定
           </Dropdown.Item>
           <Dropdown.Item
             key="logout"
