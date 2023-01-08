@@ -61,6 +61,8 @@ export interface EntryAttributes {
   community: CommunityData | null;
   thoughtAnalysis: ThoughtAnalysisData | null;
   distortions: EntryDistortionData[] | null;
+  likes: string;
+  entryLikerUids: string[];
 }
 
 export interface User {

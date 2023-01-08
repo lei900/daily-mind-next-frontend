@@ -3,7 +3,7 @@ import fetch from "node-fetch";
 import { Container } from "@nextui-org/react";
 
 import { EntryData } from "types/types";
-import { EntryListItem } from "components/entries/EntryListItem";
+import { EntryDetailCard } from "components/entries/EntryDetailCard";
 
 type Props = {
   entryData: EntryData;
@@ -11,8 +11,8 @@ type Props = {
 
 export default function EntryDetailPage({ entryData }: Props) {
   return (
-    <Container sm className="sm:px-16 md:px-10 px-4 mt-8">
-      <EntryListItem entry={entryData} />
+    <Container sm className="sm:px-16 md:px-10 px-2 mt-8">
+      <EntryDetailCard entry={entryData} />
     </Container>
   );
 }
