@@ -62,7 +62,9 @@ export interface EntryAttributes {
   thoughtAnalysis: ThoughtAnalysisData | null;
   distortions: EntryDistortionData[] | null;
   likes: string;
-  entryLikerUids: string[];
+  entryLikerUids: string[] | [];
+  bookmarks: string;
+  bookmarkerUids: string[] | [];
 }
 
 export interface User {

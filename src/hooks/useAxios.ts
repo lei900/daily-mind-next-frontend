@@ -40,9 +40,13 @@ export default function useAxios() {
     url: string,
     onSuccess?: { msg: string; redirectUrl: string },
     onFailure?: { msg: string; redirectUrl: string },
-    data?: EntryRequestData | any
+    data?: EntryRequestData | any,
+    configOptions?: any
   ) {
-    const config = await setConfig();
+    const initConfig = await setConfig();
+    const config = configOptions
+      ? { ...initConfig, ...configOptions }
+      : initConfig;
     const sendRequest = () => {
       if (method === "post") {
         return axios.post(url, data, config);
