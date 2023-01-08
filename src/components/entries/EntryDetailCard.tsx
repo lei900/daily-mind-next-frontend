@@ -1,7 +1,8 @@
-import { Card, Row, Dropdown } from "@nextui-org/react";
+import { Card, Row, Dropdown, Tooltip } from "@nextui-org/react";
 import Image from "next/image";
 import { useState, useEffect, Key } from "react";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 import {
   GlobeAsiaIcon,
@@ -23,7 +24,15 @@ type Props = {
   entry: EntryData;
 };
 
-export const EntryListItem = ({ entry }: Props) => {
+function classNames(...classes: any) {
+  return classes.filter(Boolean).join(" ");
+}
+
+export const EntryDetailCard = ({ entry }: Props) => {
+  const [hasLiked, setHasLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(Number(entry.attributes.likes));
+  // const [commentCount, setCommentCount] = useState(Number(entry.attributes.likes));
+  // const [bookmarkCount, setbookmarkCount] = useState(Number(entry.attributes.likes));
   const { currentUser, loading } = useAuthContext();
   const [isAuthor, setIsAuthor] = useState(false);
   const router = useRouter();
@@ -35,9 +44,16 @@ export const EntryListItem = ({ entry }: Props) => {
   const user = entry.attributes.user;
 
   useEffect(() => {
+    console.log(entry);
     if (!loading) {
       if (currentUser && currentUser.uid === user.uid) {
         setIsAuthor(true);
+      }
+      if (
+        currentUser &&
+        entry.attributes.entryLikerUids?.some((uid) => uid === currentUser.uid)
+      ) {
+        setHasLiked(true);
       }
     }
   }, [currentUser]);
@@ -53,7 +69,7 @@ export const EntryListItem = ({ entry }: Props) => {
   const handleDeleteEntry = () => {
     const method = "delete";
     const url = `/entries/${entry.id}`;
-    const onSuccess = { msg: "記録が削除しました", redirectUrl: "" };
+    const onSuccess = { msg: "記録が削除しました", redirectUrl: "/" };
     const onFailure = {
       msg: "記録が削除できませんでした",
       redirectUrl: "",
@@ -66,10 +82,35 @@ export const EntryListItem = ({ entry }: Props) => {
     }
   };
 
+  const handleLike = () => {
+    hasLiked ? removeLike() : addLike();
+  };
+
+  const removeLike = async () => {
+    const token = await currentUser?.getIdToken();
+    const config = {
+      headers: { authorization: `Bearer ${token}` },
+      data: { likeable_id: entry.id, likeable_type: "Entry" },
+    };
+
+    await axios.delete(`/likes/${entry.id}`, config);
+    setLikeCount(likeCount - 1);
+    setHasLiked(false);
+  };
+
+  const addLike = async () => {
+    const data = {
+      like: { likeable_id: entry.id, likeable_type: "Entry" },
+    };
+    await axioRequest("post", "/likes", undefined, undefined, data);
+    setLikeCount(likeCount + 1);
+    setHasLiked(true);
+  };
+
   return (
     <Card
       variant="flat"
-      className="bg-white flex flex-row cursor-pointer  sm:rounded-xl rounded-none hover:bg-gray-50 sm:p-4 px-2 py-4 gap-2 border-slate-300 border-t-0 border-r-0 border-l-0 sm:border"
+      className="bg-white flex flex-row rounded-none sm:p-4 px-2 py-4 gap-2 border-slate-300 border-t-0 border-r-0 border-l-0"
       key={entry.id}
     >
       <div className="flex">
@@ -120,10 +161,7 @@ export const EntryListItem = ({ entry }: Props) => {
             </Dropdown>
           )}
         </div>
-        <div
-          className="p-0"
-          onClick={() => router.push(`/entries/${entry.id}`)}
-        >
+        <div className="p-0">
           {diary && (
             <>
               <div className="font-semibold text-gray-700 mb-1 sm:text-base text-sm">
@@ -165,7 +203,7 @@ export const EntryListItem = ({ entry }: Props) => {
             </>
           )}
           {entry.attributes.community && (
-            <div className="flex my-3">
+            <div className="flex sm:my-6 my-4">
               <button className="bg-slate-100 rounded-2xl flex flex-row pl-2 pr-3 py-2 gap-0.5 items-center hover:bg-slate-200">
                 <GlobeAsiaIcon />
                 <p className="text-xs sm:text-sm text-sky-600 font-medium">
@@ -175,24 +213,38 @@ export const EntryListItem = ({ entry }: Props) => {
             </div>
           )}
           <Card.Footer className="flex flex-row py-0 px-0 justify-between items-center">
-            <button className="group inline-flex items-center p-2 rounded-xl hover:bg-pink-100">
-              <HeartIcon className="stroke-gray-500	w-5 h-5 group-hover:stroke-pink-500" />
-              <span className="text-xs text-gray-500 px-1 group-hover:text-pink-500">
-                応援
-              </span>
-            </button>
-            <button className="group inline-flex items-center p-2 rounded-xl hover:bg-blue-100">
-              <ChatIcon className="stroke-gray-500 w-5 h-5 group-hover:stroke-blue-500" />
-              <span className="text-xs text-gray-500 px-1 group-hover:text-blue-500">
-                コメント
-              </span>
-            </button>
-            <button className="group inline-flex items-center p-2 rounded-xl hover:bg-blue-100">
-              <BookmarkIcon className="stroke-gray-500 w-5 h-5 group-hover:stroke-blue-500" />
-              <span className="text-xs text-gray-500 px-1 group-hover:text-blue-500">
-                保存
-              </span>
-            </button>
+            <Tooltip content="応援する">
+              <button
+                className="group inline-flex items-center p-2 rounded-xl hover:bg-pink-100"
+                onClick={handleLike}
+              >
+                <HeartIcon
+                  className={classNames(
+                    hasLiked ? "stroke-pink-500" : "stroke-gray-500",
+                    "w-5 h-5 group-hover:stroke-pink-500"
+                  )}
+                />
+                <span className="text-xs sm:text-sm text-gray-500 px-1 group-hover:text-pink-500">
+                  {likeCount === 0 ? "応援" : likeCount}
+                </span>
+              </button>
+            </Tooltip>
+            <Tooltip content="コメントする">
+              <button className="group inline-flex items-center p-2 rounded-xl hover:bg-blue-100">
+                <ChatIcon className="stroke-gray-500 w-5 h-5 group-hover:stroke-blue-500" />
+                <span className="text-xs sm:text-sm text-gray-500 px-1 group-hover:text-blue-500">
+                  コメント
+                </span>
+              </button>
+            </Tooltip>
+            <Tooltip content="保存する">
+              <button className="group inline-flex items-center p-2 rounded-xl hover:bg-blue-100">
+                <BookmarkIcon className="stroke-gray-500 w-5 h-5 group-hover:stroke-blue-500" />
+                <span className="text-xs sm:text-sm text-gray-500 px-1 group-hover:text-blue-500">
+                  保存
+                </span>
+              </button>
+            </Tooltip>
           </Card.Footer>
         </div>
       </div>

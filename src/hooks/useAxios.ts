@@ -38,9 +38,9 @@ export default function useAxios() {
   async function axioRequest(
     method: "post" | "patch" | "delete",
     url: string,
-    onSuccess: { msg: string; redirectUrl: string },
-    onFailure: { msg: string; redirectUrl: string },
-    data?: EntryRequestData
+    onSuccess?: { msg: string; redirectUrl: string },
+    onFailure?: { msg: string; redirectUrl: string },
+    data?: EntryRequestData | any
   ) {
     const config = await setConfig();
     const sendRequest = () => {
@@ -56,10 +56,14 @@ export default function useAxios() {
     try {
       const response = await sendRequest();
       if (response.status === 200) {
-        toast.success(onSuccess.msg);
-        router.push(onSuccess.redirectUrl);
+        if (onSuccess) {
+          toast.success(onSuccess.msg);
+          router.push(onSuccess?.redirectUrl);
+        }
       } else {
-        toast.error(onFailure.msg);
+        if (onFailure) {
+          toast.error(onFailure.msg);
+        }
       }
     } catch (err) {
       handleAxiosError(err);
