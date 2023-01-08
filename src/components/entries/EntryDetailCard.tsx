@@ -31,8 +31,10 @@ function classNames(...classes: any) {
 export const EntryDetailCard = ({ entry }: Props) => {
   const [hasLiked, setHasLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(Number(entry.attributes.likes));
-  // const [commentCount, setCommentCount] = useState(Number(entry.attributes.likes));
-  // const [bookmarkCount, setbookmarkCount] = useState(Number(entry.attributes.likes));
+  const [hasBookmarked, setHasBookmarked] = useState(false);
+  const [bookmarkCount, setBookmarkCount] = useState(
+    Number(entry.attributes.bookmarks)
+  );
   const { currentUser, loading } = useAuthContext();
   const [isAuthor, setIsAuthor] = useState(false);
   const router = useRouter();
@@ -44,16 +46,19 @@ export const EntryDetailCard = ({ entry }: Props) => {
   const user = entry.attributes.user;
 
   useEffect(() => {
-    console.log(entry);
-    if (!loading) {
-      if (currentUser && currentUser.uid === user.uid) {
+    if (!loading && currentUser) {
+      if (currentUser.uid === user.uid) {
         setIsAuthor(true);
       }
       if (
-        currentUser &&
-        entry.attributes.entryLikerUids?.some((uid) => uid === currentUser.uid)
+        entry.attributes.entryLikerUids.some((uid) => uid === currentUser.uid)
       ) {
         setHasLiked(true);
+      }
+      if (
+        entry.attributes.bookmarkerUids.some((uid) => uid === currentUser.uid)
+      ) {
+        setHasBookmarked(true);
       }
     }
   }, [currentUser]);
@@ -62,11 +67,11 @@ export const EntryDetailCard = ({ entry }: Props) => {
     if (key === "edit") {
       router.push(`/entries/${entry.id}/edit`);
     } else {
-      handleDeleteEntry();
+      deleteEntry();
     }
   };
 
-  const handleDeleteEntry = () => {
+  const deleteEntry = () => {
     const method = "delete";
     const url = `/entries/${entry.id}`;
     const onSuccess = { msg: "記録が削除しました", redirectUrl: "/" };
@@ -82,29 +87,64 @@ export const EntryDetailCard = ({ entry }: Props) => {
     }
   };
 
-  const handleLike = () => {
-    hasLiked ? removeLike() : addLike();
+  const handleLikeEntry = () => {
+    if (currentUser) {
+      hasLiked ? unLikeEntry() : likeEntry();
+    }
   };
 
-  const removeLike = async () => {
-    const token = await currentUser?.getIdToken();
-    const config = {
-      headers: { authorization: `Bearer ${token}` },
-      data: { likeable_id: entry.id, likeable_type: "Entry" },
+  const unLikeEntry = async () => {
+    const configOptions = {
+      params: { likeable_id: entry.id, likeable_type: "Entry" },
     };
 
-    await axios.delete(`/likes/${entry.id}`, config);
+    await axioRequest(
+      "delete",
+      `/likes/${entry.id}`,
+      undefined,
+      undefined,
+      undefined,
+      configOptions
+    );
     setLikeCount(likeCount - 1);
     setHasLiked(false);
   };
 
-  const addLike = async () => {
+  const likeEntry = async () => {
     const data = {
       like: { likeable_id: entry.id, likeable_type: "Entry" },
     };
     await axioRequest("post", "/likes", undefined, undefined, data);
     setLikeCount(likeCount + 1);
     setHasLiked(true);
+  };
+
+  const handleBookmark = () => {
+    if (currentUser) {
+      hasBookmarked ? unbookmark() : bookmark();
+    }
+  };
+
+  const unbookmark = async () => {
+    const configOptions = {
+      params: { entry_id: entry.id },
+    };
+    await axioRequest(
+      "delete",
+      `/bookmarks/${entry.id}`,
+      undefined,
+      undefined,
+      undefined,
+      configOptions
+    );
+    setBookmarkCount(bookmarkCount - 1);
+    setHasBookmarked(false);
+  };
+
+  const bookmark = async () => {
+    await axioRequest("post", `/bookmarks`);
+    setBookmarkCount(bookmarkCount + 1);
+    setHasBookmarked(true);
   };
 
   return (
@@ -131,6 +171,9 @@ export const EntryDetailCard = ({ entry }: Props) => {
             </div>
             {diary && <DiaryMoodIcon mood={diary.mood} />}
           </div>
+
+          {/* entry action menu */}
+
           {isAuthor && (
             <Dropdown placement="bottom-right">
               <Dropdown.Trigger>
@@ -161,6 +204,9 @@ export const EntryDetailCard = ({ entry }: Props) => {
             </Dropdown>
           )}
         </div>
+
+        {/* entry body */}
+
         <div className="p-0">
           {diary && (
             <>
@@ -212,11 +258,14 @@ export const EntryDetailCard = ({ entry }: Props) => {
               </button>
             </div>
           )}
+
+          {/* entry reactions */}
+
           <Card.Footer className="flex flex-row py-0 px-0 justify-between items-center">
             <Tooltip content="応援する">
               <button
                 className="group inline-flex items-center p-2 rounded-xl hover:bg-pink-100"
-                onClick={handleLike}
+                onClick={handleLikeEntry}
               >
                 <HeartIcon
                   className={classNames(
@@ -238,10 +287,18 @@ export const EntryDetailCard = ({ entry }: Props) => {
               </button>
             </Tooltip>
             <Tooltip content="保存する">
-              <button className="group inline-flex items-center p-2 rounded-xl hover:bg-blue-100">
-                <BookmarkIcon className="stroke-gray-500 w-5 h-5 group-hover:stroke-blue-500" />
+              <button
+                className="group inline-flex items-center p-2 rounded-xl hover:bg-blue-100"
+                onClick={handleBookmark}
+              >
+                <BookmarkIcon
+                  className={classNames(
+                    hasBookmarked ? "stroke-blue-500" : "stroke-gray-500",
+                    "w-5 h-5 group-hover:stroke-blue-500"
+                  )}
+                />
                 <span className="text-xs sm:text-sm text-gray-500 px-1 group-hover:text-blue-500">
-                  保存
+                  {bookmarkCount === 0 ? "保存" : bookmarkCount}
                 </span>
               </button>
             </Tooltip>
