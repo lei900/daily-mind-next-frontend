@@ -101,7 +101,7 @@ export interface Question {
   qid: number;
   body: string;
   resultInterpretation: string;
-  choices?: Choice[];
+  choices: Choice[];
 }
 
 export interface Choice {

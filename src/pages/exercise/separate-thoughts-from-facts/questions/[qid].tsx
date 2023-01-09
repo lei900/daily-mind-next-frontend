@@ -32,7 +32,7 @@ export default function QuestionDetailPage({ question }: Props) {
   const questionBody = question.attributes.body;
   const choices = question.attributes.choices.map((choice) => {
     const content = choice.content;
-    const isCorrectChoice = choice.is_correct_choice;
+    const isCorrectChoice = choice.isCorrectChoice;
     return { content, isCorrectChoice };
   });
   const correctChoice = choices.find(
