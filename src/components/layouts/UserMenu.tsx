@@ -14,11 +14,11 @@ const UserMenu = ({ currentUser, onLogout }: Props) => {
 
   return (
     <>
-      <Navbar.Item className="xs:flex hidden">
+      {/* <Navbar.Item className="xs:flex hidden">
         <div className="group rounded-full hover:bg-gray-100 p-2">
           <BellIcon className="w-6 h-6 group-hover:stroke-gray-800" />
         </div>
-      </Navbar.Item>
+      </Navbar.Item> */}
       <Dropdown placement="bottom-right">
         <Navbar.Item>
           <Dropdown.Trigger>
