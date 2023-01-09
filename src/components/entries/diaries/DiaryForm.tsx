@@ -236,7 +236,7 @@ export default function DiaryForm({ entryData }: Props) {
                   id="title"
                   name="title"
                   defaultValue={diary?.title}
-                  placeholder="タイトルは任意です。"
+                  placeholder="タイトルをつけましょう"
                   className="w-full rounded-2xl bg-blue-300 bg-opacity-50  sm:text-lg text-base outline-none  text-blue-600 py-3 px-3 focus:bg-blue-200"
                 />
               </div>
