@@ -84,11 +84,10 @@ export const EntryListItem = ({ entry }: Props) => {
       </div>
       <div className="flex flex-col gap-2 w-full">
         <div className="flex flex-row justify-between">
-          <div className="flex flex-row items-center gap-0.5">
-            <div className="inline-block mr-1 sm:text-base text-sm text-gray-600">
+          <div className="flex flex-col items-center gap-0.5">
+            <div className="sm:text-base text-sm text-gray-600">
               {user.nickname}
             </div>
-            {diary && <DiaryMoodIcon mood={diary.mood} />}
           </div>
           {isAuthor && (
             <Dropdown placement="bottom-right">
@@ -126,8 +125,11 @@ export const EntryListItem = ({ entry }: Props) => {
         >
           {diary && (
             <>
-              <div className="font-semibold text-gray-700 mb-1 sm:text-base text-sm">
-                {diary.title}
+              <div className="flex flex-row items-center gap-0.5 mb-2">
+                <DiaryMoodIcon mood={diary.mood} />
+                <div className="font-semibold text-gray-700 sm:text-base text-sm">
+                  {diary.title}
+                </div>
               </div>
               <div className="whitespace-pre-line sm:text-base text-sm">
                 {diary.body}

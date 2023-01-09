@@ -212,12 +212,6 @@ export default function AnalysisForm({ entryData, distortionIds }: Props) {
   );
   const { axioRequest } = useAxios();
 
-  // distortionIds
-  //     ? distortionArray.filter((distortionInfo) =>
-  //         distortionIds.some((id) => id === distortionInfo.id)
-  //       )
-  //     :
-
   const entry = entryData;
   const isAddMode = !entry;
 
@@ -227,8 +221,6 @@ export default function AnalysisForm({ entryData, distortionIds }: Props) {
       negatetiveThought: e.target.value,
     });
   };
-
-  // entryData!.attributes.distortions!.map((d) => d.id);
 
   const handleDistortionConfirm = (distortion: DistortionInfo) => {
     if (isSelected(distortion)) {
@@ -265,8 +257,6 @@ export default function AnalysisForm({ entryData, distortionIds }: Props) {
   };
 
   const isSelected = (distortion: DistortionInfo) => {
-    // console.log(distortion);
-    // debugger;
     return thoughtInputs.distortions.some((d) => d.id === distortion.id);
   };
 

@@ -309,7 +309,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
   } catch (err) {
     let message;
     if (axios.isAxiosError(err) && err.response) {
-      console.error(err.response.data.message);
+      console.error(err.response);
     } else {
       message = String(err);
       console.error(message);

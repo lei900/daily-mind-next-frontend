@@ -65,6 +65,11 @@ export interface EntryAttributes {
   entryLikerUids: string[] | [];
   bookmarks: string;
   bookmarkerUids: string[] | [];
+  comments: {
+    data: [] | CommentData[];
+  };
+  commentCount: string;
+  createdAt: string;
 }
 
 export interface User {
@@ -75,25 +80,28 @@ export interface User {
   bio: string | null;
 }
 
-export interface QuestionData {
-  attributes: {
-    qid: number;
-    body: string;
-    resultInterpretation: string;
-    choices: ChoiceData[];
-  };
+export interface CommentData {
+  id: number;
+  attributes: CommentAttributes;
 }
 
-export interface ChoiceData {
-  content: string;
-  is_correct_choice: boolean;
+export interface CommentAttributes {
+  body: string;
+  entryId: number;
+  parentId?: number | null;
+  createdAt: string;
+  user: User;
+}
+
+export interface QuestionData {
+  attributes: Question;
 }
 
 export interface Question {
   qid: number;
   body: string;
   resultInterpretation: string;
-  choices?: Choice[];
+  choices: Choice[];
 }
 
 export interface Choice {
