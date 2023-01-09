@@ -74,6 +74,19 @@ export const DeleteIcon = ({ className = "w-6 h-6" }) => {
   );
 };
 
+export const AirplaneIcon = ({ className = "w-6 h-6" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="#3b82f6"
+      className={className}
+    >
+      <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"></path>
+    </svg>
+  );
+};
+
 export const AvatarIcon = ({ className = "w-12 h-12" }) => {
   return (
     <svg
@@ -401,7 +414,7 @@ export const IdeaIcon = ({ className = "w-10 h-10" }) => {
   );
 };
 
-export const Great = ({ className = "w-4 h-4" }) => {
+export const Great = ({ className = "w-5 h-5" }) => {
   return (
     <svg
       fill="#16a34a"
@@ -417,7 +430,7 @@ export const Great = ({ className = "w-4 h-4" }) => {
   );
 };
 
-export const Good = ({ className = "w-4 h-4" }) => {
+export const Good = ({ className = "w-5 h-5" }) => {
   return (
     <svg
       fill="#65a30d"
@@ -433,7 +446,7 @@ export const Good = ({ className = "w-4 h-4" }) => {
   );
 };
 
-export const Neutral = ({ className = "w-4 h-4" }) => {
+export const Neutral = ({ className = "w-5 h-5" }) => {
   return (
     <svg
       fill="#0d9488"
@@ -449,7 +462,7 @@ export const Neutral = ({ className = "w-4 h-4" }) => {
   );
 };
 
-export const Bad = ({ className = "w-4 h-4" }) => {
+export const Bad = ({ className = "w-5 h-5" }) => {
   return (
     <svg
       fill="#0369a1"
@@ -465,7 +478,7 @@ export const Bad = ({ className = "w-4 h-4" }) => {
   );
 };
 
-export const Terrible = ({ className = "w-4 h-4" }) => {
+export const Terrible = ({ className = "w-5 h-5" }) => {
   return (
     <svg
       fill="#3730a3"
