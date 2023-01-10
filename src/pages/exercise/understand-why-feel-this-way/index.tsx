@@ -23,10 +23,10 @@ export default function Exercise1IntroPage() {
                 <Spacer x={0.5} />
                 <Col>
                   <h2 className="text-2xl font-semibold sm:text-3xl text-gray-700">
-                    認知と感情を分ける
+                    自分の感情を理解する
                   </h2>
                   <p className="text-gray-600 sm:text-base text-sm">
-                    考え方を変えると、気分は変わる
+                    気分を決めるものは現実ではなく、考え方だ
                   </p>
                 </Col>
               </Row>

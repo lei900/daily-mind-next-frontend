@@ -9,16 +9,16 @@ import exercisePic_3 from "../exercises/images/exercisePic_3.png";
 export const ExerciseSection = () => {
   const communityList = [
     {
-      href: "/exercise/separate-thoughts-from-feelings",
-      title: "認知と感情を分ける",
-      description: "考え方を変えると、気分は変わる",
+      href: "/exercise/understand-why-feel-this-way",
+      title: "自分の感情を理解する",
+      description: "気分を決めるものは現実ではなく、考え方だ",
       src: exercisePic_1,
       numberOfParticipants: "15",
     },
     {
       href: "/exercise/separate-thoughts-from-facts",
       title: "認知と事実を分ける",
-      description: "あの考えは本当に事実なのか?!",
+      description: "自分を苦しめているのは、「事実」ではないかも",
       src: exercisePic_2,
       numberOfParticipants: "21",
     },

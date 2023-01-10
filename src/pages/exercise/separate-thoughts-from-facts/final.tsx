@@ -19,7 +19,7 @@ export default function Exercise2FinalPage() {
                     認知と事実を分ける
                   </h2>
                   <p className="text-gray-600 sm:text-base text-sm">
-                    あの考えは本当に事実なのか?!
+                    自分を苦しめているのは、「事実」ではないかも
                   </p>
                 </Col>
               </Row>

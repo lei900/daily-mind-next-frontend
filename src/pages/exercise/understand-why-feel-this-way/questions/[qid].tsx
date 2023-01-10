@@ -100,7 +100,7 @@ export default function QuestionDetailPage({ question }: Props) {
             <Grid xs={12} sm={6}>
               <Row justify="center">
                 <h2 className="text-xl text-center font-semibold sm:text-2xl text-gray-700">
-                  認知と感情を分ける
+                  自分の感情を理解する
                 </h2>
                 <Spacer x={0.5} />
                 <p className="text-center sm:text-lg text-base self-end">
