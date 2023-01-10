@@ -40,17 +40,19 @@ export const Header = () => {
       >
         <Navbar.Link href="/">Home</Navbar.Link>
         <Navbar.Link href="guide">Guide</Navbar.Link>
-        <Navbar.Link href="#">Community</Navbar.Link>
-        <Navbar.Link href="#">About</Navbar.Link>
+        {/* <Navbar.Link href="#">Community</Navbar.Link> */}
+        <Navbar.Link href="https://forms.gle/fdNoCX7MzChWnLFy7">
+          Contact Us
+        </Navbar.Link>
       </Navbar.Content>
       <Navbar.Content>
-        {currentUser ? (
+        {!loading && currentUser ? (
           <UserMenu currentUser={currentUser} onLogout={logout} />
         ) : (
           <LoginButton />
         )}
       </Navbar.Content>
-      <Navbar.Collapse>
+      {/* <Navbar.Collapse>
         {collapseItems.map((item, index) => (
           <Navbar.CollapseItem
             key={item}
@@ -63,7 +65,7 @@ export const Header = () => {
             <Link href="#">{item}</Link>
           </Navbar.CollapseItem>
         ))}
-      </Navbar.Collapse>
+      </Navbar.Collapse> */}
     </Navbar>
   );
 };
