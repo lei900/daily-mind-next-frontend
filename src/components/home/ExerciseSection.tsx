@@ -7,7 +7,7 @@ import exercisePic_2 from "../exercises/images/exercisePic_2.png";
 import exercisePic_3 from "../exercises/images/exercisePic_3.png";
 
 export const ExerciseSection = () => {
-  const communityList = [
+  const exerciseList = [
     {
       href: "/exercise/understand-why-feel-this-way",
       title: "自分の感情を理解する",
@@ -49,7 +49,7 @@ export const ExerciseSection = () => {
           "@xsMax": { mw: "650px", margin: "auto" },
         }}
       >
-        {communityList.map((item, index) => (
+        {exerciseList.map((item, index) => (
           <Grid sm={6} xs={12} key={index}>
             <Card
               isPressable
