@@ -2,6 +2,7 @@ import { GetServerSideProps } from "next";
 import fetch from "node-fetch";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 import { EntryData } from "types/types";
 import { useAuthContext } from "context/AuthContext";
@@ -27,6 +28,20 @@ export default function EditEntryPage({ entryData }: Props) {
 
   return (
     <>
+      <Head>
+        <title>
+          {entryData.attributes.diary?.title ||
+            entryData.attributes.thoughtAnalysis?.negative_thought}
+        </title>
+        <meta
+          name="description"
+          content={
+            entryData.attributes.diary?.body ||
+            entryData.attributes.thoughtAnalysis?.negative_thought
+          }
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       {entryData.attributes.diary ? (
         <DiaryForm entryData={entryData} />
       ) : (

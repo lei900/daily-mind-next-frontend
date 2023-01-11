@@ -56,7 +56,7 @@ export interface Entry extends EntryAttributes {
 export interface EntryAttributes {
   entryableType: EntryableType;
   status: Status;
-  user: User;
+  user: UserInfo;
   diary: DiaryData | null;
   community: CommunityData | null;
   thoughtAnalysis: ThoughtAnalysisData | null;
@@ -72,12 +72,24 @@ export interface EntryAttributes {
   createdAt: string;
 }
 
-export interface User {
+export interface UserInfo {
   uid: string;
   nickname: string;
   role: string;
   avatar: string;
   bio: string | null;
+}
+
+export interface UserData extends UserInfo {
+  publishedEntries?: UserEntryData;
+  nondraftEntries?: UserEntryData;
+  bookmarkedEntries?: UserEntryData;
+  draftEntries?: UserEntryData;
+  isMypage: boolean;
+}
+
+export interface UserEntryData {
+  data: EntryData[] | [];
 }
 
 export interface CommentData {
@@ -90,7 +102,7 @@ export interface CommentAttributes {
   entryId: number;
   parentId?: number | null;
   createdAt: string;
-  user: User;
+  user: UserInfo;
 }
 
 export interface QuestionData {

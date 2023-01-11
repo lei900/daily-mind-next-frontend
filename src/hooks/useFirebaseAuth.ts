@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import nookies from "nookies";
 import {
   User,
   onAuthStateChanged,
@@ -6,6 +7,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   TwitterAuthProvider,
+  onIdTokenChanged,
 } from "firebase/auth";
 import { useRouter } from "next/router";
 
@@ -44,6 +46,7 @@ export default function useFirebaseAuth() {
 
   const clear = () => {
     setCurrentUser(null);
+    nookies.set(undefined, "token", "", { path: "/" });
     setLoading(false);
   };
 
@@ -53,18 +56,34 @@ export default function useFirebaseAuth() {
   const nextOrObserver = async (user: User | null) => {
     if (!user) {
       setLoading(false);
+      setCurrentUser(null);
+      nookies.set(undefined, "token", "", { path: "/" });
+      nookies.set(undefined, "uid", "", { path: "/" });
       return;
     }
-
     setLoading(true);
+    const token = await user.getIdToken();
     setCurrentUser(user);
+    nookies.set(undefined, "token", token, { path: "/" });
+    nookies.set(undefined, "uid", user.uid, { path: "/" });
     setLoading(false);
   };
 
-  // listen for user's sign-in state change
+  // listen for token changes
+  // write new token as a cookie
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, nextOrObserver);
+    const unsubscribe = onIdTokenChanged(auth, nextOrObserver);
     return unsubscribe;
+  }, []);
+
+  // force refresh the token every 60 minutes
+  useEffect(() => {
+    const handle = setInterval(async () => {
+      const user = auth.currentUser;
+      if (user) await user.getIdToken(true);
+    }, 60 * 60 * 1000);
+
+    return () => clearInterval(handle);
   }, []);
 
   return {
