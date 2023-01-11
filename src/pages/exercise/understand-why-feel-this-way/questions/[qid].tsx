@@ -2,6 +2,7 @@ import axios from "axios";
 import { GetStaticPropsContext } from "next";
 import { useState } from "react";
 import { ParsedUrlQuery } from "querystring";
+import Head from "next/head";
 
 import { Container, Spacer, Card, Grid, Row, Modal } from "@nextui-org/react";
 import { useRouter } from "next/router";
@@ -93,70 +94,80 @@ export default function QuestionDetailPage({ question }: Props) {
   };
 
   return (
-    <Container md css={{ px: "$18", mt: "$12", "@mdMax": { px: "$10" } }}>
-      <Card css={{ p: "$sm", mw: "900px", margin: "auto" }}>
-        <Card.Header css={{ py: "$10" }}>
-          <Grid.Container justify="center">
-            <Grid xs={12} sm={6}>
-              <Row justify="center">
-                <h2 className="text-xl text-center font-semibold sm:text-2xl text-gray-700">
-                  自分の感情を理解する
-                </h2>
-                <Spacer x={0.5} />
-                <p className="text-center sm:text-lg text-base self-end">
-                  (Q {questionId} / {QUESTION_NUMBER})
-                </p>
-              </Row>
-            </Grid>
-          </Grid.Container>
-        </Card.Header>
-        <Card.Divider />
-        <Card.Body
-          css={{
-            py: "$10",
-            margin: "auto",
-          }}
+    <>
+      <Head>
+        <title>自分の感情を理解する | 質問 - Daily Mind</title>
+        <meta
+          name="description"
+          content="自動思考はどのように気持ちを影響するのか。この練習で体験してみましょう。"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Container md css={{ px: "$18", mt: "$12", "@mdMax": { px: "$10" } }}>
+        <Card css={{ p: "$sm", mw: "900px", margin: "auto" }}>
+          <Card.Header css={{ py: "$10" }}>
+            <Grid.Container justify="center">
+              <Grid xs={12} sm={6}>
+                <Row justify="center">
+                  <h2 className="text-xl text-center font-semibold sm:text-2xl text-gray-700">
+                    自分の感情を理解する
+                  </h2>
+                  <Spacer x={0.5} />
+                  <p className="text-center sm:text-lg text-base self-end">
+                    (Q {questionId} / {QUESTION_NUMBER})
+                  </p>
+                </Row>
+              </Grid>
+            </Grid.Container>
+          </Card.Header>
+          <Card.Divider />
+          <Card.Body
+            css={{
+              py: "$10",
+              margin: "auto",
+            }}
+          >
+            <QuestionBody questionBody={questionBody} />
+          </Card.Body>
+          <Card.Footer>
+            <Row justify="center">
+              <div className="grid-cols-1">
+                {choices.map((choice, index) => (
+                  <button
+                    onClick={() => checkAnswer(choice)}
+                    className="block rounded-lg bg-indigo-500 sm:px-14 px-8 py-3 my-2 text-white text-left transition hover:bg-indigo-700 min-w-full"
+                    key={index}
+                  >
+                    <span className="sm:text-lg text-base font-semibold">
+                      {choice.content}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </Row>
+          </Card.Footer>
+        </Card>
+        <Modal
+          aria-labelledby="modal-title"
+          open={visible}
+          onClose={closeHandler}
         >
-          <QuestionBody questionBody={questionBody} />
-        </Card.Body>
-        <Card.Footer>
-          <Row justify="center">
-            <div className="grid-cols-1">
-              {choices.map((choice, index) => (
-                <button
-                  onClick={() => checkAnswer(choice)}
-                  className="block rounded-lg bg-indigo-500 sm:px-14 px-8 py-3 my-2 text-white text-left transition hover:bg-indigo-700 min-w-full"
-                  key={index}
-                >
-                  <span className="sm:text-lg text-base font-semibold">
-                    {choice.content}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </Row>
-        </Card.Footer>
-      </Card>
-      <Modal
-        aria-labelledby="modal-title"
-        open={visible}
-        onClose={closeHandler}
-      >
-        <Modal.Body>
-          <ModalBodyContent />
-        </Modal.Body>
-        <Modal.Footer>
-          <Row justify="center">
-            <button
-              onClick={turnNextPage}
-              className="block rounded-lg bg-indigo-500 px-8 py-2 text-white  transition hover:bg-indigo-700 focus:outline-none focus:ring"
-            >
-              <span className="text-base font-semibold">次へ</span>
-            </button>
-          </Row>
-        </Modal.Footer>
-      </Modal>
-    </Container>
+          <Modal.Body>
+            <ModalBodyContent />
+          </Modal.Body>
+          <Modal.Footer>
+            <Row justify="center">
+              <button
+                onClick={turnNextPage}
+                className="block rounded-lg bg-indigo-500 px-8 py-2 text-white  transition hover:bg-indigo-700 focus:outline-none focus:ring"
+              >
+                <span className="text-base font-semibold">次へ</span>
+              </button>
+            </Row>
+          </Modal.Footer>
+        </Modal>
+      </Container>
+    </>
   );
 }
 

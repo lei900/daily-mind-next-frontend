@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 import { useAuthContext } from "context/AuthContext";
 import AnalysisForm from "components/entries/thought-analyses/AnalysisForm";
@@ -14,5 +15,14 @@ export default function NewAnalysisPage() {
     }
   }, [loading, currentUser]);
 
-  return <AnalysisForm />;
+  return (
+    <>
+      <Head>
+        <title>思考ゆがみ分析作成 - Daily Mind</title>
+        <meta name="description" content="思考ゆがみ分析を作成する。" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <AnalysisForm />
+    </>
+  );
 }

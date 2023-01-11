@@ -2,6 +2,7 @@ import { GetServerSideProps } from "next";
 import fetch from "node-fetch";
 import { Container, Spacer, Card } from "@nextui-org/react";
 import { useState } from "react";
+import Head from "next/head";
 
 import { EntryData, CommentData } from "types/types";
 import { EntryDetail } from "components/entries/EntryDetail";
@@ -78,47 +79,63 @@ export default function EntryDetailPage({ entryData }: Props) {
   };
 
   return (
-    <Container sm className="sm:px-16 md:px-10 px-2 sm:mt-8">
-      <div className="flex flex-col sm:p-4 px-2 py-4 gap-2">
-        <EntryDetail entry={entryData} commentCount={commentCount} />
-        {/* コメント */}
-        <div className="relative">
-          <textarea
-            value={commentInputs}
-            aria-label="Write comment"
-            id="comment"
-            name="comment"
-            rows={2}
-            className="pt-2 pb-2 pl-3 w-full bg-slate-100 rounded-lg placeholder:text-slate-600 focus:shadow-sm pr-16"
-            placeholder="みんなで励まし合いましょう"
-            onChange={handleCommentChange}
-          />
-
-          <span
-            onClick={sendComment}
-            className="flex absolute right-3 top-2/4 -mt-5 hover:bg-blue-100 p-2 rounded-full cursor-pointer"
-          >
-            <AirplaneIcon />
-          </span>
-        </div>
-        {/* Comments content */}
-        <div className="font-semibold sm:text-base text-gray-700 my-2">
-          コメント一覧
-        </div>
-        {comments.length > 0 ? (
-          comments.map((comment) => (
-            <CommentListItem
-              comment={comment}
-              entryId={entryData.id}
-              onDeleteComment={deleteComment}
-              key={comment.id}
+    <>
+      <Head>
+        <title>
+          {entryData.attributes.diary?.title ||
+            entryData.attributes.thoughtAnalysis?.negative_thought}
+        </title>
+        <meta
+          name="description"
+          content={
+            entryData.attributes.diary?.body ||
+            entryData.attributes.thoughtAnalysis?.negative_thought
+          }
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Container sm className="sm:px-16 md:px-10 px-2 sm:mt-8">
+        <div className="flex flex-col sm:p-4 px-2 py-4 gap-2">
+          <EntryDetail entry={entryData} commentCount={commentCount} />
+          {/* コメント */}
+          <div className="relative">
+            <textarea
+              value={commentInputs}
+              aria-label="Write comment"
+              id="comment"
+              name="comment"
+              rows={2}
+              className="pt-2 pb-2 pl-3 w-full bg-slate-100 rounded-lg placeholder:text-slate-600 focus:shadow-sm pr-16"
+              placeholder="みんなで励まし合いましょう"
+              onChange={handleCommentChange}
             />
-          ))
-        ) : (
-          <div>まだコメントはありません。</div>
-        )}
-      </div>
-    </Container>
+
+            <span
+              onClick={sendComment}
+              className="flex absolute right-3 top-2/4 -mt-5 hover:bg-blue-100 p-2 rounded-full cursor-pointer"
+            >
+              <AirplaneIcon />
+            </span>
+          </div>
+          {/* Comments content */}
+          <div className="font-semibold sm:text-base text-gray-700 my-2">
+            コメント一覧
+          </div>
+          {comments.length > 0 ? (
+            comments.map((comment) => (
+              <CommentListItem
+                comment={comment}
+                entryId={entryData.id}
+                onDeleteComment={deleteComment}
+                key={comment.id}
+              />
+            ))
+          ) : (
+            <div>まだコメントはありません。</div>
+          )}
+        </div>
+      </Container>
+    </>
   );
 }
 

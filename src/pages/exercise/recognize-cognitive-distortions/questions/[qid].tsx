@@ -5,6 +5,7 @@ import { ParsedUrlQuery } from "querystring";
 import ReactMarkdown from "react-markdown";
 import { Container, Spacer, Card, Grid, Row, Modal } from "@nextui-org/react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 import { QuestionData, Choice, ChoiceWithDistortionData } from "types/types";
 
@@ -172,107 +173,117 @@ export default function QuestionDetailPage({
   };
 
   return (
-    <Container md css={{ px: "$18", mt: "$12", "@mdMax": { px: "$10" } }}>
-      <Card css={{ p: "$sm", mw: "900px", margin: "auto" }}>
-        <Card.Header css={{ py: "$10" }}>
-          <Grid.Container justify="center">
-            <Grid xs={12} sm={6}>
-              <Row justify="center">
-                <h2 className="text-xl text-center font-semibold sm:text-2xl text-gray-700">
-                  認知のゆがみに気づく
-                </h2>
-                <Spacer x={0.5} />
-                <p className="text-center sm:text-lg text-base self-end">
-                  (Q {questionId} / {QUESTION_NUMBER})
-                </p>
-              </Row>
-            </Grid>
-          </Grid.Container>
-        </Card.Header>
-        <Card.Divider />
-        <Card.Body
-          css={{
-            py: "$10",
-            margin: "auto",
-          }}
-        >
-          <div className="mx-auto sm:px-14">
-            <p className="sm:text-xl text-lg">
-              次のような場合に見られる認知のゆがみを選んでください。
-            </p>
-            <p className="sm:text-xl text-lg">
-              （複数存在する可能性があります。）
-            </p>
-            <br />
-            <div className="my-6">
-              <ReactMarkdown className="prose prose-neutral prose-p:sm:text-xl prose-p:text-lg prose-p:text-gray-800">
-                {questionBody}
-              </ReactMarkdown>
+    <>
+      <Head>
+        <title>認知のゆがみに気づく | 質問 - Daily Mind</title>
+        <meta
+          name="description"
+          content="認知の歪みに対しての理解を深めるため、簡単なクイズで練習しましょう。"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Container md css={{ px: "$18", mt: "$12", "@mdMax": { px: "$10" } }}>
+        <Card css={{ p: "$sm", mw: "900px", margin: "auto" }}>
+          <Card.Header css={{ py: "$10" }}>
+            <Grid.Container justify="center">
+              <Grid xs={12} sm={6}>
+                <Row justify="center">
+                  <h2 className="text-xl text-center font-semibold sm:text-2xl text-gray-700">
+                    認知のゆがみに気づく
+                  </h2>
+                  <Spacer x={0.5} />
+                  <p className="text-center sm:text-lg text-base self-end">
+                    (Q {questionId} / {QUESTION_NUMBER})
+                  </p>
+                </Row>
+              </Grid>
+            </Grid.Container>
+          </Card.Header>
+          <Card.Divider />
+          <Card.Body
+            css={{
+              py: "$10",
+              margin: "auto",
+            }}
+          >
+            <div className="mx-auto sm:px-14">
+              <p className="sm:text-xl text-lg">
+                次のような場合に見られる認知のゆがみを選んでください。
+              </p>
+              <p className="sm:text-xl text-lg">
+                （複数存在する可能性があります。）
+              </p>
+              <br />
+              <div className="my-6">
+                <ReactMarkdown className="prose prose-neutral prose-p:sm:text-xl prose-p:text-lg prose-p:text-gray-800">
+                  {questionBody}
+                </ReactMarkdown>
+              </div>
             </div>
-          </div>
-        </Card.Body>
-        <Card.Footer>
-          <Row justify="center">
-            <div className="grid-cols-1">
-              {choices.map((choice: Choice, index) => (
+          </Card.Body>
+          <Card.Footer>
+            <Row justify="center">
+              <div className="grid-cols-1">
+                {choices.map((choice: Choice, index) => (
+                  <button
+                    onClick={() => handleChoiceClick(choice)}
+                    className="block rounded-lg bg-indigo-500 sm:px-14 px-8 py-3 my-2 text-white text-left transition hover:bg-indigo-700 min-w-full"
+                    key={index}
+                  >
+                    <span className="text-base sm:text-lg font-semibold">
+                      {choice.content}
+                    </span>
+                  </button>
+                ))}
                 <button
-                  onClick={() => handleChoiceClick(choice)}
-                  className="block rounded-lg bg-indigo-500 sm:px-14 px-8 py-3 my-2 text-white text-left transition hover:bg-indigo-700 min-w-full"
-                  key={index}
+                  onClick={openSuggestedAnswer}
+                  className="rounded-lg  text-indigo-500 border-indigo-500 hover:bg-indigo-700 hover:text-white text-center px-4 py-4 mt-5 min-w-full"
                 >
-                  <span className="text-base sm:text-lg font-semibold">
-                    {choice.content}
+                  <span className="text-base sm:text-lg underline font-semibold">
+                    参考解答を確認して、次へ
                   </span>
                 </button>
-              ))}
-              <button
-                onClick={openSuggestedAnswer}
-                className="rounded-lg  text-indigo-500 border-indigo-500 hover:bg-indigo-700 hover:text-white text-center px-4 py-4 mt-5 min-w-full"
-              >
-                <span className="text-base sm:text-lg underline font-semibold">
-                  参考解答を確認して、次へ
-                </span>
-              </button>
-            </div>
-          </Row>
-        </Card.Footer>
-      </Card>
-      <Modal
-        aria-labelledby="modal-title"
-        width="50em"
-        open={visible}
-        onClose={closeHandler}
-      >
-        <Modal.Body>
-          {showChoiceFeedback && <ChoiceFeedback />}
-          {showSuggestedAnswer && <SuggestedAnswer />}
-        </Modal.Body>
-        <Modal.Footer>
-          <Row justify="center">
-            {showChoiceFeedback && (
-              <button
-                onClick={closeHandler}
-                className="block rounded-lg bg-indigo-500 px-14 py-3 text-white  transition hover:bg-indigo-700 focus:outline-none focus:ring"
-              >
-                <span className="text-base sm:text-lg font-semibold">
-                  閉じる
-                </span>
-              </button>
-            )}
-            {showSuggestedAnswer && (
-              <button
-                onClick={turnNextPage}
-                className="block rounded-lg bg-indigo-500 px-14 py-3 text-white  transition hover:bg-indigo-700 focus:outline-none focus:ring"
-              >
-                <span className="text-base sm:text-lg font-semibold">
-                  {isLastQuestion ? "ホームへ戻る" : "次へ"}
-                </span>
-              </button>
-            )}
-          </Row>
-        </Modal.Footer>
-      </Modal>
-    </Container>
+              </div>
+            </Row>
+          </Card.Footer>
+        </Card>
+        <Modal
+          aria-labelledby="modal-title"
+          width="50em"
+          open={visible}
+          onClose={closeHandler}
+        >
+          <Modal.Body>
+            {showChoiceFeedback && <ChoiceFeedback />}
+            {showSuggestedAnswer && <SuggestedAnswer />}
+          </Modal.Body>
+          <Modal.Footer>
+            <Row justify="center">
+              {showChoiceFeedback && (
+                <button
+                  onClick={closeHandler}
+                  className="block rounded-lg bg-indigo-500 px-14 py-3 text-white  transition hover:bg-indigo-700 focus:outline-none focus:ring"
+                >
+                  <span className="text-base sm:text-lg font-semibold">
+                    閉じる
+                  </span>
+                </button>
+              )}
+              {showSuggestedAnswer && (
+                <button
+                  onClick={turnNextPage}
+                  className="block rounded-lg bg-indigo-500 px-14 py-3 text-white  transition hover:bg-indigo-700 focus:outline-none focus:ring"
+                >
+                  <span className="text-base sm:text-lg font-semibold">
+                    {isLastQuestion ? "ホームへ戻る" : "次へ"}
+                  </span>
+                </button>
+              )}
+            </Row>
+          </Modal.Footer>
+        </Modal>
+      </Container>
+    </>
   );
 }
 
