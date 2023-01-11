@@ -35,6 +35,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# firebase service secret
+src/lib/firebase/secret.json
+
 # for personal use
 src/components/logo
 src/components/images
