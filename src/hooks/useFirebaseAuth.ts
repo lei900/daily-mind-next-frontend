@@ -47,7 +47,10 @@ export default function useFirebaseAuth() {
   const clear = () => {
     setCurrentUser(null);
     nookies.set(undefined, "token", "", { path: "/" });
+    nookies.set(undefined, "nickname", "", { path: "/" });
+    nookies.set(undefined, "avatarUrl", "", { path: "/" });
     setLoading(false);
+    router.push("/");
   };
 
   const logout = () => signOut(auth).then(clear);

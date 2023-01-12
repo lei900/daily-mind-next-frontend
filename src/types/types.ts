@@ -76,7 +76,7 @@ export interface UserInfo {
   uid: string;
   nickname: string;
   role: string;
-  avatar: string;
+  avatar: string | null;
   bio: string | null;
 }
 

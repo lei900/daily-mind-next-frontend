@@ -22,7 +22,7 @@ import exercisePic_3 from "components/exercises/images/exercisePic_3.png";
 import diaryIcon from "components/home/images/diaryIcon.png";
 import analysisIcon from "components/home/images/analysisIcon.png";
 
-const Guide = () => {
+export default function GuidePage() {
   const { currentUser, loading } = useAuthContext();
   const [visible, setVisible] = useState(false);
   const router = useRouter();
@@ -662,6 +662,4 @@ const Guide = () => {
       </Container>
     </>
   );
-};
-
-export default Guide;
+}

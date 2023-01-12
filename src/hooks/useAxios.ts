@@ -6,6 +6,23 @@ import { useRouter } from "next/router";
 import { useAuthContext } from "context/AuthContext";
 import { EntryRequestData } from "types/types";
 
+export const handleAxiosError = (err: any) => {
+  let message;
+  if (axios.isAxiosError(err)) {
+    if (err.response) {
+      console.error(err.response);
+    } else if (err.request) {
+      console.error(err.request);
+    } else {
+      console.log("Error", err.message);
+      console.error(err.config);
+    }
+  } else {
+    message = String(err);
+    console.error(message);
+  }
+};
+
 export default function useAxios() {
   const { currentUser } = useAuthContext();
   const router = useRouter();
@@ -17,23 +34,6 @@ export default function useAxios() {
     };
     return config;
   }
-
-  const handleAxiosError = (err: any) => {
-    let message;
-    if (axios.isAxiosError(err)) {
-      if (err.response) {
-        console.error(err.response);
-      } else if (err.request) {
-        console.error(err.request);
-      } else {
-        console.log("Error", err.message);
-        console.error(err.config);
-      }
-    } else {
-      message = String(err);
-      console.error(message);
-    }
-  };
 
   async function axioRequest(
     method: "post" | "patch" | "delete",
