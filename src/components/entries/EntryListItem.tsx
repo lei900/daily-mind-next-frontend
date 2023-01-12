@@ -145,7 +145,17 @@ export const EntryListItem = ({ entry }: Props) => {
   };
 
   const bookmark = async () => {
-    await axioRequest("post", `/bookmarks`);
+    const configOptions = {
+      params: { entry_id: entry.id },
+    };
+    await axioRequest(
+      "post",
+      `/bookmarks`,
+      undefined,
+      undefined,
+      undefined,
+      configOptions
+    );
     setBookmarkCount(bookmarkCount + 1);
     setHasBookmarked(true);
   };
