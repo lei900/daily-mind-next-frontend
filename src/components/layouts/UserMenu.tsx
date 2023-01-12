@@ -31,12 +31,14 @@ const UserMenu = ({ currentUser, onLogout }: Props) => {
           // onAction={(actionKey) => console.log({ actionKey })}
         >
           <Dropdown.Item key="profile" css={{ height: "$18" }}>
-            <Text b color="inherit" css={{ d: "flex" }}>
-              Welcome
-            </Text>
-            <Text b color="inherit" css={{ d: "flex" }}>
-              {userName!}
-            </Text>
+            <Link href={`/user/${currentUser.uid}`}>
+              <Text b color="inherit" css={{ d: "flex" }}>
+                Welcome
+              </Text>
+              <Text b color="inherit" css={{ d: "flex" }}>
+                {userName!}
+              </Text>
+            </Link>
           </Dropdown.Item>
           <Dropdown.Item key="add-diaries" withDivider>
             <Link href="/diaries/new">今日の気持ち作成</Link>

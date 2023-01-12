@@ -134,7 +134,7 @@ export default function Home({ entriesData }: Props) {
           </header>
           <CommunityList />
           <Spacer y={0.5} />
-          <div className="flex items-center flex-col max-w-3xl sm:px-2 sm:gap-2 gap-1">
+          <div className="flex items-center flex-col max-w-4xl sm:px-2 sm:gap-2 gap-1">
             {entriesData.map((entry) => (
               <EntryListItem entry={entry} key={entry.id} />
             ))}

@@ -2,6 +2,7 @@ import { Row, Dropdown, Tooltip } from "@nextui-org/react";
 import Image from "next/image";
 import { useState, useEffect, Key } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import {
   GlobeAsiaIcon,
@@ -153,7 +154,10 @@ export const EntryDetail = ({ entry, commentCount }: Props) => {
     <div className="border-slate-300 border-t-0 border-r-0 border-l-0 border mb-2">
       <div className="flex flex-row justify-between sm:mb-4">
         <div className="flex flex-row items-center gap-1">
-          <AvatarIcon className="sm:w-12 sm:h-12 w-10 h-10" />
+          <Link href={`/user/${user.uid}`}>
+            <AvatarIcon className="sm:w-12 sm:h-12 w-10 h-10" />
+          </Link>
+
           {/* <Image
             src={user.avatar}
             width={48}
@@ -162,9 +166,12 @@ export const EntryDetail = ({ entry, commentCount }: Props) => {
             className="rounded-full"
           /> */}
           <div className="flex flex-col">
-            <div className="font-semibold sm:text-lg text-base text-gray-700">
-              {user.nickname}
-            </div>
+            <Link href={`/user/${user.uid}`}>
+              <div className="hover:underline font-semibold sm:text-lg text-base text-gray-700">
+                {user.nickname}
+              </div>
+            </Link>
+
             {/* <div className="flex flex-row gap-1">
               <p className="sm:text-sm text-xs text-gray-500">投稿日</p> */}
             <Date
