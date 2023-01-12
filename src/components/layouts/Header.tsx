@@ -37,12 +37,17 @@ export const Header = () => {
         hideIn="sm"
         gap={20}
       >
-        <Navbar.Link href="/">ホーム</Navbar.Link>
-        <Navbar.Link href="/guide">認知療法とは</Navbar.Link>
-        {/* <Navbar.Link href="#">コミュニティ</Navbar.Link> */}
-        <Navbar.Link href="https://forms.gle/fdNoCX7MzChWnLFy7" target="_blank">
-          お問い合わせ
-        </Navbar.Link>
+        <Navbar.Item>
+          <Link href="/">ホーム</Link>
+        </Navbar.Item>
+        <Navbar.Item>
+          <Link href="/guide">認知療法とは</Link>
+        </Navbar.Item>
+        <Navbar.Item>
+          <Link href="https://forms.gle/fdNoCX7MzChWnLFy7" target="_blank">
+            お問い合わせ
+          </Link>
+        </Navbar.Item>
       </Navbar.Content>
       <Navbar.Content>
         {!loading && currentUser ? (
