@@ -7,13 +7,13 @@ import Head from "next/head";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { setCookie, destroyCookie } from "nookies";
 
-import { UserData } from "types/types";
+import { UserData, UserInfo } from "types/types";
 import axios from "axios";
 import { AvatarIcon } from "components/Icons";
 import { useAuthContext } from "context/AuthContext";
 import useAxios from "hooks/useAxios";
+import { setUserInfoCookies } from "utils/manageCookies";
 
 type Props = {
   userData: UserData;
@@ -29,15 +29,15 @@ export default function ProfilePage({ userData }: Props) {
   const [checked, setChecked] = useState(
     userData.avatar ? "social" : "default"
   );
-  const { currentUser, loading } = useAuthContext();
+  const { currentUser, loading, userInfo, updateUserInfo } = useAuthContext();
   const [profileInputs, setProfileInputs] = useState<profileInputs>({
     avatar: userData.avatar,
     nickname: userData.nickname,
     bio: userData.bio ? userData.bio : "",
   });
   const router = useRouter();
-
   const { axioRequest } = useAxios();
+
   const socialAvatarUrl = currentUser?.photoURL!;
 
   useEffect(() => {
@@ -95,12 +95,9 @@ export default function ProfilePage({ userData }: Props) {
       data
     );
     if (res?.status === 200) {
-      setCookie(null, "avatar", profileInputs.avatar || "", {
-        path: "/",
-      });
-      setCookie(null, "nickname", profileInputs.nickname, {
-        path: "/",
-      });
+      const userInfo: UserInfo = res.data.data.attributes;
+      setUserInfoCookies(userInfo);
+      updateUserInfo(userInfo);
     }
   };
 
@@ -129,6 +126,7 @@ export default function ProfilePage({ userData }: Props) {
                         height={96}
                         alt="Avatar"
                         className="rounded-full"
+                        priority
                       />
                     </div>
                   ) : (

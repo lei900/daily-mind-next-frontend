@@ -64,14 +64,15 @@ export default function useAxios() {
           toast.success(onSuccess.msg);
           router.push(onSuccess?.redirectUrl);
         }
-        return response;
       } else {
         if (onFailure) {
           toast.error(onFailure.msg);
         }
       }
+      return response;
     } catch (err) {
       handleAxiosError(err);
+      return null;
     }
   }
 
