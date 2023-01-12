@@ -20,14 +20,11 @@ import { DiaryMoodIcon } from "./DiaryMoodIcon";
 import { EntryDistortionIcon } from "./EntryDistortionIcon";
 import useAxios from "hooks/useAxios";
 import Date from "components/Date";
+import classNames from "utils/classNames";
 
 type Props = {
   entry: EntryData;
 };
-
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export const EntryListItem = ({ entry }: Props) => {
   const { currentUser, loading } = useAuthContext();

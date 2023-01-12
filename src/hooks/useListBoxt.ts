@@ -33,10 +33,6 @@ export default function useListBox() {
     { id: 3, displayName: "下書き", name: "draft" },
   ];
 
-  function classNames(...classes: any) {
-    return classes.filter(Boolean).join(" ");
-  }
-
   const selectedEntryCommunity = (id: number) => {
     switch (id) {
       case 1:
@@ -70,6 +66,5 @@ export default function useListBox() {
     statuses,
     selectedEntryCommunity,
     selectedEntryStatus,
-    classNames,
   };
 }

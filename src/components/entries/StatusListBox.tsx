@@ -14,6 +14,7 @@ import {
   Bad,
   Terrible,
 } from "components/Icons";
+import classNames from "utils/classNames";
 
 interface Status {
   id: number;
@@ -27,7 +28,7 @@ type Props = {
 };
 export default function StatusListBox(props: Props) {
   const { selectedStatus, setSelectedStatus } = props;
-  const { statuses, classNames } = useListBox();
+  const { statuses } = useListBox();
 
   return (
     <Listbox value={selectedStatus} onChange={setSelectedStatus}>

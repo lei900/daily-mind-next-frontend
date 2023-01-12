@@ -65,7 +65,7 @@ export default function DiaryForm({ entryData }: Props) {
   function createDiary(data: EntryRequestData) {
     const method = "post";
     const url = "/entries";
-    const onSuccess = { msg: "気持ち記録が作成できました！", redirectUrl: "/" };
+    const onSuccess = { msg: "気持ち記録が作成しました！", redirectUrl: "/" };
     const onFailure = {
       msg: "気持ち記録が作成できませんでした",
       redirectUrl: "",
@@ -78,7 +78,7 @@ export default function DiaryForm({ entryData }: Props) {
     const method = "patch";
     const url = `/entries/${id}`;
     const onSuccess = {
-      msg: "気持ち記録が更新できました！",
+      msg: "気持ち記録が更新しました！",
       redirectUrl: `/entries/${id.toString()}`,
     };
     const onFailure = {
