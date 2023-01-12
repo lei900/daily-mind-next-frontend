@@ -10,12 +10,10 @@ export const Header = () => {
 
   const collapseItems = [
     "認知療法とは",
-    "使い方",
-    "About",
+    "コミュニティ",
     "利用規約",
     "プライバシー",
-    "Help & Feedback",
-    "Log Out",
+    "お問合せ",
   ];
 
   return (
@@ -38,11 +36,11 @@ export const Header = () => {
         hideIn="sm"
         gap={20}
       >
-        <Navbar.Link href="/">Home</Navbar.Link>
-        <Navbar.Link href="guide">Guide</Navbar.Link>
-        {/* <Navbar.Link href="#">Community</Navbar.Link> */}
+        <Navbar.Link href="/">ホーム</Navbar.Link>
+        <Navbar.Link href="/guide">認知療法とは</Navbar.Link>
+        {/* <Navbar.Link href="#">コミュニティ</Navbar.Link> */}
         <Navbar.Link href="https://forms.gle/fdNoCX7MzChWnLFy7">
-          Contact Us
+          お問い合わせ
         </Navbar.Link>
       </Navbar.Content>
       <Navbar.Content>

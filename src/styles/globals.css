@@ -32,3 +32,37 @@ a {
 .Toastify__toast--info {
   font-weight: 600;
 }
+
+/* react-tabs see: https://github.com/reactjs/react-tabs */
+.react-tabs {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.react-tabs__tab-list {
+  margin: 0 0 1rem;
+  padding: 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.react-tabs__tab--selected {
+  background: #fff;
+  color: #1f2937;
+  font-weight: bold;
+}
+
+.react-tabs__tab:focus {
+  color: black;
+}
+
+.react-tabs__tab--disabled {
+  color: #e5e7eb;
+  cursor: default;
+}
+
+.react-tabs__tab-panel {
+  display: none;
+}
+
+.react-tabs__tab-panel--selected {
+  display: block;
+}
