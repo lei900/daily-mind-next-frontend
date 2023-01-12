@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 import fetch from "node-fetch";
-import { Container, Spacer, Card } from "@nextui-org/react";
+import { Container } from "@nextui-org/react";
 import { useState } from "react";
 import Head from "next/head";
 
@@ -9,12 +9,14 @@ import { EntryDetail } from "components/entries/EntryDetail";
 import { AirplaneIcon } from "components/Icons";
 import useAxios from "hooks/useAxios";
 import { CommentListItem } from "components/entries/CommentListItem";
+import { useAuthContext } from "context/AuthContext";
 
 type Props = {
   entryData: EntryData;
 };
 
 export default function EntryDetailPage({ entryData }: Props) {
+  const { currentUser, loading } = useAuthContext();
   const [commentInputs, setCommentInputs] = useState<string>("");
   const [comments, setComments] = useState(entryData.attributes.comments.data);
   const [commentCount, setCommentCount] = useState(
@@ -98,25 +100,27 @@ export default function EntryDetailPage({ entryData }: Props) {
         <div className="flex flex-col sm:p-4 px-2 py-4 gap-2">
           <EntryDetail entry={entryData} commentCount={commentCount} />
           {/* コメント */}
-          <div className="relative">
-            <textarea
-              value={commentInputs}
-              aria-label="Write comment"
-              id="comment"
-              name="comment"
-              rows={2}
-              className="pt-2 pb-2 pl-3 w-full bg-slate-100 rounded-lg placeholder:text-slate-600 focus:shadow-sm pr-16"
-              placeholder="みんなで励まし合いましょう"
-              onChange={handleCommentChange}
-            />
+          {!loading && currentUser && (
+            <div className="relative">
+              <textarea
+                value={commentInputs}
+                aria-label="Write comment"
+                id="comment"
+                name="comment"
+                rows={2}
+                className="pt-2 pb-2 pl-3 w-full bg-blue-50 rounded-lg placeholder:text-slate-600 focus:bg-blue-100 pr-16"
+                placeholder="みんなで励まし合いましょう"
+                onChange={handleCommentChange}
+              />
 
-            <span
-              onClick={sendComment}
-              className="flex absolute right-3 top-2/4 -mt-5 hover:bg-blue-100 p-2 rounded-full cursor-pointer"
-            >
-              <AirplaneIcon />
-            </span>
-          </div>
+              <span
+                onClick={sendComment}
+                className="flex absolute right-3 top-2/4 -mt-5 hover:bg-blue-100 p-2 rounded-full cursor-pointer"
+              >
+                <AirplaneIcon />
+              </span>
+            </div>
+          )}
           {/* Comments content */}
           <div className="font-semibold sm:text-base text-gray-700 my-2">
             コメント一覧

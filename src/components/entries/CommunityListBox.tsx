@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Community } from "types/types";
 import useListBox from "hooks/useListBoxt";
 import { CheckIcon, ChevronUpDownIcon } from "components/Icons";
+import classNames from "utils/classNames";
 
 type Props = {
   selectedCommunity: Community | null;
@@ -13,7 +14,7 @@ type Props = {
 
 export default function CommunityListBox(props: Props) {
   const { selectedCommunity, setSelectedCommunity } = props;
-  const { communities, classNames } = useListBox();
+  const { communities } = useListBox();
 
   return (
     <Listbox value={selectedCommunity} onChange={setSelectedCommunity}>
