@@ -12,6 +12,7 @@ import {
 import { useRouter } from "next/router";
 
 import { auth } from "lib//firebase/initFirebase";
+import { clearUserInfoCookies } from "utils/manageCookies";
 
 export default function useFirebaseAuth() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -46,9 +47,7 @@ export default function useFirebaseAuth() {
 
   const clear = () => {
     setCurrentUser(null);
-    nookies.set(undefined, "token", "", { path: "/" });
-    nookies.set(undefined, "nickname", "", { path: "/" });
-    nookies.set(undefined, "avatarUrl", "", { path: "/" });
+    clearUserInfoCookies();
     setLoading(false);
     router.push("/");
   };
@@ -61,14 +60,12 @@ export default function useFirebaseAuth() {
       setLoading(false);
       setCurrentUser(null);
       nookies.set(undefined, "token", "", { path: "/" });
-      nookies.set(undefined, "uid", "", { path: "/" });
       return;
     }
     setLoading(true);
     const token = await user.getIdToken();
     setCurrentUser(user);
     nookies.set(undefined, "token", token, { path: "/" });
-    nookies.set(undefined, "uid", user.uid, { path: "/" });
     setLoading(false);
   };
 

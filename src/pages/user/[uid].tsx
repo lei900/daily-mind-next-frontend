@@ -5,6 +5,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { useAuthContext } from "context/AuthContext";
 
 import { UserData } from "types/types";
 import axios from "axios";
@@ -19,6 +20,7 @@ export default function UserPage({ userData }: Props) {
   const isMypage = userData.isMypage;
   const { publishedEntries, nondraftEntries, draftEntries, bookmarkedEntries } =
     userData;
+  const { userInfo } = useAuthContext();
 
   console.log(userData);
 
@@ -34,7 +36,22 @@ export default function UserPage({ userData }: Props) {
           <div className="UserHeader_profile flex-col sm:py-12 py-6">
             <div className="UserHeader_profileMain flex sm:gap-7 gap-3 justify-between items-center">
               <div className="UserHeader_avatarContainaer">
-                <AvatarIcon className="sm:w-28 sm:h-28 w-20 h-20" />
+                {userInfo.avatar ? (
+                  <div className="sm:w-28 sm:h-28 w-20 h-20">
+                    <Image
+                      src={userInfo.avatar}
+                      width={112}
+                      height={112}
+                      alt="Avatar"
+                      className="rounded-full"
+                      priority
+                    />
+                  </div>
+                ) : (
+                  <div className="cursor-pointer">
+                    <AvatarIcon className="sm:w-28 sm:h-28 w-20 h-20" />
+                  </div>
+                )}{" "}
               </div>
               <div className="UserHeader_profileMain flex-1">
                 <h1 className="UserHeader_userName sm:text-2xl text-xl">

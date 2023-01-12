@@ -1,16 +1,12 @@
 import { Navbar } from "@nextui-org/react";
 import Link from "next/link";
-import { parseCookies } from "nookies";
 
 import UserMenu from "./UserMenu";
 import LoginButton from "./LoginButton";
 import { useAuthContext } from "context/AuthContext";
 
 export const Header = () => {
-  const { currentUser, loading, logout } = useAuthContext();
-  const cookies = parseCookies();
-  const avatarUrl = cookies.avatarUrl;
-  const nickname = cookies.nickname;
+  const { currentUser, loading, logout, userInfo } = useAuthContext();
 
   const collapseItems = [
     "ホーム",
@@ -44,18 +40,13 @@ export const Header = () => {
         <Navbar.Link href="/">ホーム</Navbar.Link>
         <Navbar.Link href="/guide">認知療法とは</Navbar.Link>
         {/* <Navbar.Link href="#">コミュニティ</Navbar.Link> */}
-        <Navbar.Link href="https://forms.gle/fdNoCX7MzChWnLFy7">
+        <Navbar.Link href="https://forms.gle/fdNoCX7MzChWnLFy7" target="_blank">
           お問い合わせ
         </Navbar.Link>
       </Navbar.Content>
       <Navbar.Content>
         {!loading && currentUser ? (
-          <UserMenu
-            currentUser={currentUser}
-            onLogout={logout}
-            avatarUrl={avatarUrl}
-            nickname={nickname}
-          />
+          <UserMenu onLogout={logout} userInfo={userInfo} />
         ) : (
           <LoginButton />
         )}

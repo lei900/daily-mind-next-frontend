@@ -70,7 +70,11 @@ export default function GuidePage() {
         <Text size="$lg">
           認知療法は、うつ病や不安障害、不眠症などの治療法として、医療現場で広く活用されています。
         </Text>
-        <Link href="#" isExternal>
+        <Link
+          href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/hukushi_kaigo/shougaishahukushi/kokoro/index.html"
+          isExternal
+          target="_blank"
+        >
           <span className="text-sm">
             参照：厚生労働省のホームページ「こころの健康」
           </span>

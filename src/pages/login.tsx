@@ -1,13 +1,15 @@
 import axios from "axios";
 import Head from "next/head";
-import nookies from "nookies";
 
 import { GoogleLogo, TwitterLogo } from "components/Icons";
 import { useAuthContext } from "context/AuthContext";
 import { handleAxiosError } from "hooks/useAxios";
+import { setUserInfoCookies } from "utils/manageCookies";
+import { UserInfo } from "types/types";
 
 export default function LoginPage() {
-  const { loginWithGoogle, loginWithTwitter } = useAuthContext();
+  const { loginWithGoogle, loginWithTwitter, updateUserInfo } =
+    useAuthContext();
 
   const handleGoogleLogin = () => {
     const verifyIdToken = async () => {
@@ -21,17 +23,9 @@ export default function LoginPage() {
 
       try {
         const res = await axios.post("/auth", null, config);
-        nookies.set(undefined, "nickname", res.data.data.attributes.nickname, {
-          path: "/",
-        });
-        nookies.set(
-          undefined,
-          "avatarUrl",
-          res.data.data.attributes.avatar || "",
-          {
-            path: "/",
-          }
-        );
+        const userInfo: UserInfo = res.data.data.attributes;
+        setUserInfoCookies(userInfo);
+        updateUserInfo(userInfo);
         // console.log(response.data);
       } catch (err) {
         handleAxiosError(err);
@@ -44,7 +38,7 @@ export default function LoginPage() {
     const verifyIdToken = async () => {
       const user = await loginWithTwitter();
       const token = await user?.getIdToken();
-      console.log("Calling API with user token:", token);
+      // console.log("Calling API with user token:", token);
 
       const config = {
         headers: { authorization: `Bearer ${token}` },
@@ -52,15 +46,9 @@ export default function LoginPage() {
 
       try {
         const response = await axios.post("/auth", null, config);
-        console.log(response.data);
+        // console.log(response.data);
       } catch (err) {
-        let message;
-        if (axios.isAxiosError(err) && err.response) {
-          console.error(err.response.data.message);
-        } else {
-          message = String(err);
-          console.error(message);
-        }
+        handleAxiosError(err);
       }
     };
     verifyIdToken();

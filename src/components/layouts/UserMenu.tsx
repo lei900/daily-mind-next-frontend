@@ -3,16 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AvatarIcon, BellIcon, LogoutIcon } from "components/Icons";
-import { User } from "firebase/auth";
+import { UserInfo } from "types/types";
 
 type Props = {
-  currentUser: User;
   onLogout: () => {};
-  avatarUrl: string;
-  nickname: string;
+  userInfo: UserInfo;
 };
 
-const UserMenu = ({ currentUser, onLogout, avatarUrl, nickname }: Props) => {
+const UserMenu = ({ onLogout, userInfo }: Props) => {
   return (
     <>
       {/* <Navbar.Item className="xs:flex hidden">
@@ -23,14 +21,15 @@ const UserMenu = ({ currentUser, onLogout, avatarUrl, nickname }: Props) => {
       <Dropdown placement="bottom-right">
         <Navbar.Item>
           <Dropdown.Trigger>
-            {avatarUrl ? (
+            {userInfo.avatar ? (
               <div className="sm:w-12 sm:h-12 w-10 h-10">
                 <Image
-                  src={avatarUrl}
+                  src={userInfo.avatar}
                   width={48}
                   height={48}
                   alt="Avatar"
                   className="rounded-full"
+                  priority
                 />
               </div>
             ) : (
@@ -46,12 +45,12 @@ const UserMenu = ({ currentUser, onLogout, avatarUrl, nickname }: Props) => {
           // onAction={(actionKey) => console.log({ actionKey })}
         >
           <Dropdown.Item key="mypage" css={{ height: "$18" }}>
-            <Link href={`/user/${currentUser.uid}`}>
+            <Link href={`/user/${userInfo.uid}`}>
               <Text color="inherit" css={{ d: "flex" }}>
                 Welcome
               </Text>
               <Text b color="inherit" css={{ d: "flex" }}>
-                {nickname}
+                {userInfo.nickname}
               </Text>
             </Link>
           </Dropdown.Item>

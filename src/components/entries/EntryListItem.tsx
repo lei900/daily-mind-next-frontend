@@ -167,15 +167,22 @@ export const EntryListItem = ({ entry }: Props) => {
     >
       <div className="flex">
         <Link href={`/user/${user.uid}`}>
-          <AvatarIcon className="sm:w-12 sm:h-12 w-8 h-8" />
+          {user.avatar ? (
+            <div className="sm:w-12 sm:h-12 w-10 h-10">
+              <Image
+                src={user.avatar}
+                width={48}
+                height={48}
+                alt="Avatar"
+                className="rounded-full"
+              />
+            </div>
+          ) : (
+            <div className="cursor-pointer">
+              <AvatarIcon className="sm:w-12 sm:h-12 w-10 h-10" />
+            </div>
+          )}{" "}
         </Link>
-        {/* <Image
-            src={user.avatar}
-            width={48}
-            height={48}
-            alt="Avatar"
-            className="rounded-full"
-          /> */}
       </div>
       <div className="flex flex-col gap-2 w-full">
         <div className="flex flex-row justify-between">
