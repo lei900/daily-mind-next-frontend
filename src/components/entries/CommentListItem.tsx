@@ -1,6 +1,7 @@
-import { Card, Dropdown } from "@nextui-org/react";
+import { Dropdown } from "@nextui-org/react";
 import Image from "next/image";
 import { useState, useEffect, Key } from "react";
+import Link from "next/link";
 
 import {
   ChatIcon,
@@ -46,21 +47,32 @@ export const CommentListItem = ({ comment, onDeleteComment }: Props) => {
       key={comment.id}
     >
       <div className="flex">
-        <AvatarIcon className="sm:w-11 sm:h-11 w-8 h-8" />
-        {/* <Image
-            src={user.avatar}
-            width={48}
-            height={48}
-            alt="Avatar"
-            className="rounded-full"
-          /> */}
+        <Link href={`/user/${commentAuthor.uid}`}>
+          {commentAuthor.avatar ? (
+            <div className="sm:w-11 sm:h-11 w-8 h-8">
+              <Image
+                src={commentAuthor.avatar}
+                width={44}
+                height={44}
+                alt="Avatar"
+                className="rounded-full"
+              />
+            </div>
+          ) : (
+            <div className="cursor-pointer">
+              <AvatarIcon className="sm:w-11 sm:h-11 w-8 h-8" />
+            </div>
+          )}
+        </Link>
       </div>
       <div className="flex flex-col gap-2 w-full">
         <div className="flex flex-row justify-between">
           <div className="flex flex-col gap-0.5">
-            <div className="text-sm font-semibold text-gray-700">
-              {commentAuthor.nickname}
-            </div>
+            <Link href={`/user/${commentAuthor.uid}`}>
+              <div className="text-sm font-semibold text-gray-700 hover:underline">
+                {commentAuthor.nickname}
+              </div>
+            </Link>
             <Date
               className="text-xs text-slate-500"
               dateString={comment.attributes.createdAt}
