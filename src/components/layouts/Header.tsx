@@ -1,5 +1,6 @@
 import { Navbar } from "@nextui-org/react";
 import Link from "next/link";
+import { parseCookies } from "nookies";
 
 import UserMenu from "./UserMenu";
 import LoginButton from "./LoginButton";
@@ -7,13 +8,17 @@ import { useAuthContext } from "context/AuthContext";
 
 export const Header = () => {
   const { currentUser, loading, logout } = useAuthContext();
+  const cookies = parseCookies();
+  const avatarUrl = cookies.avatarUrl;
+  const nickname = cookies.nickname;
 
   const collapseItems = [
+    "ホーム",
     "認知療法とは",
     "コミュニティ",
     "利用規約",
     "プライバシー",
-    "お問合せ",
+    "ヘルプ＆お問い合わせ",
   ];
 
   return (
@@ -45,7 +50,12 @@ export const Header = () => {
       </Navbar.Content>
       <Navbar.Content>
         {!loading && currentUser ? (
-          <UserMenu currentUser={currentUser} onLogout={logout} />
+          <UserMenu
+            currentUser={currentUser}
+            onLogout={logout}
+            avatarUrl={avatarUrl}
+            nickname={nickname}
+          />
         ) : (
           <LoginButton />
         )}
