@@ -11,8 +11,8 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
-import fetch from "node-fetch";
 import Head from "next/head";
+import axios from "axios";
 
 import { useAuthContext } from "context/AuthContext";
 import { CommunityList } from "components/communities/communityList";
@@ -186,19 +186,9 @@ export default function Home({ entriesData }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const res = await fetch(
-    process.env.NEXT_PUBLIC_BASE_URL
-      ? `${process.env.NEXT_PUBLIC_BASE_URL}/entries/`
-      : "http://127.0.0.1:3001/api/v1/entries/"
-  );
+  const res = await axios.get("/entries");
 
-  const data = (await res.json()) as any;
-  const entriesData = data.data;
-
-  res.headers.set(
-    "Cache-Control",
-    "public, s-maxage=10, stale-while-revalidate=59"
-  );
+  const entriesData = res.data.data;
 
   return { props: { entriesData } };
 };
