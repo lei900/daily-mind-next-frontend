@@ -133,18 +133,24 @@ export default function ProfilePage({ userData }: Props) {
                     <AvatarIcon className="sm:w-24 sm:h-24 w-20 h-20" />
                   )}
                 </div>
-                <Radio.Group
-                  aria-label="Options"
-                  value={checked}
-                  onChange={handleChangeAvatar}
-                >
-                  <Radio value="default" size="sm">
-                    <span className="text-gray-700">デフォルト画像を使う</span>
-                  </Radio>
-                  <Radio value="social" size="sm">
-                    <span className="text-gray-700">ソーシャル画像を使う</span>
-                  </Radio>
-                </Radio.Group>
+                {!currentUser?.isAnonymous && (
+                  <Radio.Group
+                    aria-label="Options"
+                    value={checked}
+                    onChange={handleChangeAvatar}
+                  >
+                    <Radio value="default" size="sm">
+                      <span className="text-gray-700">
+                        デフォルト画像を使う
+                      </span>
+                    </Radio>
+                    <Radio value="social" size="sm">
+                      <span className="text-gray-700">
+                        ソーシャル画像を使う
+                      </span>
+                    </Radio>
+                  </Radio.Group>
+                )}
               </div>
               <div className="p-2 w-full my-4">
                 <label

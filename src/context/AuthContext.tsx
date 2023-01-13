@@ -10,6 +10,7 @@ interface AuthContext {
   loading: boolean;
   loginWithGoogle: () => Promise<User | undefined>;
   loginWithTwitter: () => Promise<User | undefined>;
+  loginAnonymously: () => Promise<User | undefined>;
   logout: () => Promise<void>;
   userInfo: UserInfo;
   updateUserInfo: (newUserInfo: UserInfo) => void;
@@ -24,8 +25,14 @@ const AuthCtx = createContext({} as AuthContext);
 const cookies = parseCookies();
 
 export function AuthContextProvider({ children }: AuthProviderProps) {
-  const { currentUser, loading, loginWithGoogle, loginWithTwitter, logout } =
-    useFirebaseAuth();
+  const {
+    currentUser,
+    loading,
+    loginWithGoogle,
+    loginWithTwitter,
+    loginAnonymously,
+    logout,
+  } = useFirebaseAuth();
   const [userInfo, setUserInfo] = useState({
     uid: cookies.uid,
     nickname: cookies.nickname,
@@ -49,6 +56,7 @@ export function AuthContextProvider({ children }: AuthProviderProps) {
     loading: loading,
     loginWithGoogle: loginWithGoogle,
     loginWithTwitter: loginWithTwitter,
+    loginAnonymously: loginAnonymously,
     logout: logout,
     userInfo: userInfo,
     updateUserInfo: updateUserInfo,

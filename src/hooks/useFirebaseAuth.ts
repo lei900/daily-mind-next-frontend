@@ -8,6 +8,7 @@ import {
   GoogleAuthProvider,
   TwitterAuthProvider,
   onIdTokenChanged,
+  signInAnonymously,
 } from "firebase/auth";
 import { useRouter } from "next/router";
 
@@ -37,6 +38,16 @@ export default function useFirebaseAuth() {
   const loginWithTwitter = async () => {
     const provider = new TwitterAuthProvider();
     const result = await signInWithPopup(auth, provider);
+
+    if (result) {
+      const user = result.user;
+      router.push("/");
+      return user;
+    }
+  };
+
+  const loginAnonymously = async () => {
+    const result = await signInAnonymously(auth);
 
     if (result) {
       const user = result.user;
@@ -91,6 +102,7 @@ export default function useFirebaseAuth() {
     loading,
     loginWithGoogle,
     loginWithTwitter,
+    loginAnonymously,
     logout,
   };
 }
