@@ -11,6 +11,7 @@ interface AuthContext {
   loginWithGoogle: () => Promise<User | undefined>;
   loginWithTwitter: () => Promise<User | undefined>;
   loginAnonymously: () => Promise<User | undefined>;
+  loginWithFirebase: (method: string) => Promise<User | undefined>;
   logout: () => Promise<void>;
   userInfo: UserInfo;
   updateUserInfo: (newUserInfo: UserInfo) => void;
@@ -31,6 +32,7 @@ export function AuthContextProvider({ children }: AuthProviderProps) {
     loginWithGoogle,
     loginWithTwitter,
     loginAnonymously,
+    loginWithFirebase,
     logout,
   } = useFirebaseAuth();
   const [userInfo, setUserInfo] = useState({
@@ -57,6 +59,7 @@ export function AuthContextProvider({ children }: AuthProviderProps) {
     loginWithGoogle: loginWithGoogle,
     loginWithTwitter: loginWithTwitter,
     loginAnonymously: loginAnonymously,
+    loginWithFirebase: loginWithFirebase,
     logout: logout,
     userInfo: userInfo,
     updateUserInfo: updateUserInfo,

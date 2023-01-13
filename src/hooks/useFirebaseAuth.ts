@@ -2,13 +2,14 @@ import { useState, useEffect } from "react";
 import nookies from "nookies";
 import {
   User,
-  onAuthStateChanged,
   signOut,
   signInWithPopup,
   GoogleAuthProvider,
   TwitterAuthProvider,
+  FacebookAuthProvider,
   onIdTokenChanged,
   signInAnonymously,
+  linkWithCredential,
 } from "firebase/auth";
 import { useRouter } from "next/router";
 
@@ -46,6 +47,17 @@ export default function useFirebaseAuth() {
     }
   };
 
+  const loginWithFacebook = async () => {
+    const provider = new TwitterAuthProvider();
+    const result = await signInWithPopup(auth, provider);
+
+    if (result) {
+      const user = result.user;
+      router.push("/");
+      return user;
+    }
+  };
+
   const loginAnonymously = async () => {
     const result = await signInAnonymously(auth);
 
@@ -55,6 +67,38 @@ export default function useFirebaseAuth() {
       return user;
     }
   };
+
+  const loginWithFirebase = async (method: string) => {
+    const getProvider = () => {
+      switch (method) {
+        case "google":
+          return new GoogleAuthProvider();
+        case "twitter":
+          return new TwitterAuthProvider();
+        case "facebook":
+          return new FacebookAuthProvider();
+        default:
+          return new GoogleAuthProvider();
+      }
+    };
+    const getResult = () => {
+      if (method === "guest") {
+        return signInAnonymously(auth);
+      } else {
+        return signInWithPopup(auth, getProvider());
+      }
+    };
+
+    const result = await getResult();
+
+    if (result) {
+      const user = result.user;
+      router.push("/");
+      return user;
+    }
+  };
+
+  const upgradeAccount = async () => {};
 
   const clear = () => {
     setCurrentUser(null);
@@ -103,6 +147,7 @@ export default function useFirebaseAuth() {
     loginWithGoogle,
     loginWithTwitter,
     loginAnonymously,
+    loginWithFirebase,
     logout,
   };
 }
