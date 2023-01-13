@@ -23,6 +23,7 @@ import analysisIcon from "components/home/images/analysisIcon.png";
 import { ExclamationCircleIcon } from "components/Icons";
 import { EntryCardInfo, EntryData } from "types/types";
 import { EntryListItem } from "components/entries/EntryListItem";
+import { Footer } from "components/layouts/Footer";
 
 const entryCardInfos = [
   {
@@ -181,6 +182,7 @@ export default function Home({ entriesData }: Props) {
           </Modal.Footer>
         </Modal>
       </Container>
+      <Footer />
     </>
   );
 }
