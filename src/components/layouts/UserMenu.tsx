@@ -56,13 +56,13 @@ const UserMenu = ({ onLogout, userInfo, currentUser }: Props) => {
               </Text>
             </Link>
           </Dropdown.Item>
-          {currentUser.isAnonymous ? (
+          {/* {currentUser.isAnonymous ? (
             <Dropdown.Item color="error" key="upgrade" withDivider>
               <Link href="/settings/upgrade">アカウントアップグレード</Link>
             </Dropdown.Item>
           ) : (
             <></>
-          )}
+          )} */}
           <Dropdown.Item key="edit-profile" withDivider>
             <Link href="/settings/profile">プロフィール編集</Link>
           </Dropdown.Item>
