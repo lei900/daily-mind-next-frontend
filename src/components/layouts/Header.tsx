@@ -4,6 +4,7 @@ import Link from "next/link";
 import UserMenu from "./UserMenu";
 import LoginButton from "./LoginButton";
 import { useAuthContext } from "context/AuthContext";
+import { Logo } from "./Logo";
 
 export const Header = () => {
   const { currentUser, loading, logout, userInfo } = useAuthContext();
@@ -12,9 +13,8 @@ export const Header = () => {
     "ホーム",
     "認知療法とは",
     "コミュニティ",
-    "利用規約",
-    "プライバシー",
-    "ヘルプ＆お問い合わせ",
+    "Daily Mindについて",
+    "お問い合わせ",
   ];
 
   return (
@@ -27,8 +27,9 @@ export const Header = () => {
           },
         }}
       >
-        <Link href="/">
-          <div className="text-2xl font-bold">Daily Mind</div>
+        <Link href="/" className="flex flex-row">
+          <Logo className="sm:h-9 sm:w-9" />
+          <div className="text-2xl font-semibold ml-1">Daily Mind</div>
         </Link>
       </Navbar.Brand>
       <Navbar.Content
@@ -60,7 +61,7 @@ export const Header = () => {
           <LoginButton />
         )}
       </Navbar.Content>
-      {/* <Navbar.Collapse>
+      <Navbar.Collapse>
         {collapseItems.map((item, index) => (
           <Navbar.CollapseItem
             key={item}
@@ -73,7 +74,7 @@ export const Header = () => {
             <Link href="#">{item}</Link>
           </Navbar.CollapseItem>
         ))}
-      </Navbar.Collapse> */}
+      </Navbar.Collapse>
     </Navbar>
   );
 };

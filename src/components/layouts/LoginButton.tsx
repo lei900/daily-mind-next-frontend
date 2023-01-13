@@ -9,7 +9,7 @@ const LoginButton = () => {
         className="block rounded-lg bg-indigo-500 px-4 py-2 text-white  transition hover:bg-indigo-700 focus:outline-none focus:ring"
         type="button"
       >
-        <span className="text-base font-semibold"> Log in </span>
+        <span className="text-base font-semibold"> Login </span>
       </Link>
     </Navbar.Item>
   );
