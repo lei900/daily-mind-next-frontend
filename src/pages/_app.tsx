@@ -3,6 +3,7 @@ import Script from "next/script";
 import { NextUIProvider } from "@nextui-org/react";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
+import { Analytics } from "@vercel/analytics/react";
 
 import "../styles/globals.css";
 import { Layout } from "components/layouts/Layout";
@@ -47,6 +48,7 @@ export default function App({ Component, pageProps }: AppProps) {
           </Layout>
         </AuthContextProvider>
       </NextUIProvider>
+      <Analytics />
     </>
   );
 }
