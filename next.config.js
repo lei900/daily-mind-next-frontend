@@ -14,6 +14,11 @@ const nextConfig = {
         hostname: "pbs.twimg.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "graph.facebook.com",
+        pathname: "/**",
+      },
     ],
   },
 };

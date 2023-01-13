@@ -44,6 +44,7 @@ export default function ProfilePage({ userData }: Props) {
     if (!loading && !currentUser) {
       router.push("/login");
     }
+    console.log(currentUser?.photoURL);
   }, [loading, currentUser]);
 
   const handleChangeAvatar = (value: string) => {

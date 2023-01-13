@@ -2,57 +2,76 @@ import { useState, useEffect } from "react";
 import nookies from "nookies";
 import {
   User,
-  onAuthStateChanged,
   signOut,
   signInWithPopup,
   GoogleAuthProvider,
   TwitterAuthProvider,
+  FacebookAuthProvider,
   onIdTokenChanged,
   signInAnonymously,
+  linkWithPopup,
 } from "firebase/auth";
 import { useRouter } from "next/router";
 
 import { auth } from "lib//firebase/initFirebase";
 import { clearUserInfoCookies } from "utils/manageCookies";
+import { toast } from "react-toastify";
 
 export default function useFirebaseAuth() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  const loginWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-    const result = await signInWithPopup(auth, provider);
+  const getProvider = (method: string) => {
+    switch (method) {
+      case "google":
+        return new GoogleAuthProvider();
+      case "twitter":
+        return new TwitterAuthProvider();
+      case "facebook":
+        return new FacebookAuthProvider();
+      default:
+        return new GoogleAuthProvider();
+    }
+  };
+
+  const loginWithFirebase = async (method: string) => {
+    const getResult = () => {
+      if (method === "guest") {
+        return signInAnonymously(auth);
+      } else {
+        return signInWithPopup(auth, getProvider(method));
+      }
+    };
+
+    const result = await getResult();
 
     if (result) {
-      // The signed-in user info.
       const user = result.user;
-      // This gives you a Google Access Token.You can use it to access the Google API.
-      // const credential = GoogleAuthProvider.credentialFromResult(result);
-      // const token = credential?.accessToken;
       router.push("/");
       return user;
     }
   };
 
-  const loginWithTwitter = async () => {
-    const provider = new TwitterAuthProvider();
-    const result = await signInWithPopup(auth, provider);
+  const upgradeAccount = async (method: string) => {
+    const user = await linkWithPopup(auth.currentUser!, getProvider(method))
+      .then((result) => {
+        // Accounts successfully linked.
+        toast.success("アップグレードしました。");
+        return result.user;
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("アップグレード失敗しました。もう一度お試しください。");
+      });
 
-    if (result) {
-      const user = result.user;
+    if (user) {
+      setLoading(true);
+      setCurrentUser(user);
+      const token = await user.getIdToken();
+      nookies.set(undefined, "token", token, { path: "/" });
+      setLoading(false);
       router.push("/");
-      return user;
-    }
-  };
-
-  const loginAnonymously = async () => {
-    const result = await signInAnonymously(auth);
-
-    if (result) {
-      const user = result.user;
-      router.push("/");
-      return user;
     }
   };
 
@@ -100,9 +119,8 @@ export default function useFirebaseAuth() {
   return {
     currentUser,
     loading,
-    loginWithGoogle,
-    loginWithTwitter,
-    loginAnonymously,
+    loginWithFirebase,
+    upgradeAccount,
     logout,
   };
 }
