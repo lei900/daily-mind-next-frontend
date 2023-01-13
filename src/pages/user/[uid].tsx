@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 import nookies from "nookies";
-import { Container } from "@nextui-org/react";
+import { Container, Spacer } from "@nextui-org/react";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,6 +11,7 @@ import { UserData } from "types/types";
 import axios from "axios";
 import { AvatarIcon } from "components/Icons";
 import { EntryListItem } from "components/entries/EntryListItem";
+import { Footer } from "components/layouts/Footer";
 
 type Props = {
   userData: UserData;
@@ -151,6 +152,8 @@ export default function UserPage({ userData }: Props) {
           </div>
         </div>
       </Container>
+      <Spacer y={4} />
+      <Footer />
     </>
   );
 }

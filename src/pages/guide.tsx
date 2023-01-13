@@ -21,6 +21,7 @@ import exercisePic_2 from "components/exercises/images/exercisePic_2.png";
 import exercisePic_3 from "components/exercises/images/exercisePic_3.png";
 import diaryIcon from "components/home/images/diaryIcon.png";
 import analysisIcon from "components/home/images/analysisIcon.png";
+import { Footer } from "components/layouts/Footer";
 
 export default function GuidePage() {
   const { currentUser, loading } = useAuthContext();
@@ -664,6 +665,7 @@ export default function GuidePage() {
         </Modal>
         <Spacer y={4} />
       </Container>
+      <Footer />
     </>
   );
 }
