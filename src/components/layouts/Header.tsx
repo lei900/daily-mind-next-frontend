@@ -51,7 +51,11 @@ export const Header = () => {
       </Navbar.Content>
       <Navbar.Content>
         {!loading && currentUser ? (
-          <UserMenu onLogout={logout} userInfo={userInfo} />
+          <UserMenu
+            currentUser={currentUser}
+            onLogout={logout}
+            userInfo={userInfo}
+          />
         ) : (
           <LoginButton />
         )}

@@ -1,6 +1,7 @@
 import { Navbar, Text, Dropdown } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
+import { User } from "firebase/auth";
 
 import { AvatarIcon, BellIcon, LogoutIcon } from "components/Icons";
 import { UserInfo } from "types/types";
@@ -8,9 +9,10 @@ import { UserInfo } from "types/types";
 type Props = {
   onLogout: () => {};
   userInfo: UserInfo;
+  currentUser: User;
 };
 
-const UserMenu = ({ onLogout, userInfo }: Props) => {
+const UserMenu = ({ onLogout, userInfo, currentUser }: Props) => {
   return (
     <>
       {/* <Navbar.Item className="xs:flex hidden">
@@ -54,6 +56,13 @@ const UserMenu = ({ onLogout, userInfo }: Props) => {
               </Text>
             </Link>
           </Dropdown.Item>
+          {currentUser.isAnonymous ? (
+            <Dropdown.Item color="error" key="upgrade" withDivider>
+              <Link href="/settings/upgrade">アカウントアップグレード</Link>
+            </Dropdown.Item>
+          ) : (
+            <></>
+          )}
           <Dropdown.Item key="edit-profile" withDivider>
             <Link href="/settings/profile">プロフィール編集</Link>
           </Dropdown.Item>
@@ -63,12 +72,7 @@ const UserMenu = ({ onLogout, userInfo }: Props) => {
           <Dropdown.Item key="add-thought-analyses">
             <Link href="/thought-analyses/new">ゆがみ分析作成</Link>
           </Dropdown.Item>
-          <Dropdown.Item
-            key="logout"
-            withDivider
-            color="error"
-            icon={<LogoutIcon />}
-          >
+          <Dropdown.Item key="logout" withDivider icon={<LogoutIcon />}>
             <div onClick={onLogout}>ログアウト</div>
           </Dropdown.Item>
         </Dropdown.Menu>
