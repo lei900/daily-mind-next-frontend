@@ -7,7 +7,7 @@ import {
   TwitterLogo,
   FacebookLogo,
   UserCircleIcon,
-  InformationCircleIcon,
+  QuestionMarkIcon,
 } from "components/Icons";
 import { useAuthContext } from "context/AuthContext";
 import { handleAxiosError } from "hooks/useAxios";
@@ -15,27 +15,9 @@ import { setUserInfoCookies } from "utils/manageCookies";
 import { UserInfo } from "types/types";
 
 export default function LoginPage() {
-  const {
-    loginWithGoogle,
-    loginWithTwitter,
-    loginAnonymously,
-    loginWithFirebase,
-    updateUserInfo,
-  } = useAuthContext();
+  const { loginWithFirebase, updateUserInfo } = useAuthContext();
 
   const handleLogin = async (loginMethod: string) => {
-    // const getUser = () => {
-    //   switch (loginMethod) {
-    //     case "google":
-    //       return loginWithGoogle();
-    //     case "twitter":
-    //       return loginWithTwitter();
-    //     case "guest":
-    //       return loginAnonymously();
-    //   }
-    // };
-
-    // const verifyIdToken = async () => {
     const user = await loginWithFirebase(loginMethod);
     const token = await user?.getIdToken();
 
@@ -48,12 +30,9 @@ export default function LoginPage() {
       const userInfo: UserInfo = res.data.data.attributes;
       setUserInfoCookies(userInfo);
       updateUserInfo(userInfo);
-      // console.log(response.data);
     } catch (err) {
       handleAxiosError(err);
     }
-    // };
-    // verifyIdToken();
   };
 
   return (
@@ -102,9 +81,7 @@ export default function LoginPage() {
               contentColor="primary"
               content={
                 <div className="p-2 w-80 ">
-                  <p>
-                    臨時アカウントが発行され、サイト全ての機能を試すことは可能です。
-                  </p>
+                  <p>個人情報不要で、臨時アカウントが発行されます。</p>
                   <p className="mt-2">
                     ただし、
                     <span className="underline font-semibold">
@@ -118,7 +95,7 @@ export default function LoginPage() {
                 </div>
               }
             >
-              <InformationCircleIcon className="h-5 w-5 stroke-gray-600" />
+              <QuestionMarkIcon className="h-5 w-5 stroke-gray-600" />
               <p className="text-center text-sm text-gray-700">
                 ゲストログインとは
               </p>

@@ -8,10 +8,8 @@ import { UserInfo } from "types/types";
 interface AuthContext {
   currentUser: User | null;
   loading: boolean;
-  loginWithGoogle: () => Promise<User | undefined>;
-  loginWithTwitter: () => Promise<User | undefined>;
-  loginAnonymously: () => Promise<User | undefined>;
   loginWithFirebase: (method: string) => Promise<User | undefined>;
+  upgradeAccount: (method: string) => Promise<void>;
   logout: () => Promise<void>;
   userInfo: UserInfo;
   updateUserInfo: (newUserInfo: UserInfo) => void;
@@ -26,15 +24,8 @@ const AuthCtx = createContext({} as AuthContext);
 const cookies = parseCookies();
 
 export function AuthContextProvider({ children }: AuthProviderProps) {
-  const {
-    currentUser,
-    loading,
-    loginWithGoogle,
-    loginWithTwitter,
-    loginAnonymously,
-    loginWithFirebase,
-    logout,
-  } = useFirebaseAuth();
+  const { currentUser, loading, loginWithFirebase, upgradeAccount, logout } =
+    useFirebaseAuth();
   const [userInfo, setUserInfo] = useState({
     uid: cookies.uid,
     nickname: cookies.nickname,
@@ -56,10 +47,8 @@ export function AuthContextProvider({ children }: AuthProviderProps) {
   const AuthContext: AuthContext = {
     currentUser: currentUser,
     loading: loading,
-    loginWithGoogle: loginWithGoogle,
-    loginWithTwitter: loginWithTwitter,
-    loginAnonymously: loginAnonymously,
     loginWithFirebase: loginWithFirebase,
+    upgradeAccount: upgradeAccount,
     logout: logout,
     userInfo: userInfo,
     updateUserInfo: updateUserInfo,
