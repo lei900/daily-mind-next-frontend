@@ -1,34 +1,67 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## バックエンドドRepo: [daily-mind-next-backend](https://github.com/lei900/daily-mind-next-backend)
 
-## Getting Started
+### サービス概要
 
-First, run the development server:
+ネガティブな考えに囚われて、抜け出したい人に  
+認知行動療法の実践方法を提供する
+考え方のゆがみを見直すための記録アプリ。
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+### メインのターゲットユーザー
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ストレスや不安、自己否定感などネガティブな感情から気持ちの切り替えが難しい人
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### ユーザーが抱える課題
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+ネガティブな考えに囚われるとき、自分の考え方のゆがみに気づき、そのゆがみを見直し、つらい気持ちから抜け出すことが難しくなる。
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### 解決方法
 
-## Learn More
+特徴的な思考のゆがみをクイズ形式で学習し、認知行動療法を活用して自分の思考のゆがみを記録・分析する機能を提供する。
 
-To learn more about Next.js, take a look at the following resources:
+### 実装予定の機能
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- 未ログインユーザー
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  - 認知行動療法や認知のゆがみについての基本紹介ページを閲覧できる
+  - 認知行動療法を勉強するクイズを実行できる
+  - 「コミュニティー」ページで他人の公開記録を閲覧できる
 
-## Deploy on Vercel
+- ログインユーザー
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  - 自分の日記・思考分析の作成、下書き保存、一覧、詳細、編集、削除
+  - 他人の公開記録を閲覧、コメント、いいね、ブックマークできる
+  - 練習クイズに対してコメントできる
+  - ブックマークした他人の公開記録一覧を確認できる
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- 管理ユーザー
+
+  - ユーザーの検索、一覧、詳細、編集、削除
+  - クイズの一覧、詳細、作成、編集、削除
+  - 公開記録一覧、詳細、編集、削除
+  - コメント一覧、詳細、編集、削除
+
+### 画面遷移図
+
+Figma リンク  
+https://www.figma.com/file/s1FsnwtiZpqgXouTMo6ap3/Daily-mind-Screen-transitions
+
+### ER 図
+
+Drawio 共有リンク  
+https://drive.google.com/file/d/1n5JOkpUXLjSfRYyG3F08gCQ-uc4FHYBj/view?usp=sharing
+
+### なぜこのサービスを作りたいのか？
+
+自分だけでなく、よく自己否定したり、ネガティブな気分になりがちな友達が結構いる。
+
+しかし、認知行動療法を実践する方法として、気持ちの記録機能を提供する既存のアプリは多いが、考え方のゆがみを見直すための勉強機能を提供していない。
+
+友達と一緒に認知行動療法を勉強して、考え方のゆがみに気づき、見直す習慣を身に付けたいと思う。
+
+### スケジュール
+
+- 企画〜技術調査(React 学習）：10/20 〆切
+- README〜ER 図作成：10/27 〆切
+- メイン機能実装：10/27 - 1/8
+- β 版を RUNTEQ 内リリース（MVP）：1/10 〆切
+- 本番リリース：1/25 〆切
