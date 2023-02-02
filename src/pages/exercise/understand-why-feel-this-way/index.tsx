@@ -9,7 +9,7 @@ import exercisePic from "components/exercises/images/exercisePic_1.png";
 export default function Exercise1IntroPage() {
   const router = useRouter();
   const handleStart = async () => {
-    router.push("/exercise/separate-thoughts-from-feelings/questions/1");
+    router.push("/exercise/understand-why-feel-this-way/questions/1");
     axios.patch("/exercises/1/participations");
   };
 
