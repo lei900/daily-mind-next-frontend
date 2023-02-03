@@ -14,7 +14,6 @@ import { useAuthContext } from "context/AuthContext";
 import { handleAxiosError } from "hooks/useAxios";
 import { setUserInfoCookies } from "utils/manageCookies";
 import { UserInfo } from "types/types";
-import { Logo } from "components/layouts/Logo";
 
 export default function LoginPage() {
   const { loginWithFirebase, updateUserInfo } = useAuthContext();
@@ -26,10 +25,12 @@ export default function LoginPage() {
     const config = {
       headers: { authorization: `Bearer ${token}` },
     };
+    console.log(token);
 
     try {
       const res = await axios.post("/auth", null, config);
       const userInfo: UserInfo = res.data.data.attributes;
+      console.log(userInfo);
       setUserInfoCookies(userInfo);
       updateUserInfo(userInfo);
     } catch (err) {
