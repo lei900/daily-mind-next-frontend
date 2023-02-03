@@ -14,7 +14,6 @@ import { useAuthContext } from "context/AuthContext";
 import { handleAxiosError } from "hooks/useAxios";
 import { setUserInfoCookies } from "utils/manageCookies";
 import { UserInfo } from "types/types";
-import { Logo } from "components/layouts/Logo";
 
 export default function LoginPage() {
   const { loginWithFirebase, updateUserInfo } = useAuthContext();

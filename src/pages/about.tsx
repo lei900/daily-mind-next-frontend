@@ -17,7 +17,7 @@ import Head from "next/head";
 export default function AboutPage() {
   return (
     <>
-      <div>about</div>
+      <div>coming soon...</div>
       <Footer />
     </>
   );
