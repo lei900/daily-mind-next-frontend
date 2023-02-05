@@ -67,15 +67,14 @@ https://www.figma.com/file/s1FsnwtiZpqgXouTMo6ap3/Daily-mind-Screen-transitions
 
 ### ER 図
 
-Drawio 共有リンク  
-https://drive.google.com/file/d/1n5JOkpUXLjSfRYyG3F08gCQ-uc4FHYBj/view?usp=sharing
+![daily-mind-er-diagram](https://user-images.githubusercontent.com/97896554/216803080-79797fad-cbcc-481b-8a5e-d86093540e49.png)
 
 ### 使用技術
 
 フロントエンド
 Next.js 13.0.4 (React 18.2.0) + TypeScript 4.9.3
 
-UI: Tailwind CSS 3.2.4 + NextUI v1.0.0
+UI フレームワーク： Tailwind CSS 3.2.4 + NextUI v1.0.0
 
 バックエンド
 Rails 7.0.4
