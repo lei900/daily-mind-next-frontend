@@ -94,6 +94,23 @@ export default function EntryDetailPage({ entryData }: Props) {
             entryData.attributes.thoughtAnalysis?.negative_thought
           }
         />
+        <meta
+          property="og:title"
+          content={
+            entryData.attributes.diary?.title ||
+            entryData.attributes.thoughtAnalysis?.negative_thought
+          }
+          key="ogtitle"
+        />
+        <meta
+          property="og:description"
+          content={
+            entryData.attributes.diary?.body ||
+            entryData.attributes.thoughtAnalysis?.negative_thought
+          }
+          key="ogdesc"
+        />
+
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container sm className="sm:px-16 md:px-10 px-2 sm:mt-8">

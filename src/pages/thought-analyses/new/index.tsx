@@ -20,6 +20,7 @@ export default function NewAnalysisPage() {
       <Head>
         <title>思考ゆがみ分析作成 - Daily Mind</title>
         <meta name="description" content="思考ゆがみ分析を作成する。" />
+        <meta property="og:title" content="思考ゆがみ分析作成" key="ogtitle" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AnalysisForm />

@@ -21,6 +21,16 @@ export default function Exercise1IntroPage() {
           name="description"
           content="自動思考はどのように気持ちを影響するのか。この練習で体験してみましょう。"
         />
+        <meta
+          property="og:title"
+          content="自分の感情を理解する"
+          key="ogtitle"
+        />
+        <meta
+          property="og:description"
+          content="自動思考はどのように気持ちを影響するのか。この練習で体験してみましょう。"
+          key="ogdesc"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container md css={{ px: "$18", mt: "$12", "@mdMax": { px: "$10" } }}>

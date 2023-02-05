@@ -48,6 +48,7 @@ export default function GuidePage() {
           name="description"
           content="「認知療法・認知行動療法」とは、認知に働きかけて、心のストレスを軽くしていく治療法です。"
         />
+        <meta property="og:title" content="Guide" key="ogtitle" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container sm css={{ px: "$12", mt: "$8", "@xsMax": { px: "$10" } }}>
