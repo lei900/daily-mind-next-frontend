@@ -27,12 +27,25 @@ export default function App({ Component, pageProps }: AppProps) {
           content="https://user-images.githubusercontent.com/97896554/216817744-65a74c1c-66ba-436f-abf4-2300b353c474.png"
           key="ogimage"
         />
-        <meta property="og:site_name" content="Daily Mind" key="ogsitename" />
         <meta
-          name="twitter:card"
-          content="認知療法で心のセルフケアを練習しましょう"
-          key="twcard"
+          property="og:site_name"
+          content="summary_large_image"
+          key="ogsitename"
         />
+        <meta name="twitter:card" content="Daily Mind" key="twcard" />
+        <meta
+          name="twitter:title"
+          content="Daily Mind | 嫌な気持ちを楽にする"
+        />
+        <meta
+          name="twitter:description"
+          content="自己否定感などネガティブな感情から抜け出したい人に、認知療法に基づいたセルフケア方法を提供するサービス"
+        />
+        <meta
+          name="twitter:image"
+          content="https://user-images.githubusercontent.com/97896554/216817744-65a74c1c-66ba-436f-abf4-2300b353c474.png"
+        />
+
         <meta name="twitter:creator" content="@Maize_2" key="twhandle" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
