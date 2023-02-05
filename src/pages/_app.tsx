@@ -17,6 +17,25 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
+        <meta name="twitter:card" content="summary_large_image" key="twcard" />
+        <meta property="twitter:site" content="idailymind.com/" key="twsite" />
+        <meta
+          name="twitter:title"
+          content="Daily Mind | 嫌な気持ちを楽にする"
+          key="twtitle"
+        />
+        <meta
+          name="twitter:description"
+          content="自己否定感などネガティブな感情から抜け出したい人に、認知療法に基づいたセルフケア方法を提供するサービス"
+          key="twdesc"
+        />
+        <meta
+          name="twitter:image"
+          content="https://user-images.githubusercontent.com/97896554/216817744-65a74c1c-66ba-436f-abf4-2300b353c474.png"
+          key="twimage"
+        />
+
+        <meta name="twitter:creator" content="@Maize_2" key="twhandle" />
         <meta
           property="og:url"
           content="https://www.idailymind.com/"
@@ -28,21 +47,6 @@ export default function App({ Component, pageProps }: AppProps) {
           key="ogimage"
         />
         <meta property="og:site_name" content="Daily Mind" key="ogsitename" />
-        <meta name="twitter:card" content="summary_large_image" key="twcard" />
-        <meta
-          name="twitter:title"
-          content="Daily Mind | 嫌な気持ちを楽にする"
-        />
-        <meta
-          name="twitter:description"
-          content="自己否定感などネガティブな感情から抜け出したい人に、認知療法に基づいたセルフケア方法を提供するサービス"
-        />
-        <meta
-          name="twitter:image"
-          content="https://user-images.githubusercontent.com/97896554/216817744-65a74c1c-66ba-436f-abf4-2300b353c474.png"
-        />
-
-        <meta name="twitter:creator" content="@Maize_2" key="twhandle" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* Google tag  */}
