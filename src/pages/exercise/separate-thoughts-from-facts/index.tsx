@@ -21,6 +21,12 @@ export default function Exercise2IntroPage() {
           name="description"
           content="認知と事実の区別がつくかどうか、試してみてください。"
         />
+        <meta property="og:title" content="認知と事実を分ける" key="ogtitle" />
+        <meta
+          property="og:description"
+          content="認知と事実の区別がつくかどうか、試してみてください。"
+          key="ogdesc"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container md css={{ px: "$18", mt: "$12", "@mdMax": { px: "$10" } }}>

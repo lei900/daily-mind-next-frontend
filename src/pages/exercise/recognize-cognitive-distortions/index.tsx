@@ -21,6 +21,16 @@ export default function Exercise3IntroPage() {
           name="description"
           content="認知の歪みに対しての理解を深めるため、簡単なクイズで練習しましょう。"
         />
+        <meta
+          property="og:title"
+          content="認知のゆがみに気づく"
+          key="ogtitle"
+        />
+        <meta
+          property="og:description"
+          content="認知の歪みに対しての理解を深めるため、簡単なクイズで練習しましょう。"
+          key="ogdesc"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container md css={{ px: "$18", mt: "$12", "@mdMax": { px: "$10" } }}>

@@ -41,6 +41,7 @@ export default function LoginPage() {
       <Head>
         <title>ログイン - Daily Mind</title>
         <meta name="description" content="ログインしてください。" />
+        <meta property="og:title" content="Login" key="ogtitle" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Card className="max-w-lg mx-auto p-8 sm:mt-24 sm:rounded-xl sm:shadow-none shadow-slate-300">

@@ -30,6 +30,7 @@ export default function UserPage({ userData }: Props) {
       <Head>
         <title>{userData.nickname} - Daily Mind</title>
         <meta name="description" content={userData.bio || "ユーザーページ"} />
+        <meta property="og:title" content={userData.nickname} key="ogtitle" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container md>

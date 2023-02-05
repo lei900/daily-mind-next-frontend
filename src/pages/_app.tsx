@@ -4,6 +4,7 @@ import { NextUIProvider } from "@nextui-org/react";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import { Analytics } from "@vercel/analytics/react";
+import Head from "next/head";
 
 import "../styles/globals.css";
 import { Layout } from "components/layouts/Layout";
@@ -15,6 +16,25 @@ axios.defaults.baseURL =
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
+      <Head>
+        <meta
+          property="og:url"
+          content="https://www.idailymind.com/"
+          key="ogurl"
+        />
+        <meta
+          property="og:image"
+          content="public/previewImage.png"
+          key="ogimage"
+        />
+        <meta property="og:site_name" content="Daily Mind" key="ogsitename" />
+        <meta
+          name="twitter:card"
+          content="認知療法で心のセルフケアを練習しましょう"
+          key="twcard"
+        />
+        <meta name="twitter:creator" content="@Maize_2" key="twhandle" />
+      </Head>
       {/* Google tag  */}
       <Script
         strategy="lazyOnload"
