@@ -22,7 +22,11 @@ export default function App({ Component, pageProps }: AppProps) {
           content="https://www.idailymind.com/"
           key="ogurl"
         />
-        <meta property="og:image" content="/previewImage.png" key="ogimage" />
+        <meta
+          property="og:image"
+          content="https://user-images.githubusercontent.com/97896554/216817744-65a74c1c-66ba-436f-abf4-2300b353c474.png"
+          key="ogimage"
+        />
         <meta property="og:site_name" content="Daily Mind" key="ogsitename" />
         <meta
           name="twitter:card"
@@ -30,6 +34,7 @@ export default function App({ Component, pageProps }: AppProps) {
           key="twcard"
         />
         <meta name="twitter:creator" content="@Maize_2" key="twhandle" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* Google tag  */}
       <Script

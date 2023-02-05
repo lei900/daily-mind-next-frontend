@@ -77,7 +77,6 @@ export default function Home({ entriesData }: Props) {
           content="認知療法で心のセルフケアを練習しましょう"
           key="ogdesc"
         />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container lg className="sm:px-16 md:px-10 px-4 mt-8">
         <HeroSection />
