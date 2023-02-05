@@ -27,12 +27,8 @@ export default function App({ Component, pageProps }: AppProps) {
           content="https://user-images.githubusercontent.com/97896554/216817744-65a74c1c-66ba-436f-abf4-2300b353c474.png"
           key="ogimage"
         />
-        <meta
-          property="og:site_name"
-          content="summary_large_image"
-          key="ogsitename"
-        />
-        <meta name="twitter:card" content="Daily Mind" key="twcard" />
+        <meta property="og:site_name" content="Daily Mind" key="ogsitename" />
+        <meta name="twitter:card" content="summary_large_image" key="twcard" />
         <meta
           name="twitter:title"
           content="Daily Mind | 嫌な気持ちを楽にする"
