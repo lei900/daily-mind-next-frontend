@@ -22,11 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
           content="https://www.idailymind.com/"
           key="ogurl"
         />
-        <meta
-          property="og:image"
-          content="public/previewImage.png"
-          key="ogimage"
-        />
+        <meta property="og:image" content="/previewImage.png" key="ogimage" />
         <meta property="og:site_name" content="Daily Mind" key="ogsitename" />
         <meta
           name="twitter:card"
