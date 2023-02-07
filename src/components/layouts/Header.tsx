@@ -10,11 +10,10 @@ export const Header = () => {
   const { currentUser, loading, logout, userInfo } = useAuthContext();
 
   const collapseItems = [
-    "ホーム",
-    "認知療法とは",
-    "コミュニティ",
-    "Daily Mindについて",
-    "お問い合わせ",
+    { name: "ホーム", url: "/" },
+    { name: "認知療法とは", url: "/guide" },
+    { name: "Daily Mindについて", url: "/about" },
+    { name: "お問い合わせ", url: "https://forms.gle/fdNoCX7MzChWnLFy7" },
   ];
 
   return (
@@ -64,14 +63,14 @@ export const Header = () => {
       <Navbar.Collapse>
         {collapseItems.map((item, index) => (
           <Navbar.CollapseItem
-            key={item}
+            key={index}
             activeColor="secondary"
             css={{
               color: index === collapseItems.length - 1 ? "$error" : "",
             }}
             isActive={index === 0}
           >
-            <Link href="#">{item}</Link>
+            <Link href={item.url}>{item.name}</Link>
           </Navbar.CollapseItem>
         ))}
       </Navbar.Collapse>
