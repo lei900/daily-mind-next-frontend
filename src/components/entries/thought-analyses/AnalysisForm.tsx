@@ -331,7 +331,6 @@ export default function AnalysisForm({ entryData, distortionIds }: Props) {
     const method = "post";
     const url = "/entries";
     const onSuccess = {
-      msg: "分析記録が作成しました！",
       redirectUrl: "/thought-analyses/new/feedback",
     };
     const onFailure = {
