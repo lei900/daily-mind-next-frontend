@@ -55,10 +55,10 @@ export default function QuestionDetailPage({ question }: Props) {
 
   const turnNextPage = () => {
     closeHandler();
-    const nextQuestionUrl = `/exercise/separate-thoughts-from-feelings/questions/${(
+    const nextQuestionUrl = `/exercise/understand-why-feel-this-way/questions/${(
       questionId + 1
     ).toString()}`;
-    const finalUrl = "/exercise/separate-thoughts-from-feelings/final";
+    const finalUrl = "/exercise/understand-why-feel-this-way/final";
     const nextUrl = isLastQuestion ? finalUrl : nextQuestionUrl;
     router.push(nextUrl);
   };
