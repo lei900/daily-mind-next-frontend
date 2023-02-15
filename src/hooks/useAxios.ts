@@ -38,8 +38,8 @@ export default function useAxios() {
   async function axioRequest(
     method: "post" | "patch" | "delete",
     url: string,
-    onSuccess?: { msg: string; redirectUrl: string },
-    onFailure?: { msg: string; redirectUrl: string },
+    onSuccess?: { msg?: string; redirectUrl: string },
+    onFailure?: { msg?: string; redirectUrl: string },
     data?: EntryRequestData | any,
     configOptions?: any
   ) {
