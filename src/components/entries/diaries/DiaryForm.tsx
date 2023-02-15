@@ -13,7 +13,7 @@ import {
   Community,
 } from "types/types";
 import useAxios from "hooks/useAxios";
-import useListBox from "hooks/useListBoxt";
+import useListBox from "hooks/useListBox";
 import CommunityListBox from "../CommunityListBox";
 import StatusListBox from "../StatusListBox";
 

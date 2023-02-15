@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { EntryData } from "types/types";
-import useListBox from "hooks/useListBoxt";
+import useListBox from "hooks/useListBox";
 import useAxios from "hooks/useAxios";
 import CommunityListBox from "../CommunityListBox";
 import StatusListBox from "../StatusListBox";

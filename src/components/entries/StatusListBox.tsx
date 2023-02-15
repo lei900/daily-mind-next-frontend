@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, Fragment } from "react";
 import Image from "next/image";
 
 import { Community } from "types/types";
-import useListBox from "hooks/useListBoxt";
+import useListBox from "hooks/useListBox";
 import {
   CheckIcon,
   ChevronUpDownIcon,
